@@ -28,8 +28,8 @@ private:
     };
 
     LineTracer* mLineTracer;
-    TailController* mTailController;
     Starter* mStarter;
+    TailController* mTailController;
     State mState;
 
     void execUndefined();

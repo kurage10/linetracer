@@ -52,7 +52,7 @@ void LineTracerWithStarter::execUndefined() {
 void LineTracerWithStarter::execWaitingForStart() {
 
     if (mStarter->isPushed()) {
-      mTailController->setAngle(20);
+      mTailController->setAngle(-60);
       mState = WALKING;
     }
 }
