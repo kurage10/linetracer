@@ -1,7 +1,4 @@
 #include "TailController.h"
-#include <math.h>
-#define GAIN 2.5F
-
 
 TailController::TailController(ev3api::Motor& tailMotor)
   :mTailMotor(tailMotor),
@@ -9,7 +6,6 @@ TailController::TailController(ev3api::Motor& tailMotor)
 
 void TailController::run(){
   float speed = calcDirection();
-  //int speed=-1;
   mTailMotor.setPWM(speed);
 }
 
