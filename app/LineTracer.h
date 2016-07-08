@@ -14,17 +14,17 @@
 
 class LineTracer {
 public:
-    LineTracer(const LineMonitor* lineMonitor,
+    LineTracer(LineMonitor* lineMonitor,
                BalancingWalker* balancingWalker);
 
     void run();
 
 private:
-    const LineMonitor* mLineMonitor;
+    LineMonitor* mLineMonitor;
     BalancingWalker* mBalancingWalker;
     bool mIsInitialized;
 
-    int calcDirection(bool isOnLine);
+    float calcSpeed(float direction);
 };
 
 #endif  // EV3_APP_LINETRACER_H_
