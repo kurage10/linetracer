@@ -33,8 +33,7 @@ void LineTracer::run() {
 
     // 走行体の向きを計算する
     //float speed = calcSpeed(direction);
-
-    mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
+    mBalancingWalker->setCommand(speed, direction);
 
     // 倒立走行を行う
     mBalancingWalker->run();
