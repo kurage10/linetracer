@@ -13,7 +13,7 @@
  * @param lineMonitor     ライン判定
  * @param balancingWalker 倒立走行
  */
-LineTracer::LineTracer(const LineMonitor* lineMonitor,
+LineTracer::LineTracer(LineMonitor* lineMonitor,
                        BalancingWalker* balancingWalker)
     : mLineMonitor(lineMonitor),
       mBalancingWalker(balancingWalker),
@@ -29,10 +29,10 @@ void LineTracer::run() {
         mIsInitialized = true;
     }
 
-    bool isOnLine = mLineMonitor->isOnLine();
+    float direction = mLineMonitor->calcVecSpeed();
 
     // 走行体の向きを計算する
-    int direction = calcDirection(isOnLine);
+    //float speed = calcSpeed(direction);
 
     mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
 
@@ -46,12 +46,12 @@ void LineTracer::run() {
  * @retval 30  ライン上にある場合(右旋回指示)
  * @retval -30 ライン外にある場合(左旋回指示)
  */
-int LineTracer::calcDirection(bool isOnLine) {
-    if (isOnLine) {
+float LineTracer::calcSpeed(float direction) {
+    if (direction > 0) {
         // ライン上にある場合
-        return BalancingWalker::LOW;
+        return direction;
     } else {
         // ライン外にある場合
-        return -BalancingWalker::LOW;
+        return -direction;
     }
 }
