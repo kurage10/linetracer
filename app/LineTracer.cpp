@@ -32,8 +32,9 @@ void LineTracer::run() {
     float direction = mLineMonitor->calcVecSpeed();
 
     // 走行体の向きを計算する
-    float speed = calcSpeed(direction);
-    mBalancingWalker->setCommand(speed, direction);
+    //float speed = calcSpeed(direction);
+
+    mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
 
     // 倒立走行を行う
     mBalancingWalker->run();
