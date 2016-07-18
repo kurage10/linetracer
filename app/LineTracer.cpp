@@ -55,3 +55,8 @@ float LineTracer::calcSpeed(float direction) {
         return -direction;
     }
 }
+
+void LineTracer::init(){
+  mBalancingWalker->init();
+  mIsInitialized = true;
+}
