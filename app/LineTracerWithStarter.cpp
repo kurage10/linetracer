@@ -43,6 +43,7 @@ void LineTracerWithStarter::run() {
  * 未定義状態の処理
  */
 void LineTracerWithStarter::execUndefined() {
+    mTailController->setAngle(90);
     mState = WAITING_FOR_START;
 }
 
@@ -50,9 +51,9 @@ void LineTracerWithStarter::execUndefined() {
  * 開始待ち状態の処理
  */
 void LineTracerWithStarter::execWaitingForStart() {
-
+    mTailController -> run();
     if (mStarter->isPushed()) {
-      mTailController->setAngle(-60);
+      mTailController->setAngle(3);
       mState = WALKING;
     }
 }

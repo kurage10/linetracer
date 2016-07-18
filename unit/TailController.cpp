@@ -15,8 +15,7 @@ void TailController::init(){
 int TailController::calcDirection(){
   int diff=mTailMotor.getCount()-mAngle;
   if(diff==0)return 0;
-  else if(diff<0) return 1;
-  else return -1;
+  else return -diff*0.25;
 }
 void TailController::setAngle(int angle){
   mAngle=angle;
