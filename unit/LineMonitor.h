@@ -15,15 +15,18 @@
 class LineMonitor {
 public:
     explicit LineMonitor(const ev3api::ColorSensor& colorSensor);
-
-    bool isOnLine() const;
+    float calcVecSpeed();
     void setThreshold(int8_t threshold);
 
 private:
     static const int8_t INITIAL_THRESHOLD;
-
+    static const float KP;        // 比例係数
+    static const float KI;
+    static const float KD;
     const ev3api::ColorSensor& mColorSensor;
     int8_t mThreshold;
+    float diff[2];
+    float integral;
 };
 
 #endif  // EV3_UNIT_LINEMONITOR_H_

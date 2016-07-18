@@ -7,7 +7,6 @@ class TailController{
 private:
   ev3api::Motor& mTailMotor;
   int mAngle; //expected value of Motor
-  int mForward; //the speed of Motor
 public:
   TailController(ev3api::Motor& tailController);
   int calcDirection();
