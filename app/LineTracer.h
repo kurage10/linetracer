@@ -18,6 +18,7 @@ public:
                BalancingWalker* balancingWalker);
 
     void run();
+    void init();
 
 private:
     LineMonitor* mLineMonitor;
