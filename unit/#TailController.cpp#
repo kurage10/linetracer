@@ -1,4 +1,4 @@
-#include "TailController.h"
+q#include "TailController.h"
 
 TailController::TailController(ev3api::Motor& tailMotor)
   :mTailMotor(tailMotor),
@@ -17,6 +17,6 @@ int TailController::calcDirection(){
   if(diff==0)return 0;
   else return -diff*0.25;
 }
-void TailController::setAngle(int32_t angle){
+void TailController::setAngle(int angle){
   mAngle=angle;
 }
