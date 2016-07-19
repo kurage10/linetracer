@@ -13,8 +13,8 @@
  * @param lineTracer ライントレーサ
  * @param starter    スタータ
  */
-LineTracerWithStarter::LineTracerWithStarter(LineTracer* lineTracer,Starter* starter,TailController* tailController)
-    : mLineTracer(lineTracer),
+LineTracerWithStarter::LineTracerWithStarter(StairWalker* stairWalker,Starter* starter,TailController* tailController)
+    : mStairWalker(stairWalker),
       mStarter(starter),
       mTailController(tailController),
       mState(UNDEFINED) {
@@ -44,7 +44,7 @@ void LineTracerWithStarter::run() {
  */
 void LineTracerWithStarter::execUndefined() {
     mTailController->setAngle(94);
-    
+
     mState = WAITING_FOR_START;
 }
 
@@ -53,7 +53,7 @@ void LineTracerWithStarter::execUndefined() {
  */
 void LineTracerWithStarter::execWaitingForStart() {
     mTailController -> run();
-  
+
     if (mStarter->isPushed()) {
       //      mTailController->setAngle(96);
       //      mTailController -> run();
@@ -68,5 +68,6 @@ void LineTracerWithStarter::execWaitingForStart() {
  */
 void LineTracerWithStarter::execWalking() {
     mTailController -> run();
-    mLineTracer->run();
+    //mLineTracer->run();
+    mStairWalker->run();
 }

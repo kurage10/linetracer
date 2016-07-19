@@ -4,7 +4,7 @@ StairWalker::StairWalker(TailWalker* tailWalker)
   :mtailWalker(tailWalker),
   mCount(0){
 }
-StairWalker::run(){
+void StairWalker::run(){
   switch (mState) {
     case UNDEFINED:
       execUndefined();
@@ -17,15 +17,15 @@ StairWalker::run(){
     break;
   }
 }
-StairWalker::execUndefined(){
+void StairWalker::execUndefined(){
   mState=WALKING;
 }
-StairWalker::execWalking(){
-  tailWalker->run();
+void StairWalker::execWalking(){
+  mtailWalker->run();
   if(/*距離の条件をここに入れる*/mCount < 2){
     mState = TURNING;
   }
 }
-StairWalker::execTurning(){
-
+void StairWalker::execTurning(){
+  mCount=mCount+1;
 }

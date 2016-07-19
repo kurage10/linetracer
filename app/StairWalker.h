@@ -3,9 +3,9 @@
 
 #include "TailWalker.h"
 
-class StairTurner{
+class StairWalker{
 public:
-  StairTurner(TailWalker* tailWalker);
+  StairWalker(TailWalker* tailWalker);
   void run();
 private:
   TailWalker* mtailWalker;
@@ -19,5 +19,5 @@ private:
   void execUndefined();
   void execWalking();
   void execTurning();
-}
+};
 #endif

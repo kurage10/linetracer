@@ -9,6 +9,7 @@
 #include "app.h"
 #include "LineTracerWithStarter.h"
 
+
 // using宣言
 using ev3api::ColorSensor;
 using ev3api::GyroSensor;
@@ -32,6 +33,8 @@ static LineTracer      *gLineTracer;
 static Starter         *gStarter;
 static TailController *gTailController;
 static LineTracerWithStarter *gLineTracerWithStarter;
+static TailWalker *gTailWalker;
+static StairWalker *gStairWalker;
 
 /**
  * EV3システム生成
@@ -50,7 +53,9 @@ static void user_system_create() {
     gStarter         = new Starter(gTouchSensor);
     gTailController  = new TailController(gTailMotor);
     gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
-    gLineTracerWithStarter = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
+    gTailWalker = new TailWalker(gLeftWheel,gRightWheel,gTailController);
+    gStairWalker = new StairWalker(gTailWalker);
+    gLineTracerWithStarter = new LineTracerWithStarter(gStairWalker, gStarter,gTailController);
 
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
@@ -63,6 +68,8 @@ static void user_system_destroy() {
     gLeftWheel.reset();
     gRightWheel.reset();
     gTailMotor.reset();
+    delete gStairWalker;
+    delete gTailWalker;
     delete gLineTracerWithStarter;
     delete gLineTracer;
     delete gTailController;

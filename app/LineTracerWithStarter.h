@@ -12,10 +12,11 @@
 #include "Starter.h"
 #include "LineTracer.h"
 #include "TailController.h"
+#include "StairWalker.h"
 
 class LineTracerWithStarter {
 public:
-    LineTracerWithStarter(LineTracer* lineTracer,
+    LineTracerWithStarter(StairWalker* stairWalker,
                Starter* starter,TailController* tailController);
 
     void run();
@@ -28,6 +29,7 @@ private:
     };
 
     LineTracer* mLineTracer;
+    StairWalker* mStairWalker;
     Starter* mStarter;
     TailController* mTailController;
     State mState;
