@@ -14,10 +14,13 @@ We have to fix the parameter KP,KI,KD
 #include "LineMonitor.h"
 
 // 定数宣言
-const int8_t LineMonitor::INITIAL_THRESHOLD = 23;  // 黒色の光センサ値
-const float LineMonitor::KP = 1.11;
-const float LineMonitor::KI = 3.96;
-const float LineMonitor::KD = 0.08;
+//const int8_t LineMonitor::INITIAL_THRESHOLD = 23;  // 黒色の光センサ値
+const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
+const float LineMonitor::KP = 1.3;
+//const float LineMonitor::KI = 3.96;
+const float LineMonitor::KI = 2.12;
+//const float LineMonitor::KD = 0.08;
+const float LineMonitor::KD = 0.031;
 
 /**
  * コンストラクタ
@@ -35,7 +38,7 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor)
  * @retval true  ライン上
  * @retval false ライン外
  */
-float LineMonitor::calcVecSpeed(){
+float LineMonitor::calcVecSpeed(bool starting){
     // 光センサからの取得値を見て
     // PID制御を行う
   float p,i,d,speed;
@@ -45,8 +48,13 @@ float LineMonitor::calcVecSpeed(){
   p=KP*diff[1];
   i=KI*integral;
   d=KD*(diff[1]-diff[0])/0.004;
-  speed=p+i+d;
 
+  if(starting){
+    speed=p;
+  }else{
+    speed=p+i+d;
+  }
+    
   //右側走行化
   speed *= -1;
   

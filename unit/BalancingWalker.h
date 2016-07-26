@@ -13,8 +13,11 @@
 #include "Motor.h"
 #include "BalancerCpp.h"
 
+#include <stdio.h>
+
 class BalancingWalker {
 public:
+  static const int LOWEST;
     static const int LOW;
     static const int NORMAL;
     static const int HIGH;
@@ -35,6 +38,8 @@ private:
     Balancer* mBalancer;
     int mForward;
     int mTurn;
+
+    FILE* file;
 };
 
 #endif  // EV3_UNIT_BALANCINGWALKER_H_

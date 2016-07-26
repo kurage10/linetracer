@@ -20,3 +20,7 @@ int TailController::calcDirection(){
 void TailController::setAngle(int32_t angle){
   mAngle=angle;
 }
+
+int32_t TailController::getAngle(){
+  return mTailMotor.getCount();
+}

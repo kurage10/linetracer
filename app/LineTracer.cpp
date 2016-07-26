@@ -23,14 +23,14 @@ LineTracer::LineTracer(LineMonitor* lineMonitor,
 /**
  * ライントレースする
  */
-void LineTracer::run() {
+void LineTracer::run(bool starting) {
     if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
     }
 
-    float direction = mLineMonitor->calcVecSpeed();
-
+    float direction = mLineMonitor->calcVecSpeed(starting);
+    
     // 走行体の向きを計算する
     //float speed = calcSpeed(direction);
 
