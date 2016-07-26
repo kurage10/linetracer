@@ -8,8 +8,8 @@ TailWalker::TailWalker(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailCo
 }
 void TailWalker::run(){
   mTailController->setAngle(70);
-  mLeftWheel.setPWM(40);
-  mRightWheel.setPWM(40);
+  mLeftWheel.setPWM(80);
+  mRightWheel.setPWM(80);
 }
 void TailWalker::init(){
   mLeftWheel.reset();

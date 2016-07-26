@@ -11,6 +11,7 @@ APPL_CXXOBJS += \
 	LineTracer.o \
 	LineTracerWithStarter.o \
 	TailWalker.o \
+	StairTurner.o \
 	StairWalker.o \
 
 SRCLANG := c++

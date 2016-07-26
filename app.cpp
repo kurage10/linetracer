@@ -34,6 +34,7 @@ static Starter         *gStarter;
 static TailController *gTailController;
 static LineTracerWithStarter *gLineTracerWithStarter;
 static TailWalker *gTailWalker;
+static StairTurner *gStairTurner;
 static StairWalker *gStairWalker;
 
 /**
@@ -54,7 +55,8 @@ static void user_system_create() {
     gTailController  = new TailController(gTailMotor);
     gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
     gTailWalker = new TailWalker(gLeftWheel,gRightWheel,gTailController);
-    gStairWalker = new StairWalker(gTailWalker);
+    gStairTurner = new StairTurner(gLeftWheel,gRightWheel);
+    gStairWalker = new StairWalker(gTailWalker ,gStairTurner);
     gLineTracerWithStarter = new LineTracerWithStarter(gStairWalker, gStarter,gTailController);
 
     // 初期化完了通知
@@ -70,6 +72,7 @@ static void user_system_destroy() {
     gTailMotor.reset();
     delete gStairWalker;
     delete gTailWalker;
+    delete gStairTurner;
     delete gLineTracerWithStarter;
     delete gLineTracer;
     delete gTailController;

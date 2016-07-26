@@ -1,7 +1,9 @@
 
 #include "StairWalker.h"
-StairWalker::StairWalker(TailWalker* tailWalker)
+StairWalker::StairWalker(TailWalker* tailWalker,StairTurner* stairTurner)
   :mtailWalker(tailWalker),
+  mstairTurner(stairTurner),
+  mState(UNDEFINED),
   mCount(0){
 }
 void StairWalker::run(){
@@ -22,10 +24,12 @@ void StairWalker::execUndefined(){
 }
 void StairWalker::execWalking(){
   mtailWalker->run();
-  if(/*距離の条件をここに入れる*/mCount < 2){
+  distance=distance+1;
+  if(distance%1000==0 && mCount < 2){
     mState = TURNING;
   }
 }
 void StairWalker::execTurning(){
-  mCount=mCount+1;
+  mstairTurner->run();
+  //mCount=mCount+1;
 }
