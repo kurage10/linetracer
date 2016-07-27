@@ -17,7 +17,8 @@ LineTracerWithStarter::LineTracerWithStarter(StairWalker* stairWalker,Starter* s
     : mStairWalker(stairWalker),
       mStarter(starter),
       mTailController(tailController),
-      mState(UNDEFINED) {
+      mState(UNDEFINED),
+      timeFromStart(0) {
 }
 
 /**
@@ -31,6 +32,12 @@ void LineTracerWithStarter::run() {
     case WAITING_FOR_START:
         execWaitingForStart();
         break;
+    case PREPARE_STARTING:
+        execPrepare();
+        break;
+    case ROCKET_STARTING:
+        execStarting();
+	break;
     case WALKING:
         execWalking();
         break;
@@ -55,19 +62,37 @@ void LineTracerWithStarter::execWaitingForStart() {
     mTailController -> run();
 
     if (mStarter->isPushed()) {
-      //      mTailController->setAngle(96);
-      //      mTailController -> run();
-      //       mLineTracer->init();
-      mTailController->setAngle(3);
-      mState = WALKING;
+      mLineTracer->init();
+      mTailController->setAngle(99);
+      mState = PREPARE_STARTING;
     }
+}
+
+void LineTracerWithStarter::execPrepare() {
+  mTailController -> run();
+
+  if(mTailController -> getAngle() >= 96){
+    mTailController -> setAngle(0);
+    mState = ROCKET_STARTING;
+  }
+}
+
+void LineTracerWithStarter::execStarting() {
+  mLineTracer->run(true);
+  mTailController -> run();
+
+  if(timeFromStart > 3000){
+    mState = WALKING;
+  }else{
+    timeFromStart += 4;
+  }
 }
 
 /**
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
-    mTailController -> run();
-    //mLineTracer->run();
-    mStairWalker->run();
+
+  mLineTracer->run(false);
+  mTailController -> run();
 }

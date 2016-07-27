@@ -37,6 +37,8 @@ static TailWalker *gTailWalker;
 static StairTurner *gStairTurner;
 static StairWalker *gStairWalker;
 
+void *__dso_handle = 0;
+
 /**
  * EV3システム生成
  */
