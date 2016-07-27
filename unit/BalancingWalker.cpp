@@ -9,6 +9,7 @@
 #include "BalancingWalker.h"
 
 // 定数宣言
+const int BalancingWalker::LOWEST = 20;    // 超低速
 const int BalancingWalker::LOW    = 30;    // 低速
 const int BalancingWalker::NORMAL = 50;    // 通常
 const int BalancingWalker::HIGH   = 70;    // 高速
@@ -40,6 +41,8 @@ void BalancingWalker::run() {
     int rightWheelEnc = mRightWheel.getCount();       // 右モータ回転角度
     int leftWheelEnc  = mLeftWheel.getCount();        // 左モータ回転角度
 
+    fprintf(file,"angle = %d\n",angle);
+    
     mBalancer->setCommand(mForward, mTurn);
 
     int battery = ev3_battery_voltage_mV();
@@ -55,13 +58,16 @@ void BalancingWalker::run() {
  */
 void BalancingWalker::init() {
     int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-
+  
     // モータエンコーダをリセットする
     mLeftWheel.reset();
     mRightWheel.reset();
 
     // 倒立振子制御初期化
     mBalancer->init(offset);
+
+    file = fopen("/gyroLog.txt","w");
+    fprintf(file,"offset = %d\n",offset);
 }
 
 /**

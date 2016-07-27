@@ -33,6 +33,8 @@ static Starter         *gStarter;
 static TailController *gTailController;
 static LineTracerWithStarter *gLineTracerWithStarter;
 
+void *__dso_handle = 0;
+
 /**
  * EV3システム生成
  */
