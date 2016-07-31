@@ -13,6 +13,7 @@ APPL_CXXOBJS += \
 	TailWalker.o \
 	StairTurner.o \
 	StairWalker.o \
+	Switcher.o
 
 SRCLANG := c++
 
