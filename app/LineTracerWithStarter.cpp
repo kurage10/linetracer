@@ -78,10 +78,10 @@ void LineTracerWithStarter::execPrepare() {
 }
 
 void LineTracerWithStarter::execStarting() {
-  mLineTracer->run(true);
+  mLineTracer->run(true, timeFromStart);
   mTailController -> run();
   
-  if(timeFromStart > 3000){
+  if(timeFromStart > 5000){
     mState = WALKING;
   }else{
     timeFromStart += 4;
@@ -92,6 +92,6 @@ void LineTracerWithStarter::execStarting() {
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
-  mLineTracer->run(false);
+  mLineTracer->run(false, timeFromStart);
   mTailController -> run();
 }
