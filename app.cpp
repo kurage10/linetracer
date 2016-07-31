@@ -7,7 +7,7 @@
  *****************************************************************************/
 
 #include "app.h"
-#include "LineTracerWithStarter.h"
+#include "Switcher.h"
 
 // using宣言
 using ev3api::ColorSensor;
@@ -32,6 +32,7 @@ static LineTracer      *gLineTracer;
 static Starter         *gStarter;
 static TailController *gTailController;
 static LineTracerWithStarter *gLineTracerWithStarter;
+static Switcher *gSwitcher;
 
 void *__dso_handle = 0;
 
@@ -43,17 +44,17 @@ static void user_system_create() {
     tslp_tsk(2);
 
     // オブジェクトの作成
-    gBalancer        = new Balancer();
-    gBalancingWalker = new BalancingWalker(gGyroSensor,
+    gBalancer               = new Balancer();
+    gBalancingWalker        = new BalancingWalker(gGyroSensor,
                                            gLeftWheel,
                                            gRightWheel,
                                            gBalancer);
-    gLineMonitor     = new LineMonitor(gColorSensor);
-    gStarter         = new Starter(gTouchSensor);
-    gTailController  = new TailController(gTailMotor);
-    gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
-    gLineTracerWithStarter = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
-
+    gLineMonitor            = new LineMonitor(gColorSensor);
+    gStarter                = new Starter(gTouchSensor);
+    gTailController         = new TailController(gTailMotor);
+    gLineTracer             = new LineTracer(gLineMonitor, gBalancingWalker);
+    gLineTracerWithStarter  = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
+    gSwitcher               = new Switcher(gLineTracerWithStarter);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }
@@ -65,6 +66,7 @@ static void user_system_destroy() {
     gLeftWheel.reset();
     gRightWheel.reset();
     gTailMotor.reset();
+    delete gSwitcher;
     delete gLineTracerWithStarter;
     delete gLineTracer;
     delete gTailController;
@@ -107,7 +109,7 @@ void tracer_task(intptr_t exinf) {
     if (ev3_button_is_pressed(BACK_BUTTON)) {
         wup_tsk(MAIN_TASK);  // バックボタン押下
     } else {
-        gLineTracerWithStarter->run();  // 倒立走行
+        gSwitcher->run();  // 倒立走行
     }
 
     ext_tsk();
