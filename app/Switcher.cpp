@@ -1,7 +1,8 @@
 #include "Switcher.h"
 
-Switcher::Switcher(LineTracerWithStarter* linetracer):
+Switcher::Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker):
   mLineTracerWithStarter(linetracer),
+  mStairWalker(stairWalker),
   mUsecase(UNDEFINED){
 
 }
@@ -28,7 +29,8 @@ void Switcher::run(){
 }
 void Switcher::execUndefined(){
   //各種初期化
-  mUsecase= LINETRACER;
+  //mUsecase= LINETRACER;
+  mUsecase= STAIR;
 }
 void Switcher::execLineTracer(){
   mLineTracerWithStarter->run();
@@ -40,5 +42,5 @@ void Switcher::execGarage(){
 
 }
 void Switcher::execStair(){
-
+  mStairWalker->run();
 }
