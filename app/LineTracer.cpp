@@ -30,14 +30,14 @@ void LineTracer::run(bool starting, int timeFromStart) {
   if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
-    }
+  }
 
     float direction = mLineMonitor->calcVecSpeed(starting);
 
     if(starting){
-      mSpeed = (1 - cos(2*M_PI/5000 * timeFromStart)) * 50;
+      mSpeed = 35;
     }else{
-      mSpeed = 100;
+      mSpeed = 70;
     }
       
     
@@ -46,6 +46,7 @@ void LineTracer::run(bool starting, int timeFromStart) {
 
     //mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
     mBalancingWalker->setCommand(mSpeed, direction);
+    //mBalancingWalker->setCommand(mSpeed, 0);
 
     // 倒立走行を行う
     mBalancingWalker->run();

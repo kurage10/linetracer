@@ -1,7 +1,7 @@
 #ifndef EV3_APP_TAILCONTROLLER_H_
 #define EV3_APP_TAILCONTROLLER_H_
 #include "Motor.h"
-
+#include <Clock.h>
 
 class TailController{
 private:
