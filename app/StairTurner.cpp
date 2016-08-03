@@ -1,18 +1,21 @@
 #include "StairTurner.h"
 
-StairTurner::StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel):
+StairTurner::StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController):
   mLeftWheel(leftWheel),
   mRightWheel(rightWheel),
+  mTailController(tailController),
   initialized(false){
 
 }
 
 void StairTurner::run(){
   if(!initialized){
-    mLeftWheel.setPWM(0);
-    mRightWheel.setPWM(0);
+    mLeftWheel.reset();
+    mRightWheel.reset();
+    mTailController->setAngle(80);
     initialized=true;
   }
-  mLeftWheel.setPWM(-20);
-  mRightWheel.setPWM(20);
+  mTailController->run();
+  mLeftWheel.setPWM(-40);
+  mRightWheel.setPWM(40);
 }

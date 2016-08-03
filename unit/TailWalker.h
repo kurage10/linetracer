@@ -13,5 +13,6 @@ private:
   ev3api::Motor& mLeftWheel;
   ev3api::Motor& mRightWheel;
   TailController* mTailController;
+  bool mIsInitialized;
 };
 #endif

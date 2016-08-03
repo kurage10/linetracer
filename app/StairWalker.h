@@ -3,21 +3,23 @@
 
 #include "TailWalker.h"
 #include "StairTurner.h"
+#include "BalancingWalker.h"
 
 class StairWalker{
 public:
-  StairWalker(TailWalker* tailWalker,StairTurner* stairTurner);
+  StairWalker(TailWalker* tailWalker,StairTurner* stairTurner,BalancingWalker* balancingWalker);
   void run();
 private:
-  TailWalker* mtailWalker;
-  StairTurner* mstairTurner;
-  int distance=0;
-  enum State {
+  TailWalker* mTailWalker;
+  StairTurner* mStairTurner;
+  BalancingWalker* mBalancingWalker;
+  enum StairState {
       UNDEFINED,
       WALKING,
       TURNING
   };
-  State mState;
+  StairState mStairState;
+  int timefromstart;
   int mCount;
   void execUndefined();
   void execWalking();

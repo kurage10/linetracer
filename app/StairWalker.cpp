@@ -1,13 +1,15 @@
 
 #include "StairWalker.h"
-StairWalker::StairWalker(TailWalker* tailWalker,StairTurner* stairTurner)
-  :mtailWalker(tailWalker),
-  mstairTurner(stairTurner),
-  mState(UNDEFINED),
+StairWalker::StairWalker(TailWalker* tailWalker,StairTurner* stairTurner,BalancingWalker* balancingWalker)
+  :mTailWalker(tailWalker),
+  mStairTurner(stairTurner),
+  mBalancingWalker(balancingWalker),
+  mStairState(WALKING),
+  timefromstart(0),
   mCount(0){
 }
 void StairWalker::run(){
-  switch (mState) {
+  switch (mStairState) {
     case UNDEFINED:
       execUndefined();
     break;
@@ -17,19 +19,27 @@ void StairWalker::run(){
     case TURNING:
       execTurning();
     break;
+    default:
+    break;
   }
 }
 void StairWalker::execUndefined(){
-  mState=WALKING;
+  mTailWalker->init();
+  mStairState=WALKING;
+  //mStairState=TURNING;
+
 }
 void StairWalker::execWalking(){
-  mtailWalker->run();
-  distance=distance+1;
-  if(distance%1000==0 && mCount < 2){
-    mState = TURNING;
+  mTailWalker->run();
+  //mBalancingWalker->setCommand(BalancingWalker::NORMAL,BalancingWalker::NORMAL);
+  //mBalancingWalker->run();
+  timefromstart=timefromstart+1;
+  if(timefromstart%1000==0 && mCount < 2){
+    //mStairTurner->init();
+    mStairState = TURNING;
   }
 }
 void StairWalker::execTurning(){
-  mstairTurner->run();
+  mStairTurner->run();
   //mCount=mCount+1;
 }
