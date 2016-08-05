@@ -24,6 +24,8 @@ private:
     enum State {
         UNDEFINED,
         WAITING_FOR_START,
+	PREPARE_STARTING,
+	ROCKET_STARTING,
         WALKING
     };
 
@@ -34,7 +36,12 @@ private:
 
     void execUndefined();
     void execWaitingForStart();
+    void execPrepare();
+    void execStarting();
     void execWalking();
+
+    bool mStarting();
+    int timeFromStart;
 };
 
 #endif  // EV3_APP_LINETRACERWITHSTARTER_H_

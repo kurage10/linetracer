@@ -15,7 +15,7 @@
 class LineMonitor {
 public:
     explicit LineMonitor(const ev3api::ColorSensor& colorSensor);
-    float calcVecSpeed();
+    float calcVecSpeed(bool starting);
     void setThreshold(int8_t threshold);
 
 private:
