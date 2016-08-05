@@ -17,11 +17,15 @@ We have to fix the parameter KP,KI,KD
 //const int8_t LineMonitor::INITIAL_THRESHOLD = 23;  // 黒色の光センサ値
 const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 //const float LineMonitor::KP = 1.3; //mSpeed = 30の時
-const float LineMonitor::KP = 2.2;
+//const float LineMonitor::KP = 1.8;//速度60で振動
+const float LineMonitor::KP = 0.98;
+const float LineMonitor::KP_Start = 1.0;
 //const float LineMonitor::KI = 3.96;
-const float LineMonitor::KI = 4.0;
+const float LineMonitor::KI = 0.5;
+//const float LineMonitor::KI = 3.87;
 //const float LineMonitor::KD = 0.08;
-const float LineMonitor::KD = 0.13;
+const float LineMonitor::KD = 0.11;
+//const float LineMonitor::KD = 0.045;
 
 /**
  * コンストラクタ
@@ -51,7 +55,7 @@ float LineMonitor::calcVecSpeed(bool starting){
   d=KD*(diff[1]-diff[0])/0.004;
 
   if(starting){
-    speed=p/KP*1.35;
+    speed=p/KP*KP_Start;
   }else{
     speed=p+i+d;
   }

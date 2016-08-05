@@ -82,7 +82,7 @@ void LineTracerWithStarter::execStarting() {
   mLineTracer->run(true, timeFromStart);
   mTailController -> run();
   
-  if(timeFromStart > 2500){
+  if(timeFromStart > 4000){
     mState = WALKING;
   }else{
     timeFromStart += 4;

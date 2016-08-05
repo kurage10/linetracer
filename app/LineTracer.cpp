@@ -35,9 +35,9 @@ void LineTracer::run(bool starting, int timeFromStart) {
     float direction = mLineMonitor->calcVecSpeed(starting);
 
     if(starting){
-      mSpeed = 35;
+      mSpeed = 30;
     }else{
-      mSpeed = 70;
+      mSpeed = 60;
     }
       
     

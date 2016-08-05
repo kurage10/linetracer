@@ -21,6 +21,7 @@ public:
 private:
     static const int8_t INITIAL_THRESHOLD;
     static const float KP;        // 比例係数
+    static const float KP_Start;        // 比例係数
     static const float KI;
     static const float KD;
     const ev3api::ColorSensor& mColorSensor;
