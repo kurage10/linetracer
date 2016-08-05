@@ -17,7 +17,7 @@ public:
     LineTracer(LineMonitor* lineMonitor,
                BalancingWalker* balancingWalker);
 
-    void run(bool starting);
+    void run(bool starting, int timeFromStart);
     void init();
 
 private:

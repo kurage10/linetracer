@@ -50,7 +50,8 @@ void LineTracerWithStarter::run() {
  * 未定義状態の処理
  */
 void LineTracerWithStarter::execUndefined() {
-    mTailController->setAngle(94);
+  mTailController->init();
+    mTailController->setAngle(102);
     
     mState = WAITING_FOR_START;
 }
@@ -63,7 +64,7 @@ void LineTracerWithStarter::execWaitingForStart() {
   
     if (mStarter->isPushed()) {
       mLineTracer->init();
-      mTailController->setAngle(99);
+      mTailController->setAngle(112);
       mState = PREPARE_STARTING;
     }
 }
@@ -71,17 +72,17 @@ void LineTracerWithStarter::execWaitingForStart() {
 void LineTracerWithStarter::execPrepare() {
   mTailController -> run();
 
-  if(mTailController -> getAngle() >= 96){
+  if(mTailController -> getAngle() >= 108){
     mTailController -> setAngle(0);
     mState = ROCKET_STARTING;
   }
 }
 
 void LineTracerWithStarter::execStarting() {
-  mLineTracer->run(true);
+  mLineTracer->run(true, timeFromStart);
   mTailController -> run();
   
-  if(timeFromStart > 3000){
+  if(timeFromStart > 4000){
     mState = WALKING;
   }else{
     timeFromStart += 4;
@@ -92,6 +93,6 @@ void LineTracerWithStarter::execStarting() {
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
-  mLineTracer->run(false);
+  mLineTracer->run(false, timeFromStart);
   mTailController -> run();
 }
