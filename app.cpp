@@ -75,7 +75,7 @@ static void user_system_destroy() {
     gLeftWheel.reset();
     gRightWheel.reset();
     gTailMotor.reset();
-    
+
     delete gStairWalker;
     delete gTailWalker;
     delete gStairTurner;
