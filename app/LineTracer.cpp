@@ -44,8 +44,8 @@ void LineTracer::run(bool starting, int timeFromStart) {
     // 走行体の向きを計算する
     //float speed = calcSpeed(direction);
 
-    //mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
-    mBalancingWalker->setCommand(mSpeed, direction);
+    mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
+    //mBalancingWalker->setCommand(mSpeed, direction);
     //mBalancingWalker->setCommand(mSpeed, 0);
 
     // 倒立走行を行う
