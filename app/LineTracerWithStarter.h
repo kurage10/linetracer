@@ -16,7 +16,7 @@
 
 class LineTracerWithStarter {
 public:
-    LineTracerWithStarter(StairWalker* stairWalker,
+    LineTracerWithStarter(LineTracer* lineTracer,
                Starter* starter,TailController* tailController);
 
     void run();
@@ -31,7 +31,6 @@ private:
     };
 
     LineTracer* mLineTracer;
-    StairWalker* mStairWalker;
     Starter* mStarter;
     TailController* mTailController;
     State mState;

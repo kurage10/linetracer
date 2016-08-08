@@ -5,17 +5,19 @@ TailController::TailController(ev3api::Motor& tailMotor)
   mAngle(3){}
 
 void TailController::run(){
-  float speed = calcDirection();
+  int speed = calcDirection();
   mTailMotor.setPWM(speed);
 }
 
 void TailController::init(){
   mTailMotor.reset();
+  mTailMotor.setBrake(true);
 }
 int TailController::calcDirection(){
-  int diff=mTailMotor.getCount()-mAngle;
-  if(diff==0)return 0;
-  else return -diff*0.25;
+  int diff=(mTailMotor.getCount()-mAngle)*0.5;
+  if(diff > 100) return -100;
+  else if(diff < -100)return 100;
+  else return -diff;
 }
 void TailController::setAngle(int32_t angle){
   mAngle=angle;

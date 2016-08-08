@@ -4,7 +4,7 @@
 #include "StairWalker.h"
 class Switcher{
 public:
-  Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker);
+  Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker,TailWalker* tailWalker);
   void run();
 private:
   enum Usecase{
@@ -15,7 +15,10 @@ private:
     STAIR
   };
   LineTracerWithStarter* mLineTracerWithStarter;
+  StairWalker* mStairWalker;
+  TailWalker* mTailWalker;
   Usecase mUsecase;
+  int timeFromStart=0;
   void execUndefined();
   void execLineTracer();
   void execLookupGate();

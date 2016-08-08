@@ -13,8 +13,8 @@
  * @param lineTracer ライントレーサ
  * @param starter    スタータ
  */
-LineTracerWithStarter::LineTracerWithStarter(StairWalker* stairWalker,Starter* starter,TailController* tailController)
-    : mStairWalker(stairWalker),
+LineTracerWithStarter::LineTracerWithStarter(LineTracer* lineTracer,Starter* starter,TailController* tailController)
+    : mLineTracer(lineTracer),
       mStarter(starter),
       mTailController(tailController),
       mState(UNDEFINED),
@@ -72,7 +72,7 @@ void LineTracerWithStarter::execPrepare() {
   mTailController -> run();
 
   if(mTailController -> getAngle() >= 96){
-    mTailController -> setAngle(0);
+    mTailController -> setAngle(10);
     mState = ROCKET_STARTING;
   }
 }
@@ -94,5 +94,5 @@ void LineTracerWithStarter::execStarting() {
 void LineTracerWithStarter::execWalking() {
 
   mLineTracer->run(false);
-  mTailController -> run();
+  //mTailController -> run();
 }

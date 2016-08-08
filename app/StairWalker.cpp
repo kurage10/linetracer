@@ -31,11 +31,8 @@ void StairWalker::execUndefined(){
 }
 void StairWalker::execWalking(){
   mTailWalker->run();
-  //mBalancingWalker->setCommand(BalancingWalker::NORMAL,BalancingWalker::NORMAL);
-  //mBalancingWalker->run();
   timefromstart=timefromstart+1;
   if(timefromstart%1000==0 && mCount < 2){
-    //mStairTurner->init();
     mStairState = TURNING;
   }
 }

@@ -9,13 +9,14 @@ StairTurner::StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,Tail
 }
 
 void StairTurner::run(){
-  if(!initialized){
+  /*if(!initialized){
     mLeftWheel.reset();
     mRightWheel.reset();
     mTailController->setAngle(80);
     initialized=true;
-  }
-  mTailController->run();
+  }*/
+  //mTailController->setAngle(80);
+  //mTailController->run();
   mLeftWheel.setPWM(-40);
   mRightWheel.setPWM(40);
 }

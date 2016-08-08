@@ -39,7 +39,7 @@ private:
     int mForward;
     int mTurn;
 
-    FILE* file;
+    //FILE* file;
 };
 
 #endif  // EV3_UNIT_BALANCINGWALKER_H_
