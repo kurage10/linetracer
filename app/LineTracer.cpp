@@ -32,22 +32,21 @@ void LineTracer::run(bool starting, int timeFromStart) {
         mIsInitialized = true;
   }
 
-    float direction = mLineMonitor->calcVecSpeed(starting);
+    float direction = mLineMonitor->calcDirection(starting);
 
-    if(starting){
-      mSpeed = 30;
-    }else{
-      mSpeed = 60;
-    }
-      
+    mSpeed = mLineMonitor->distanceMonitor();
     
     // 走行体の向きを計算する
     //float speed = calcSpeed(direction);
 
     //mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
     mBalancingWalker->setCommand(mSpeed, direction);
-    //mBalancingWalker->setCommand(mSpeed, 0);
-
+    //    if(starting){
+    //      mBalancingWalker->setCommand(mSpeed, 10);
+    //    }else{
+    //      mBalancingWalker->setCommand(mSpeed, 25);
+    //    }
+      
     // 倒立走行を行う
     mBalancingWalker->run();
 }

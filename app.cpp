@@ -49,11 +49,11 @@ static void user_system_create() {
                                            gLeftWheel,
                                            gRightWheel,
                                            gBalancer);
-    gLineMonitor            = new LineMonitor(gColorSensor);
-    gStarter                = new Starter(gTouchSensor);
-    gTailController         = new TailController(gTailMotor);
-    gLineTracer             = new LineTracer(gLineMonitor, gBalancingWalker);
-    gLineTracerWithStarter  = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
+    gLineMonitor     = new LineMonitor(gColorSensor, gLeftWheel, gRightWheel);
+    gStarter         = new Starter(gTouchSensor);
+    gTailController  = new TailController(gTailMotor);
+    gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
+    gLineTracerWithStarter = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
     gSwitcher               = new Switcher(gLineTracerWithStarter);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
