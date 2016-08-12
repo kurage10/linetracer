@@ -48,7 +48,7 @@ static void user_system_create() {
                                            gLeftWheel,
                                            gRightWheel,
                                            gBalancer);
-    gLineMonitor     = new LineMonitor(gColorSensor);
+    gLineMonitor     = new LineMonitor(gColorSensor, gLeftWheel, gRightWheel);
     gStarter         = new Starter(gTouchSensor);
     gTailController  = new TailController(gTailMotor);
     gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
