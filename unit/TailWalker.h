@@ -1,21 +1,24 @@
-#ifndef EV3_APP_TAILWALKER_H_
-#define EV3_APP_TAILWALKER_H_
 
-#include "TailController.h"
+#ifndef EV3_UNIT_TAILWALKER_H_
+#define EV3_UNIT_TAILWALKER_H_
+
 #include "Motor.h"
-#include "BalancingWalker.h"
+#include "TailController.h"
+#include <stdio.h>
 
-class TailWalker{
+class TailWalker {
 public:
-  TailWalker(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,ev3api::Motor& tailMotor,TailController* tailController,BalancingWalker* balancingWalker);
-  void run();
+  TailWalker(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController);
+
   void init();
+  void run();
+
 private:
-  ev3api::Motor& mLeftWheel;
-  ev3api::Motor& mRightWheel;
-  ev3api::Motor& mTailMotor;
-  TailController* mTailController;
-  BalancingWalker* mBalancingWalker;
-  bool mIsInitialized;
+    ev3api::Motor& mLeftWheel;
+    ev3api::Motor& mRightWheel;
+    TailController* mTailController;
+    bool mIsInitialized;
+    FILE* file;
 };
-#endif
+
+#endif  // EV3_UNIT_BALANCINGWALKER_H_

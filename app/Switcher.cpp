@@ -1,9 +1,8 @@
 #include "Switcher.h"
 
-Switcher::Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker,TailWalker *tailWalker):
+Switcher::Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker):
   mLineTracerWithStarter(linetracer),
   mStairWalker(stairWalker),
-  mTailWalker(tailWalker),
   mUsecase(UNDEFINED){
 
 }
@@ -37,7 +36,7 @@ void Switcher::execUndefined(){
 void Switcher::execLineTracer(){
   mLineTracerWithStarter->run();
   timeFromStart++;
-  if(timeFromStart > 5000){
+  if(timeFromStart > 3000){
     mUsecase=STAIR;
     timeFromStart=0;
   }
@@ -50,6 +49,6 @@ void Switcher::execGarage(){
 }
 void Switcher::execStair(){
   //mLineTracerWithStarter->run();
-  //mTailWalker->run();
+  timeFromStart++;
   mStairWalker->run();
 }

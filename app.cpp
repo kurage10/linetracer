@@ -26,17 +26,18 @@ Motor       gRightWheel(PORT_B);
 Motor       gTailMotor(PORT_A);
 
 // オブジェクトの定義
-static LineMonitor     *gLineMonitor;
-static Balancer        *gBalancer;
-static BalancingWalker *gBalancingWalker;
-static LineTracer      *gLineTracer;
-static Starter         *gStarter;
-static TailController *gTailController;
+static LineMonitor           *gLineMonitor;
+static Balancer              *gBalancer;
+static BalancingWalker       *gBalancingWalker;
+static LineTracer            *gLineTracer;
+static Starter               *gStarter;
+static TailController        *gTailController;
 static LineTracerWithStarter *gLineTracerWithStarter;
-static TailWalker *gTailWalker;
-static StairTurner *gStairTurner;
-static StairWalker *gStairWalker;
-static Switcher *gSwitcher;
+static ObstacleDitector      *gObstacleDitector;
+static StairTurner           *gStairTurner;
+static StairWalker           *gStairWalker;
+static TailWalker            *gTailWalker;
+static Switcher              *gSwitcher;
 
 void *__dso_handle = 0;
 
@@ -53,15 +54,16 @@ static void user_system_create() {
                                            gLeftWheel,
                                            gRightWheel,
                                            gBalancer);
+    gObstacleDitector       = new ObstacleDitector(gGyroSensor);
     gTailController         = new TailController(gTailMotor);
     gLineMonitor            = new LineMonitor(gColorSensor);
     gStarter                = new Starter(gTouchSensor);
-    gTailWalker             = new TailWalker(gLeftWheel,gRightWheel,gTailMotor,gTailController,gBalancingWalker);
     gStairTurner            = new StairTurner(gLeftWheel,gRightWheel,gTailController);
-    gStairWalker            = new StairWalker(gTailWalker ,gStairTurner,gBalancingWalker);
     gLineTracer             = new LineTracer(gLineMonitor, gBalancingWalker);
+    gTailWalker            = new TailWalker(gLeftWheel,gRightWheel,gTailController);
+    gStairWalker            = new StairWalker(gStairTurner,gLineTracer,gObstacleDitector,gTailWalker,gBalancingWalker,gTailController);
     gLineTracerWithStarter  = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
-    gSwitcher               = new Switcher(gLineTracerWithStarter,gStairWalker,gTailWalker);
+    gSwitcher               = new Switcher(gLineTracerWithStarter,gStairWalker);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }
@@ -73,11 +75,11 @@ static void user_system_destroy() {
     gLeftWheel.reset();
     gRightWheel.reset();
     gTailMotor.reset();
-
-    delete gStairWalker;
-    delete gTailWalker;
-    delete gStairTurner;
     delete gSwitcher;
+    delete gTailWalker;
+    delete gStairWalker;
+    delete gStairTurner;
+    delete gObstacleDitector;
     delete gLineTracerWithStarter;
     delete gLineTracer;
     delete gTailController;

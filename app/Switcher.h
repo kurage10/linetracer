@@ -2,9 +2,10 @@
 #define EV3_APP_SWITCHER_H_
 #include "LineTracerWithStarter.h"
 #include "StairWalker.h"
+
 class Switcher{
 public:
-  Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker,TailWalker* tailWalker);
+  Switcher(LineTracerWithStarter* linetracer,StairWalker* stairWalker);
   void run();
 private:
   enum Usecase{

@@ -8,9 +8,10 @@ APPL_CXXOBJS += \
 	BalancerCpp.o \
 	Starter.o \
   TailController.o \
+	TailWalker.o \
 	LineTracer.o \
 	LineTracerWithStarter.o \
-	TailWalker.o \
+	ObstacleDitector.o \
 	StairTurner.o \
 	StairWalker.o \
 	Switcher.o

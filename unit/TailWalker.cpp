@@ -1,22 +1,22 @@
 #include "TailWalker.h"
 
 
-TailWalker::TailWalker(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,ev3api::Motor& tailMotor,TailController* tailController,BalancingWalker* balancingWalker)
-  :mLeftWheel(leftWheel),
-  mRightWheel(rightWheel),
-  mTailMotor(tailMotor),
-  mTailController(tailController),
-  mBalancingWalker(balancingWalker),
-  mIsInitialized(false){
+TailWalker::TailWalker(ev3api::Motor& leftWheel,
+                       ev3api::Motor& rightWheel,
+                       TailController* tailController)
+     :mLeftWheel(leftWheel),
+      mRightWheel(rightWheel),
+      mTailController(tailController){
 
 }
 void TailWalker::run(){
-  mTailController->setAngle((int32_t)75);
+
+  mTailController->setAngle((int32_t)80);
   mTailController->run();
-  mLeftWheel.setPWM((int32_t)100);
-  mRightWheel.setPWM((int32_t)100);
+  mLeftWheel.setPWM(100);
+  mRightWheel.setPWM(100);
 }
 void TailWalker::init(){
-  mTailController->setAngle((int32_t)75);
+  mTailController->setAngle((int32_t)80);
   mIsInitialized = true;
 }

@@ -19,12 +19,13 @@ public:
 
     void run(bool starting);
     void init();
+    void stop();
 
 private:
     LineMonitor* mLineMonitor;
     BalancingWalker* mBalancingWalker;
     bool mIsInitialized;
-
+    int mSpeed;
     float calcSpeed(float direction);
 };
 

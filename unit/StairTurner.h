@@ -7,11 +7,13 @@ class StairTurner{
 public:
   StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController);
   void run();
+  void init();
 private:
   ev3api::Motor& mLeftWheel;
   ev3api::Motor& mRightWheel;
   TailController* mTailController;
-  bool initialized;
+  bool mIsInitialized;
+  int timefromstart;
 };
 
 

@@ -41,7 +41,7 @@ void BalancingWalker::run() {
     int rightWheelEnc = mRightWheel.getCount();       // 右モータ回転角度
     int leftWheelEnc  = mLeftWheel.getCount();        // 左モータ回転角度
 
-//    fprintf(file,"angle = %d\n",angle);
+    //fprintf(file,"%d\n",angle);
 
     mBalancer->setCommand(mForward, mTurn);
 
@@ -66,8 +66,8 @@ void BalancingWalker::init() {
     // 倒立振子制御初期化
     mBalancer->init(offset);
 
-//    file = fopen("/gyroLog.txt","w");
-//    fprintf(file,"offset = %d\n",offset);
+    //file = fopen("/gyroLog.txt","w");
+    //fprintf(file,"%d\n",offset);
 }
 
 /**

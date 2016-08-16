@@ -1,27 +1,41 @@
 #ifndef EV3_APP_STAIRWALKER_H_
 #define EV3_APP_STAIRWALKER_H_
 
-#include "TailWalker.h"
 #include "StairTurner.h"
+#include "LineTracer.h"
+#include "GyroSensor.h"
+#include "ObstacleDitector.h"
+#include "TailWalker.h"
 #include "BalancingWalker.h"
+#include "TailController.h"
 
 class StairWalker{
 public:
-  StairWalker(TailWalker* tailWalker,StairTurner* stairTurner,BalancingWalker* balancingWalker);
+  StairWalker(StairTurner* stairTurner,
+    LineTracer* lineTracer,
+    ObstacleDitector* obstacleDitector,
+    TailWalker* tailWalker,
+    BalancingWalker* balancingWalker,
+    TailController* tailController);
   void run();
 private:
-  TailWalker* mTailWalker;
   StairTurner* mStairTurner;
+  LineTracer* mLineTracer;
+  ObstacleDitector* mObstacleDitector;
+  TailWalker* mTailWalker;
   BalancingWalker* mBalancingWalker;
-  enum StairState {
+  TailController* mTailController;
+  enum State {
       UNDEFINED,
+      PREPARE,
       WALKING,
       TURNING
   };
-  StairState mStairState;
+  State mState;
   int timefromstart;
   int mCount;
   void execUndefined();
+  void execPrepare();
   void execWalking();
   void execTurning();
 };
