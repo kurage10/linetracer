@@ -16,11 +16,15 @@ void StairTurner::run(){
     //mTailController->setAngle(80);
     mIsInitialized=true;
   }
+  int tailangle=85+timefromstart/200;
+  if(tailangle > 93) tailangle=93;
+  mTailController->setAngle(tailangle);
+  mTailController->run();
   //mTailController->setAngle(80);
   //mTailController->run();
   timefromstart=timefromstart+1;
   if(timefromstart > 200){
-    int speed=(1000-timefromstart)/20;
+    int speed=(980-timefromstart)/20;
     if(speed<0)speed=0;
     mLeftWheel.setPWM(-speed);
     mRightWheel.setPWM(speed);
@@ -34,5 +38,6 @@ void StairTurner::run(){
 void StairTurner::init(){
   mLeftWheel.setPWM(0);
   mRightWheel.setPWM(0);
+  timefromstart=0;
   mIsInitialized=false;
 }

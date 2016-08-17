@@ -47,7 +47,7 @@ void StairWalker::execPrepare(){
   mBalancingWalker->setCommand(0,0);
   mBalancingWalker->run();
   if(timefromstart>3000){
-    //mState=WALKING;
+    mState=WALKING;
     timefromstart=0;
   }
 }
@@ -61,26 +61,23 @@ void StairWalker::execWalking(){
     timefromstart=timefromstart+1;
     mBalancingWalker->run();
     if(timefromstart > 100)mBalancingWalker->setCommand(0,0);
-    if(timefromstart > 700)mState=TURNING;
+    if(timefromstart > 700){
+      mStairTurner->init();
+      mState=TURNING;
+    }
   }else{
     mBalancingWalker->setCommand(BalancingWalker::NORMAL,0);
     mBalancingWalker->run();
   }
 }
 void StairWalker::execTurning(){
-  mTailController->setAngle(85);
-  mTailController->run();
+
   timefromstart=timefromstart+1;
   mStairTurner->run();
-  if(timefromstart > 2000){
-    mTailController->setAngle(99);
-    mTailController->run();
-    if(mTailController -> getAngle() >= 96){
-      mTailController -> setAngle(0);
-      mObstacleDitector->init();
-      mStairTurner->init();
-      timefromstart=0;
-      mState=PREPARE;
-    }
+  if(timefromstart > 1900){
+    mObstacleDitector->init();
+    mStairTurner->init();
+    timefromstart=0;
+    mState=PREPARE;
   }
 }

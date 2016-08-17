@@ -40,4 +40,7 @@ bool ObstacleDitector::isObstacle(){
 }
 void ObstacleDitector::init(){
   mCliming=false;
+  max=0;min=0;
+  max_liveness=INITIAL_LIVENESS;
+  min_liveness=INITIAL_LIVENESS;
 }
