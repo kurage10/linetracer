@@ -12,20 +12,26 @@
 #include "LineMonitor.h"
 #include "BalancingWalker.h"
 
+namespace LineTrace{
+  namespace app{
+
 class LineTracer {
 public:
-    LineTracer(LineMonitor* lineMonitor,
-               BalancingWalker* balancingWalker);
+  LineTracer(unit::LineMonitor* lineMonitor,
+	     unit::BalancingWalker* balancingWalker);
 
     void run(bool starting, int timeFromStart);
     void init();
 
 private:
-    LineMonitor* mLineMonitor;
-    BalancingWalker* mBalancingWalker;
+    unit::LineMonitor* mLineMonitor;
+    unit::BalancingWalker* mBalancingWalker;
     bool mIsInitialized;
 
     float calcSpeed(float direction);
 };
+
+  }
+}
 
 #endif  // EV3_APP_LINETRACER_H_

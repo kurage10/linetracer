@@ -8,6 +8,9 @@
 
 #include "BalancingWalker.h"
 
+namespace LineTrace{
+  namespace unit{
+
 // 定数宣言
 const int BalancingWalker::LOWEST = 20;    // 超低速
 const int BalancingWalker::LOW    = 30;    // 低速
@@ -24,7 +27,7 @@ const int BalancingWalker::HIGH   = 70;    // 高速
 BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& leftWheel,
                                  ev3api::Motor& rightWheel,
-                                 Balancer* balancer)
+                                 unit::Balancer* balancer)
     : mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),
@@ -82,4 +85,7 @@ void BalancingWalker::init() {
 void BalancingWalker::setCommand(int forward, int turn) {
     mForward = forward;
     mTurn    = turn;
+}
+
+  }
 }

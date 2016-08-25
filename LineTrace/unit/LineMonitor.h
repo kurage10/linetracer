@@ -12,6 +12,9 @@
 #include "ColorSensor.h"
 #include "Motor.h"
 
+namespace LineTrace{
+  namespace unit{
+
 // 定義
 class LineMonitor {
 public:
@@ -42,10 +45,12 @@ private:
     int leftWheelEnc;
     int rightWheelEnc;
     int startMeasuringEnc;
-    //int mState;
     
     FILE* fp;
     float time;
 };
+
+  }
+}
 
 #endif  // EV3_UNIT_LINEMONITOR_H_

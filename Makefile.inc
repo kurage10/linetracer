@@ -10,7 +10,9 @@ APPL_CXXOBJS += \
   TailController.o \
 	LineTracer.o \
 	LineTracerWithStarter.o \
-	Switcher.o
+	Switcher.o \
+	UsecaseDetector.o \
+	DistanceMonitor.o
 
 SRCLANG := c++
 
@@ -21,10 +23,16 @@ include $(EV3RT_SDK_LIB_DIR)/libcpp-ev3/Makefile
 
 endif
 
-APPL_DIR += $(mkfile_path)app $(mkfile_path)unit
+APPL_DIR += \
+	 $(mkfile_path)app \
+	 $(mkfile_path)unit \
+	 $(mkfile_path)/LineTrace/app \
+	 $(mkfile_path)/LineTrace/unit
 
 INCLUDES += \
 	-I$(mkfile_path)app \
-	-I$(mkfile_path)unit
+	-I$(mkfile_path)unit \
+	-I$(mkfile_path)/LineTrace/app \
+	-I$(mkfile_path)/LineTrace/unit
 
 COPTS += -fno-use-cxa-atexit

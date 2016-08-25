@@ -25,14 +25,16 @@ Motor       gRightWheel(PORT_B);
 Motor       gTailMotor(PORT_A);
 
 // オブジェクトの定義
-static LineMonitor     *gLineMonitor;
-static Balancer        *gBalancer;
-static BalancingWalker *gBalancingWalker;
-static LineTracer      *gLineTracer;
-static Starter         *gStarter;
-static TailController *gTailController;
-static LineTracerWithStarter *gLineTracerWithStarter;
-static Switcher *gSwitcher;
+static LineTrace::unit::LineMonitor     *gLineMonitor;
+static LineTrace::unit::Balancer        *gBalancer;
+static LineTrace::unit::BalancingWalker *gBalancingWalker;
+static LineTrace::app::LineTracer      *gLineTracer;
+static LineTrace::unit::Starter         *gStarter;
+static LineTrace::unit::TailController *gTailController;
+static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter;
+static app::Switcher *gSwitcher;
+static unit::UsecaseDetector *gUsecaseDetector;
+static unit::DistanceMonitor *gDistanceMonitor;
 
 void *__dso_handle = 0;
 
@@ -44,17 +46,21 @@ static void user_system_create() {
     tslp_tsk(2);
 
     // オブジェクトの作成
-    gBalancer               = new Balancer();
-    gBalancingWalker        = new BalancingWalker(gGyroSensor,
-                                           gLeftWheel,
-                                           gRightWheel,
-                                           gBalancer);
-    gLineMonitor     = new LineMonitor(gColorSensor, gLeftWheel, gRightWheel);
-    gStarter         = new Starter(gTouchSensor);
-    gTailController  = new TailController(gTailMotor);
-    gLineTracer      = new LineTracer(gLineMonitor, gBalancingWalker);
-    gLineTracerWithStarter = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
-    gSwitcher               = new Switcher(gLineTracerWithStarter);
+    gBalancer               = new LineTrace::unit::Balancer();
+    gBalancingWalker        = new LineTrace::unit::BalancingWalker(gGyroSensor,
+								   gLeftWheel,
+								   gRightWheel,
+								   gBalancer);
+    gLineMonitor     = new LineTrace::unit::LineMonitor(gColorSensor, gLeftWheel, gRightWheel);
+    gStarter         = new LineTrace::unit::Starter(gTouchSensor);
+    gTailController  = new LineTrace::unit::TailController(gTailMotor);
+    gLineTracer      = new LineTrace::app::LineTracer(gLineMonitor, gBalancingWalker);
+    gLineTracerWithStarter = new LineTrace::app::LineTracerWithStarter(gLineTracer,
+								       gStarter,
+								       gTailController);
+    gDistanceMonitor = new unit::DistanceMonitor(gLeftWheel, gRightWheel);
+    gUsecaseDetector = new unit::UsecaseDetector(gDistanceMonitor);
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }

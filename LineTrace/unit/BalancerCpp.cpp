@@ -10,6 +10,9 @@
 
 #include "BalancerCpp.h"
 
+namespace LineTrace{
+  namespace unit{
+
 /**
  * コンストラクタ
  */
@@ -76,4 +79,7 @@ int8_t Balancer::getPwmRight() {
  */
 int8_t Balancer::getPwmLeft() {
     return mLeftPwm;
+}
+
+  }
 }

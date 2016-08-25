@@ -13,10 +13,14 @@
 #include "LineTracer.h"
 #include "TailController.h"
 
+namespace LineTrace{
+  namespace app{
+
 class LineTracerWithStarter {
 public:
-    LineTracerWithStarter(LineTracer* lineTracer,
-               Starter* starter,TailController* tailController);
+  LineTracerWithStarter(app::LineTracer* lineTracer,
+			unit::Starter* starter,
+			unit::TailController* tailController);
 
     void run();
 
@@ -29,9 +33,9 @@ private:
         WALKING
     };
 
-    LineTracer* mLineTracer;
-    Starter* mStarter;
-    TailController* mTailController;
+    app::LineTracer* mLineTracer;
+    unit::Starter* mStarter;
+    unit::TailController* mTailController;
     State mState;
 
     void execUndefined();
@@ -43,5 +47,8 @@ private:
     bool mStarting();
     int timeFromStart;
 };
+
+  }
+}
 
 #endif  // EV3_APP_LINETRACERWITHSTARTER_H_

@@ -15,6 +15,9 @@
 
 #include <stdio.h>
 
+namespace LineTrace{
+  namespace unit{
+
 class BalancingWalker {
 public:
   static const int LOWEST;
@@ -25,7 +28,7 @@ public:
     BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                     ev3api::Motor& leftWheel,
                     ev3api::Motor& rightWheel,
-                    Balancer* balancer);
+                    unit::Balancer* balancer);
 
     void init();
     void run();
@@ -35,11 +38,14 @@ private:
     const ev3api::GyroSensor& mGyroSensor;
     ev3api::Motor& mLeftWheel;
     ev3api::Motor& mRightWheel;
-    Balancer* mBalancer;
+    unit::Balancer* mBalancer;
     int mForward;
     int mTurn;
 
     FILE* file;
 };
+
+  }
+}
 
 #endif  // EV3_UNIT_BALANCINGWALKER_H_

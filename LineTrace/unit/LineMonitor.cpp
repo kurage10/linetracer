@@ -13,8 +13,11 @@ We have to fix the parameter KP,KI,KD
 */
 #include "LineMonitor.h"
 
+namespace LineTrace{
+  namespace unit{
+
 // 定数宣言
-const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
+    const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 
 const float LineMonitor::KP_80 = 0.90;
 const float LineMonitor::KI_80 = 1.2;
@@ -45,7 +48,6 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor,
       leftWheelEnc(0),
       rightWheelEnc(0),
       startMeasuringEnc(0),
-      //mState(0), 
       time(0) {
   //  fp = fopen("directionLog.csv","w");
 }
@@ -99,9 +101,6 @@ float LineMonitor::calcDirection(bool starting){
     speed = 0;
   }
   
-  //fprintf(fp,"%f,%f\n",time,speed);
-  //time += 0.004;
-  
   if(speed > DIRECTION_MAX) return DIRECTION_MAX;
   else if(speed < -DIRECTION_MAX)return -DIRECTION_MAX;
   else return speed;
@@ -115,31 +114,24 @@ int LineMonitor::distanceMonitor(){
   leftWheelEnc = mLeftWheel.getCount();
   rightWheelEnc = mRightWheel.getCount();
 
-  //fprintf(fp,"%d, %d\n",leftWheelEnc, rightWheelEnc);
-  
   if(rightWheelEnc > leftWheelEnc + ENC_THRESHOLD && startMeasuringEnc == 0){
-    //mState = 1;
     startMeasuringEnc = leftWheelEnc;
   }
 
   if(leftWheelEnc - startMeasuringEnc > 2500 && startMeasuringEnc != 0){
     mSpeed = 30;
-    //mState = 2;
   }
 
   if(leftWheelEnc - startMeasuringEnc > 2770 && startMeasuringEnc != 0){
     mSpeed = 80;
-    //mState = 2;
   }
 
   if(leftWheelEnc - startMeasuringEnc > 3110 && startMeasuringEnc != 0){
     mSpeed = 30;
-    //mState = 2;
   }
 
   if(leftWheelEnc - startMeasuringEnc > 3380 && startMeasuringEnc != 0){
     mSpeed = 80;
-    //mState = 3;
   }
   
   return mSpeed;
@@ -151,4 +143,7 @@ int LineMonitor::distanceMonitor(){
  */
 void LineMonitor::setThreshold(int8_t threshold) {
     mThreshold = threshold;
+}
+
+  }
 }

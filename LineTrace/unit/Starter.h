@@ -11,6 +11,9 @@
 
 #include "TouchSensor.h"
 
+namespace LineTrace{
+  namespace unit{
+
 class Starter {
 public:
     explicit Starter(const ev3api::TouchSensor& touchSensor);
@@ -20,5 +23,8 @@ public:
 protected:
     const ev3api::TouchSensor& mTouchSensor;
 };
+
+  }
+}
 
 #endif  // EV3_UNIT_STARTER_H_

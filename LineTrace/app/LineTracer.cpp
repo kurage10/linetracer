@@ -9,13 +9,15 @@
 #include "LineTracer.h"
 #include <math.h>
 
+namespace LineTrace{
+  namespace app{
 /**
  * コンストラクタ
  * @param lineMonitor     ライン判定
  * @param balancingWalker 倒立走行
  */
-LineTracer::LineTracer(LineMonitor* lineMonitor,
-                       BalancingWalker* balancingWalker)
+    LineTracer::LineTracer(unit::LineMonitor* lineMonitor,
+			   unit::BalancingWalker* balancingWalker)
     : mLineMonitor(lineMonitor),
       mBalancingWalker(balancingWalker),
       mIsInitialized(false) {
@@ -70,4 +72,7 @@ float LineTracer::calcSpeed(float direction) {
 void LineTracer::init(){
   mBalancingWalker->init();
   mIsInitialized = true;
+}
+
+  }
 }

@@ -3,6 +3,9 @@
 #include "Motor.h"
 #include <Clock.h>
 
+namespace LineTrace{
+  namespace unit{
+
 class TailController{
 private:
   ev3api::Motor& mTailMotor;
@@ -16,6 +19,7 @@ public:
   int32_t getAngle();
 };
 
-
+  }
+}
 
 #endif
