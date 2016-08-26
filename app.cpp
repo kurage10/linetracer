@@ -35,6 +35,7 @@ static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter;
 static app::Switcher *gSwitcher;
 static unit::UsecaseDetector *gUsecaseDetector;
 static unit::DistanceMonitor *gDistanceMonitor;
+static Stopper *gStopper;
 
 void *__dso_handle = 0;
 
@@ -51,6 +52,7 @@ static void user_system_create() {
 								   gLeftWheel,
 								   gRightWheel,
 								   gBalancer);
+	gStopper		 = new Stopper(gLeftWheel, gRightWheel, gTailMotor);
     gLineMonitor     = new LineTrace::unit::LineMonitor(gColorSensor, gLeftWheel, gRightWheel);
     gStarter         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController  = new LineTrace::unit::TailController(gTailMotor);
@@ -60,7 +62,7 @@ static void user_system_create() {
 								       gTailController);
     gDistanceMonitor = new unit::DistanceMonitor(gLeftWheel, gRightWheel);
     gUsecaseDetector = new unit::UsecaseDetector(gDistanceMonitor);
-    gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector);
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector, gStopper);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }

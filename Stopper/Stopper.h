@@ -12,9 +12,8 @@ public:
 				  ev3api::Motor& tailMotor
 			);
 	
-	void update();
-	
-	void activate();
+	void run();
+	void init();
 	
 private:
  	
@@ -28,7 +27,7 @@ private:
 	
 	void updatePWM();
 	bool isEndReached();
-	bool bIsStopping;
+	bool bIsInitialized;
 	bool bIsTailDown;
 };
 

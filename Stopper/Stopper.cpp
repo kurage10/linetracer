@@ -10,33 +10,36 @@ Stopper::Stopper(	ev3api::Motor& leftWheel,
 	: mLeftWheel(leftWheel),
 	  mRightWheel(rightWheel),
 	  mTailMotor(tailMotor){
-		  bIsStopping = false;
+		  bIsInitialized = false;
 		  bIsTailDown = false;
 }
 
-void Stopper::activate(){
-	bIsStopping = true;
+void Stopper::init(){
 	mLeftWheel.setCount(0);
 	mRightWheel.setCount(0);
-	mTailMotor.setPWM(10);
 }
 
-void Stopper::update(){
-	if(bIsStopping)
+void Stopper::run(){
+	
+	if(!bIsInitialized)
+		init();
+	
+	if(mTailMotor.getCount() >= tailAngle)
 	{
-		if(mTailMotor.getCount() >= tailAngle)
-		{
-			mTailMotor.setPWM(0);
-			bIsTailDown = true;
-		}
+		mTailMotor.setPWM(0);
+		bIsTailDown = true;
+	}
+	else
+	{
+		mTailMotor.setPWM(10);
+	}
 		
-		if(bIsTailDown)
-		{
-			updatePWM();
+	if(bIsTailDown)
+	{
+		updatePWM();
 		
-			mLeftWheel.setPWM(currentPWM);
-			mRightWheel.setPWM(currentPWM);
-		}
+		mLeftWheel.setPWM(currentPWM);
+		mRightWheel.setPWM(currentPWM);
 	}
 }
 

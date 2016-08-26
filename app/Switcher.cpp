@@ -3,10 +3,11 @@
 namespace app{
   
   Switcher::Switcher(LineTrace::app::LineTracerWithStarter* linetracer,
-		     unit::UsecaseDetector* usecasedetector):
+		     unit::UsecaseDetector* usecasedetector, Stopper* stopper):
   mLineTracerWithStarter(linetracer),
   mUsecaseDetector(usecasedetector), 
-  mUsecase(unit::UsecaseDetector::UNDEFINED){
+  mUsecase(unit::UsecaseDetector::UNDEFINED),
+  mStopper(stopper){
 
 }
 void Switcher::run(){
@@ -43,6 +44,7 @@ void Switcher::execLookupGate(){
   mUsecase = mUsecaseDetector->nextUsecase();
 }
 void Switcher::execGarage(){
+  mStopper->run();
   mUsecase = mUsecaseDetector->nextUsecase();
 }
 void Switcher::execStair(){
