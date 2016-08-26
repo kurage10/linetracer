@@ -12,7 +12,8 @@ APPL_CXXOBJS += \
 	LineTracerWithStarter.o \
 	Switcher.o \
 	UsecaseDetector.o \
-	DistanceMonitor.o
+	DistanceMonitor.o \
+	Stopper.o
 
 SRCLANG := c++
 
