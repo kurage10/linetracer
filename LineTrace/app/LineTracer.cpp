@@ -20,35 +20,25 @@ namespace LineTrace{
 			   unit::BalancingWalker* balancingWalker)
     : mLineMonitor(lineMonitor),
       mBalancingWalker(balancingWalker),
-      mIsInitialized(false) {
+      mIsInitialized(false){
 }
 
 /**
  * ライントレースする
  */
-void LineTracer::run(bool starting, int timeFromStart) {
+void LineTracer::run() {
   int mSpeed;
-  
+
   if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
   }
 
-    float direction = mLineMonitor->calcDirection(starting);
+    float direction = mLineMonitor->calcDirection(mStarting);
 
-    mSpeed = mLineMonitor->distanceMonitor();
-    
-    // 走行体の向きを計算する
-    //float speed = calcSpeed(direction);
+    mSpeed = mLineMonitor->calcSpeed();
 
-    //mBalancingWalker->setCommand(BalancingWalker::LOW, direction);
     mBalancingWalker->setCommand(mSpeed, direction);
-    //    if(starting){
-    //      mBalancingWalker->setCommand(mSpeed, 10);
-    //    }else{
-    //      mBalancingWalker->setCommand(mSpeed, 25);
-    //    }
-      
     // 倒立走行を行う
     mBalancingWalker->run();
 }
@@ -59,19 +49,23 @@ void LineTracer::run(bool starting, int timeFromStart) {
  * @retval 30  ライン上にある場合(右旋回指示)
  * @retval -30 ライン外にある場合(左旋回指示)
  */
-float LineTracer::calcSpeed(float direction) {
-    if (direction > 0) {
-        // ライン上にある場合
-        return direction;
-    } else {
-        // ライン外にある場合
-        return -direction;
-    }
-}
 
 void LineTracer::init(){
   mBalancingWalker->init();
   mIsInitialized = true;
+}
+
+bool LineTracer::isDone(){
+  int distance = mLineMonitor->measureDistance();
+  if(distance > 9000){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+void LineTracer::setStarting(bool starting){
+  mStarting = starting;
 }
 
   }

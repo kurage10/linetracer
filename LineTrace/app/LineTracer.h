@@ -11,24 +11,29 @@
 
 #include "LineMonitor.h"
 #include "BalancingWalker.h"
+#include "Task.h"
+
+using app::Task;
 
 namespace LineTrace{
   namespace app{
 
-class LineTracer {
+class LineTracer : public Task{
 public:
   LineTracer(unit::LineMonitor* lineMonitor,
 	     unit::BalancingWalker* balancingWalker);
 
-    void run(bool starting, int timeFromStart);
+    void run();
     void init();
+    bool isDone();
+    void setStarting(bool starting);
 
 private:
     unit::LineMonitor* mLineMonitor;
     unit::BalancingWalker* mBalancingWalker;
     bool mIsInitialized;
+    bool mStarting;
 
-    float calcSpeed(float direction);
 };
 
   }

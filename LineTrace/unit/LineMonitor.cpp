@@ -44,14 +44,10 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor,
       mThreshold(INITIAL_THRESHOLD),
       diff(),
       integral(0),
-      KP(1.0),
-      KI(0),
-      KD(0),
       mSpeed(80),
       leftWheelEnc(0),
       rightWheelEnc(0),
       startMeasuringEnc(0),
-      mSpeedState(DEFAULT),
       time(0) {
   //  fp = fopen("directionLog.csv","w");
 }
@@ -65,10 +61,28 @@ float LineMonitor::calcDirection(bool starting){
     // 光センサからの取得値を見て
     // PID制御を行う
   float p,i,d,speed;
-
+  float KP,KI,KD;
   diff[0]=diff[1];
   diff[1] = mColorSensor.getBrightness() - mThreshold;
   integral=integral+(diff[1]+diff[0])/2.0*0.004;
+
+  switch(mSpeed){
+  case 80:
+    KP = KP_80;
+    KI = KI_80;
+    KD = KD_80;
+    break;
+  case 30:
+    KP = KP_30;
+    KI = KI_30;
+    KD = KD_30;
+    break;
+  default:
+    KP = 1.0;
+    KI = 0.0;
+    KD = 0.0;
+    break;
+  }
 
   p=KP*diff[1];
   i=KI*integral;
@@ -96,50 +110,38 @@ float LineMonitor::calcDirection(bool starting){
 /**
  *距離を監視し条件に応じて速度を変更する
  */
-int LineMonitor::distanceMonitor(){
+int LineMonitor::calcSpeed(){
+  int distance=measureDistance();
+  if(distance > 2500 && startMeasuringEnc != 0){
+    mSpeed = 30;
+  }
+
+  if(distance > 2770 && startMeasuringEnc != 0){
+    mSpeed = 80;
+  }
+
+  if(distance > 3110 && startMeasuringEnc != 0){
+    mSpeed = 30;
+  }
+
+  if(distance > 3380 && startMeasuringEnc != 0){
+    mSpeed = 80;
+  }
+
+  return mSpeed;
+}
+int LineMonitor::measureDistance(){
   leftWheelEnc = mLeftWheel.getCount();
   rightWheelEnc = mRightWheel.getCount();
 
-  if(rightWheelEnc > leftWheelEnc + ENC_THRESHOLD && startMeasuringEnc == 0){
+  if(rightWheelEnc - leftWheelEnc > ENC_THRESHOLD && startMeasuringEnc == 0){
     startMeasuringEnc = leftWheelEnc;
   }
 
-  if(leftWheelEnc - startMeasuringEnc > 2500 && startMeasuringEnc != 0){
-    mSpeed = 30;
-
+  if(startMeasuringEnc == 0){
+    return 0;
   }
-
-  if(leftWheelEnc - startMeasuringEnc > 2770 && startMeasuringEnc != 0){
-    mSpeed = 80;
-  }
-
-  if(leftWheelEnc - startMeasuringEnc > 3110 && startMeasuringEnc != 0){
-    mSpeed = 30;
-  }
-
-  if(leftWheelEnc - startMeasuringEnc > 3380 && startMeasuringEnc != 0){
-    mSpeed = 80;
-  }
-  switch(mSpeedState){
-    case HIGH_SPEED:
-      KP = KP_80;
-      KI = KI_80;
-      KD = KD_80;
-      break;
-    case EDGE:
-      KP = KP_30;
-      KI = KI_30;
-      KD = KD_30;
-      break;
-    case DEFAULT:
-      KP = 1.0;
-      KI = 0.0;
-      KD = 0.0;
-      break;
-    default:
-      break;
-  }
-  return mSpeed;
+  return leftWheelEnc - startMeasuringEnc;
 }
 
 /**
