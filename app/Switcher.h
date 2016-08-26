@@ -2,13 +2,15 @@
 #define EV3_APP_SWITCHER_H_
 #include "LineTracerWithStarter.h"
 #include "UsecaseDetector.h"
+#include "LookUpGate.h"
 
 namespace app{
   
 class Switcher{
 public:
   Switcher(LineTrace::app::LineTracerWithStarter* linetracer,
-	   unit::UsecaseDetector* usecasedetector);
+	   unit::UsecaseDetector* usecasedetector,
+     LookUpGate::app::LookUpGate* lookupgate);
   void run();
 private:
   /*  enum Usecase{
@@ -22,6 +24,7 @@ private:
   LineTrace::app::LineTracerWithStarter* mLineTracerWithStarter;
   unit::UsecaseDetector* mUsecaseDetector;
   unit::UsecaseDetector::Usecase mUsecase;
+  LookUpGate::app::LookUpGate* mLookUpGate;
   void execUndefined();
   void execLineTracer();
   void execLookupGate();

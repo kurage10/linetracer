@@ -18,9 +18,11 @@ namespace LineTrace{
  */
     LineTracerWithStarter::LineTracerWithStarter(app::LineTracer* lineTracer,
 						 unit::Starter* starter,
-						 unit::TailController* tailController)
+						 unit::TailController* tailController,
+             ev3api::SonarSensor& sonar)
     : mLineTracer(lineTracer),
       mStarter(starter),
+      mSonar(sonar),
       mTailController(tailController),
       mState(UNDEFINED),
       timeFromStart(0) {
@@ -98,6 +100,11 @@ void LineTracerWithStarter::execStarting() {
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
+  int dis = mSonar.getDistance();
+  if (dis < 60) {      
+    mTailController -> setAngle(85); 
+  }
+
   mLineTracer->run(false, timeFromStart);
   mTailController -> run();
 }

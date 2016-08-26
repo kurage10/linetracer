@@ -9,6 +9,7 @@ APPL_CXXOBJS += \
 	Starter.o \
   TailController.o \
 	LineTracer.o \
+	LookUpGate.o \
 	LineTracerWithStarter.o \
 	Switcher.o \
 	UsecaseDetector.o \
@@ -28,12 +29,16 @@ APPL_DIR += \
 	 $(mkfile_path)app \
 	 $(mkfile_path)unit \
 	 $(mkfile_path)/LineTrace/app \
-	 $(mkfile_path)/LineTrace/unit
+	 $(mkfile_path)/LineTrace/unit \
+	 $(mkfile_path)/LookUpGate/app \
+	 $(mkfile_path)/LookUpGate/unit
 
 INCLUDES += \
 	-I$(mkfile_path)app \
 	-I$(mkfile_path)unit \
 	-I$(mkfile_path)/LineTrace/app \
-	-I$(mkfile_path)/LineTrace/unit
+	-I$(mkfile_path)/LineTrace/unit \
+	-I$(mkfile_path)/LookUpGate/app \
+	-I$(mkfile_path)/LookUpGate/unit
 
 COPTS += -fno-use-cxa-atexit

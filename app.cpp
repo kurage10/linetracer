@@ -14,12 +14,14 @@ using ev3api::ColorSensor;
 using ev3api::GyroSensor;
 using ev3api::TouchSensor;
 using ev3api::Motor;
+using ev3api::SonarSensor;
 
 // Device objects
 // オブジェクトを静的に確保する
 ColorSensor gColorSensor(PORT_3);
 GyroSensor  gGyroSensor(PORT_4);
 TouchSensor gTouchSensor(PORT_1);
+SonarSensor gSonarSensor(PORT_2);
 Motor       gLeftWheel(PORT_C);
 Motor       gRightWheel(PORT_B);
 Motor       gTailMotor(PORT_A);
@@ -35,6 +37,7 @@ static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter;
 static app::Switcher *gSwitcher;
 static unit::UsecaseDetector *gUsecaseDetector;
 static unit::DistanceMonitor *gDistanceMonitor;
+static LookUpGate::app::LookUpGate      *gLookUpGate;
 
 void *__dso_handle = 0;
 
@@ -57,10 +60,12 @@ static void user_system_create() {
     gLineTracer      = new LineTrace::app::LineTracer(gLineMonitor, gBalancingWalker);
     gLineTracerWithStarter = new LineTrace::app::LineTracerWithStarter(gLineTracer,
 								       gStarter,
-								       gTailController);
+								       gTailController,
+                                       gSonarSensor);
     gDistanceMonitor = new unit::DistanceMonitor(gLeftWheel, gRightWheel);
     gUsecaseDetector = new unit::UsecaseDetector(gDistanceMonitor);
-    gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector);
+    gLookUpGate      = new LookUpGate::app::LookUpGate(gTailController, gSonarSensor, gLeftWheel, gRightWheel);
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector, gLookUpGate);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }

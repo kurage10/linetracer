@@ -12,6 +12,8 @@
 #include "Starter.h"
 #include "LineTracer.h"
 #include "TailController.h"
+#include "ev3api.h"
+#include "SonarSensor.h"
 
 namespace LineTrace{
   namespace app{
@@ -20,7 +22,8 @@ class LineTracerWithStarter {
 public:
   LineTracerWithStarter(app::LineTracer* lineTracer,
 			unit::Starter* starter,
-			unit::TailController* tailController);
+			unit::TailController* tailController,
+            ev3api::SonarSensor& sonar);
 
     void run();
 
@@ -35,6 +38,7 @@ private:
 
     app::LineTracer* mLineTracer;
     unit::Starter* mStarter;
+    ev3api::SonarSensor& mSonar;
     unit::TailController* mTailController;
     State mState;
 
