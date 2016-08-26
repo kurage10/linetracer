@@ -60,7 +60,7 @@ static void user_system_create() {
     gStarter                = new Starter(gTouchSensor);
     gStairTurner            = new StairTurner(gLeftWheel,gRightWheel,gTailController);
     gLineTracer             = new LineTracer(gLineMonitor, gBalancingWalker);
-    gTailWalker            = new TailWalker(gLeftWheel,gRightWheel,gTailController);
+    gTailWalker             = new TailWalker(gLeftWheel,gRightWheel,gTailController);
     gStairWalker            = new StairWalker(gStairTurner,gLineTracer,gObstacleDitector,gTailWalker,gBalancingWalker,gTailController);
     gLineTracerWithStarter  = new LineTracerWithStarter(gLineTracer, gStarter,gTailController);
     gSwitcher               = new Switcher(gLineTracerWithStarter,gStairWalker);

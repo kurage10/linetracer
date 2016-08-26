@@ -29,6 +29,7 @@ private:
       UNDEFINED,
       PREPARE,
       WALKING,
+      CLIMBING,
       TURNING
   };
   State mState;
@@ -37,6 +38,7 @@ private:
   void execUndefined();
   void execPrepare();
   void execWalking();
+  void execClimbing();
   void execTurning();
 };
 #endif

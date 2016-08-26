@@ -8,14 +8,15 @@ public:
   StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController);
   void run();
   void init();
+  void setSpinSpeed(int speed);
+  int getSpinSpeed();
 private:
   ev3api::Motor& mLeftWheel;
   ev3api::Motor& mRightWheel;
   TailController* mTailController;
   bool mIsInitialized;
-  int timefromstart;
+  int mSpeed;
 };
-
 
 
 #endif
