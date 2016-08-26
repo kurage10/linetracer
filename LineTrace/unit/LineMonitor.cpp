@@ -44,10 +44,14 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor,
       mThreshold(INITIAL_THRESHOLD),
       diff(),
       integral(0),
+      KP(1.0),
+      KI(0),
+      KD(0),
       mSpeed(80),
       leftWheelEnc(0),
       rightWheelEnc(0),
       startMeasuringEnc(0),
+      mSpeedState(DEFAULT),
       time(0) {
   //  fp = fopen("directionLog.csv","w");
 }
@@ -61,29 +65,11 @@ float LineMonitor::calcDirection(bool starting){
     // 光センサからの取得値を見て
     // PID制御を行う
   float p,i,d,speed;
-  float KP,KI,KD;
+
   diff[0]=diff[1];
   diff[1] = mColorSensor.getBrightness() - mThreshold;
   integral=integral+(diff[1]+diff[0])/2.0*0.004;
 
-  switch(mSpeed){
-  case 80:
-    KP = KP_80;
-    KI = KI_80;
-    KD = KD_80;
-    break;
-  case 30:
-    KP = KP_30;
-    KI = KI_30;
-    KD = KD_30;
-    break;
-  default:
-    KP = 1.0;
-    KI = 0.0;
-    KD = 0.0;
-    break;
-  }
-  
   p=KP*diff[1];
   i=KI*integral;
   d=KD*(diff[1]-diff[0])/0.004;
@@ -93,14 +79,14 @@ float LineMonitor::calcDirection(bool starting){
   }else{
     speed=p+i+d;
   }
-    
+
   //右側走行化
   speed *= -1;
 
   if(mSpeed == 0){
     speed = 0;
   }
-  
+
   if(speed > DIRECTION_MAX) return DIRECTION_MAX;
   else if(speed < -DIRECTION_MAX)return -DIRECTION_MAX;
   else return speed;
@@ -120,6 +106,7 @@ int LineMonitor::distanceMonitor(){
 
   if(leftWheelEnc - startMeasuringEnc > 2500 && startMeasuringEnc != 0){
     mSpeed = 30;
+
   }
 
   if(leftWheelEnc - startMeasuringEnc > 2770 && startMeasuringEnc != 0){
@@ -133,7 +120,25 @@ int LineMonitor::distanceMonitor(){
   if(leftWheelEnc - startMeasuringEnc > 3380 && startMeasuringEnc != 0){
     mSpeed = 80;
   }
-  
+  switch(mSpeedState){
+    case HIGH_SPEED:
+      KP = KP_80;
+      KI = KI_80;
+      KD = KD_80;
+      break;
+    case EDGE:
+      KP = KP_30;
+      KI = KI_30;
+      KD = KD_30;
+      break;
+    case DEFAULT:
+      KP = 1.0;
+      KI = 0.0;
+      KD = 0.0;
+      break;
+    default:
+      break;
+  }
   return mSpeed;
 }
 
