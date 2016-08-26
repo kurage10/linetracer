@@ -22,8 +22,9 @@ public:
 		       ev3api::Motor& leftMotor, ev3api::Motor& rightMotor);
     float calcDirection(bool starting);
     void setThreshold(int8_t threshold);
-    int distanceMonitor();
-    
+    int calcSpeed();
+    int measureDistance();
+
 private:
     static const int8_t INITIAL_THRESHOLD;
     static const float KP_80;        // 比例係数
@@ -45,7 +46,7 @@ private:
     int leftWheelEnc;
     int rightWheelEnc;
     int startMeasuringEnc;
-    
+
     FILE* fp;
     float time;
 };

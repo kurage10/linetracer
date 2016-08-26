@@ -7,10 +7,11 @@
  *****************************************************************************/
 
 #include "LineTracerWithStarter.h"
+#include "Task.h"
 
 namespace LineTrace{
   namespace app{
-  
+
 /**
  * コンストラクタ
  * @param lineTracer ライントレーサ
@@ -57,7 +58,7 @@ void LineTracerWithStarter::run() {
 void LineTracerWithStarter::execUndefined() {
   mTailController->init();
     mTailController->setAngle(102);
-    
+
     mState = WAITING_FOR_START;
 }
 
@@ -66,7 +67,7 @@ void LineTracerWithStarter::execUndefined() {
  */
 void LineTracerWithStarter::execWaitingForStart() {
     mTailController -> run();
-  
+
     if (mStarter->isPushed()) {
       mLineTracer->init();
       mTailController->setAngle(112);
@@ -84,9 +85,10 @@ void LineTracerWithStarter::execPrepare() {
 }
 
 void LineTracerWithStarter::execStarting() {
-  mLineTracer->run(true, timeFromStart);
+  mLineTracer->setStarting(true);
+  mLineTracer->run();
   mTailController -> run();
-  
+
   if(timeFromStart > 3000){
     mState = WALKING;
   }else{
@@ -98,8 +100,13 @@ void LineTracerWithStarter::execStarting() {
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
-  mLineTracer->run(false, timeFromStart);
+  mLineTracer->setStarting(false);
+  mLineTracer->run();
   mTailController -> run();
+}
+
+bool LineTracerWithStarter::isDone(){
+  return mLineTracer -> isDone();
 }
 
   }
