@@ -14,10 +14,14 @@
 #include "TailController.h"
 #include "StairWalker.h"
 
+namespace Stair{
+  namespace app{
+
 class LineTracerWithStarter {
 public:
-    LineTracerWithStarter(LineTracer* lineTracer,
-               Starter* starter,TailController* tailController);
+  LineTracerWithStarter(Stair::app::LineTracer* lineTracer,
+			Stair::unit::Starter* starter,
+			Stair::unit::TailController* tailController);
 
     void run();
 
@@ -30,9 +34,9 @@ private:
         WALKING
     };
 
-    LineTracer* mLineTracer;
-    Starter* mStarter;
-    TailController* mTailController;
+    Stair::app::LineTracer* mLineTracer;
+    Stair::unit::Starter* mStarter;
+    Stair::unit::TailController* mTailController;
     State mState;
 
     void execUndefined();
@@ -45,4 +49,7 @@ private:
     int timeFromStart;
 };
 
+  }
+}
+ 
 #endif  // EV3_APP_LINETRACERWITHSTARTER_H_

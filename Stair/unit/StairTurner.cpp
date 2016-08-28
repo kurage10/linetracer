@@ -1,5 +1,8 @@
 #include "StairTurner.h"
 
+namespace Stair{
+  namespace unit{
+
 StairTurner::StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController):
   mLeftWheel(leftWheel),
   mRightWheel(rightWheel),
@@ -25,4 +28,7 @@ void StairTurner::setSpinSpeed(int speed){
 }
 int StairTurner::getSpinSpeed(){
   return mSpeed;
+}
+
+  }
 }

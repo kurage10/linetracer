@@ -3,6 +3,10 @@
 
 #include "GyroSensor.h"
 #include<stdio.h>
+
+namespace Stair{
+  namespace unit{
+
 class ObstacleDitector{
 public:
   ObstacleDitector(const ev3api::GyroSensor& gyroSensor);
@@ -20,4 +24,7 @@ private:
   int min_liveness;
   FILE* file;
 };
+
+  }
+}
 #endif

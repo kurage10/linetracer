@@ -8,11 +8,14 @@
 
 #include "BalancingWalker.h"
 
+namespace Stair{
+  namespace unit{
+
 // 定数宣言
-const int BalancingWalker::LOWEST = 20;    // 超低速
-const int BalancingWalker::LOW    = 30;    // 低速
-const int BalancingWalker::NORMAL = 50;    // 通常
-const int BalancingWalker::HIGH   = 70;    // 高速
+    const int Stair::unit::BalancingWalker::LOWEST = 20;    // 超低速
+    const int Stair::unit::BalancingWalker::LOW    = 30;    // 低速
+    const int Stair::unit::BalancingWalker::NORMAL = 50;    // 通常
+    const int Stair::unit::BalancingWalker::HIGH   = 70;    // 高速
 
 /**
  * コンストラクタ
@@ -24,7 +27,7 @@ const int BalancingWalker::HIGH   = 70;    // 高速
 BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& leftWheel,
                                  ev3api::Motor& rightWheel,
-                                 Balancer* balancer)
+                                 Stair::unit::Balancer* balancer)
     : mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),
@@ -78,4 +81,7 @@ void BalancingWalker::init() {
 void BalancingWalker::setCommand(int forward, int turn) {
     mForward = forward;
     mTurn    = turn;
+}
+
+  }
 }

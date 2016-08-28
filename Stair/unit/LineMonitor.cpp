@@ -13,6 +13,10 @@ We have to fix the parameter KP,KI,KD
 */
 #include "LineMonitor.h"
 
+namespace Stair{
+  namespace unit{
+
+
 // 定数宣言
 //const int8_t LineMonitor::INITIAL_THRESHOLD = 23;  // 黒色の光センサ値
 const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
@@ -70,4 +74,7 @@ float LineMonitor::calcVecSpeed(bool starting){
  */
 void LineMonitor::setThreshold(int8_t threshold) {
     mThreshold = threshold;
+}
+
+  }
 }

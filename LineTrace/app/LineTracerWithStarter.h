@@ -18,38 +18,40 @@ using app::Task;
 namespace LineTrace{
   namespace app{
 
-class LineTracerWithStarter : public Task{
-public:
-  LineTracerWithStarter(app::LineTracer* lineTracer,
-			unit::Starter* starter,
-			unit::TailController* tailController);
+    class LineTracerWithStarter : public Task{
+    public:
+      LineTracerWithStarter(app::LineTracer* lineTracer,
+			    unit::Starter* starter,
+			    unit::TailController* tailController);
 
-    void run();
-    bool isDone();
+      ~LineTracerWithStarter();
 
-private:
-    enum State {
+      void run();
+      bool isDone();
+
+    private:
+      enum State {
         UNDEFINED,
         WAITING_FOR_START,
 	PREPARE_STARTING,
 	ROCKET_STARTING,
         WALKING
+      };
+
+      app::LineTracer* mLineTracer;
+      unit::Starter* mStarter;
+      unit::TailController* mTailController;
+      State mState;
+
+      void execUndefined();
+      void execWaitingForStart();
+      void execPrepare();
+      void execStarting();
+      void execWalking();
+      bool isFinished();
+      bool mStarting();
+      int timeFromStart;
     };
-
-    app::LineTracer* mLineTracer;
-    unit::Starter* mStarter;
-    unit::TailController* mTailController;
-    State mState;
-
-    void execUndefined();
-    void execWaitingForStart();
-    void execPrepare();
-    void execStarting();
-    void execWalking();
-    bool isFinished();
-    bool mStarting();
-    int timeFromStart;
-};
 
   }
 }

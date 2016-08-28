@@ -8,16 +8,19 @@
 
 #include "LineTracer.h"
 
+namespace Stair{
+  namespace app{
+  
 /**
  * コンストラクタ
  * @param lineMonitor     ライン判定
  * @param balancingWalker 倒立走行
  */
-LineTracer::LineTracer(LineMonitor* lineMonitor,
-                       BalancingWalker* balancingWalker)
+    LineTracer::LineTracer(Stair::unit::LineMonitor* lineMonitor,
+			   Stair::unit::BalancingWalker* balancingWalker)
     : mLineMonitor(lineMonitor),
       mBalancingWalker(balancingWalker),
-      mSpeed(BalancingWalker::LOW),
+      mSpeed(Stair::unit::BalancingWalker::LOW),
       mIsInitialized(false) {
 }
 
@@ -60,4 +63,7 @@ float LineTracer::calcSpeed(float direction) {
 void LineTracer::init(){
   mBalancingWalker->init();
   mIsInitialized = true;
+}
+
+  }
 }

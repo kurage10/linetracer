@@ -1,6 +1,9 @@
 #include "ObstacleDitector.h"
 #include<stdio.h>
 
+namespace Stair{
+  namespace unit{
+
 const int ObstacleDitector::INITIAL_LIVENESS = 80;
 
 ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor):
@@ -43,4 +46,7 @@ void ObstacleDitector::init(){
   max=0;min=0;
   max_liveness=INITIAL_LIVENESS;
   min_liveness=INITIAL_LIVENESS;
+}
+
+  }
 }

@@ -1,5 +1,8 @@
 #include "TailController.h"
 
+namespace Stair{
+  namespace unit{
+
 TailController::TailController(ev3api::Motor& tailMotor)
   :mTailMotor(tailMotor),
   mAngle(3){}
@@ -25,4 +28,7 @@ void TailController::setAngle(int32_t angle){
 
 int32_t TailController::getAngle(){
   return mTailMotor.getCount();
+}
+
+  }
 }

@@ -11,62 +11,60 @@
 
 namespace LineTrace{
   namespace app{
-/**
- * コンストラクタ
- * @param lineMonitor     ライン判定
- * @param balancingWalker 倒立走行
- */
+    /**
+     * コンストラクタ
+     * @param lineMonitor     ライン判定
+     * @param balancingWalker 倒立走行
+     */
     LineTracer::LineTracer(unit::LineMonitor* lineMonitor,
 			   unit::BalancingWalker* balancingWalker)
-    : mLineMonitor(lineMonitor),
-      mBalancingWalker(balancingWalker),
-      mIsInitialized(false){
-}
+      : mLineMonitor(lineMonitor),
+	mBalancingWalker(balancingWalker),
+	mIsInitialized(false){
+    }
 
-/**
- * ライントレースする
- */
-void LineTracer::run() {
-  int mSpeed;
+    /**
+     * ライントレースする
+     */
+    void LineTracer::run() {
+      int mSpeed;
 
-  if (mIsInitialized == false) {
+      if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
-  }
+      }
 
-    float direction = mLineMonitor->calcDirection(mStarting);
+      float direction = mLineMonitor->calcDirection(mStarting);
 
-    mSpeed = mLineMonitor->calcSpeed();
+      mSpeed = mLineMonitor->calcSpeed();
 
-    mBalancingWalker->setCommand(mSpeed, direction);
-    // 倒立走行を行う
-    mBalancingWalker->run();
-}
+      mBalancingWalker->setCommand(mSpeed, direction);
+      // 倒立走行を行う
+      mBalancingWalker->run();
+    }
 
-/**
- * 走行体の向きを計算する
- * @param isOnLine true:ライン上/false:ライン外
- * @retval 30  ライン上にある場合(右旋回指示)
- * @retval -30 ライン外にある場合(左旋回指示)
- */
+    void LineTracer::init(){
+      mBalancingWalker->init();
+      mIsInitialized = true;
+    }
 
-void LineTracer::init(){
-  mBalancingWalker->init();
-  mIsInitialized = true;
-}
+    bool LineTracer::isDone(){
+      int distance = mLineMonitor->measureDistance();
+      if(distance > 9000){
+	return true;
+      }
+      else{
+	return false;
+      }
+    }
+    void LineTracer::setStarting(bool starting){
+      mStarting = starting;
+    }
 
-bool LineTracer::isDone(){
-  int distance = mLineMonitor->measureDistance();
-  if(distance > 9000){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
-void LineTracer::setStarting(bool starting){
-  mStarting = starting;
-}
-
+    LineTracer::~LineTracer(){
+      delete mLineMonitor;
+      delete mBalancingWalker;
+      delete &mIsInitialized;
+    }
   }
 }

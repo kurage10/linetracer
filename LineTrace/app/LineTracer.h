@@ -18,23 +18,25 @@ using app::Task;
 namespace LineTrace{
   namespace app{
 
-class LineTracer : public Task{
-public:
-  LineTracer(unit::LineMonitor* lineMonitor,
-	     unit::BalancingWalker* balancingWalker);
+    class LineTracer : public Task{
+    public:
+      LineTracer(unit::LineMonitor* lineMonitor,
+		 unit::BalancingWalker* balancingWalker);
 
-    void run();
-    void init();
-    bool isDone();
-    void setStarting(bool starting);
+      ~LineTracer();
 
-private:
-    unit::LineMonitor* mLineMonitor;
-    unit::BalancingWalker* mBalancingWalker;
-    bool mIsInitialized;
-    bool mStarting;
+      void run();
+      void init();
+      bool isDone();
+      void setStarting(bool starting);
 
-};
+    private:
+      unit::LineMonitor* mLineMonitor;
+      unit::BalancingWalker* mBalancingWalker;
+      bool mIsInitialized;
+      bool mStarting;
+
+    };
 
   }
 }

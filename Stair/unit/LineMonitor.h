@@ -11,6 +11,9 @@
 
 #include "ColorSensor.h"
 
+namespace Stair{
+  namespace unit{
+
 // 定義
 class LineMonitor {
 public:
@@ -28,5 +31,8 @@ private:
     float diff[2];
     float integral;
 };
+
+  }
+}
 
 #endif  // EV3_UNIT_LINEMONITOR_H_

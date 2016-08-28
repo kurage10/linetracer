@@ -1,5 +1,7 @@
 #include "TailWalker.h"
 
+namespace Stair{
+  namespace unit{
 
 TailWalker::TailWalker(ev3api::Motor& leftWheel,
                        ev3api::Motor& rightWheel,
@@ -19,4 +21,7 @@ void TailWalker::run(){
 void TailWalker::init(){
   mTailController->setAngle((int32_t)80);
   mIsInitialized = true;
+}
+
+  }
 }

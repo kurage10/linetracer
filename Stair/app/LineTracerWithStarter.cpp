@@ -8,12 +8,17 @@
 
 #include "LineTracerWithStarter.h"
 
+namespace Stair{
+  namespace app{
+
 /**
  * コンストラクタ
  * @param lineTracer ライントレーサ
  * @param starter    スタータ
  */
-LineTracerWithStarter::LineTracerWithStarter(LineTracer* lineTracer,Starter* starter,TailController* tailController)
+    LineTracerWithStarter::LineTracerWithStarter(Stair::app::LineTracer* lineTracer,
+						 Stair::unit::Starter* starter,
+						 Stair::unit::TailController* tailController)
     : mLineTracer(lineTracer),
       mStarter(starter),
       mTailController(tailController),
@@ -95,4 +100,7 @@ void LineTracerWithStarter::execWalking() {
 
   mLineTracer->run(false);
   //mTailController -> run();
+}
+
+  }
 }

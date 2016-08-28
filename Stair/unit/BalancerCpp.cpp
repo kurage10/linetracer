@@ -7,8 +7,10 @@
  *****************************************************************************/
 
 #include "balancer.h"
-
 #include "BalancerCpp.h"
+
+namespace Stair{
+  namespace unit{
 
 /**
  * コンストラクタ
@@ -76,4 +78,7 @@ int8_t Balancer::getPwmRight() {
  */
 int8_t Balancer::getPwmLeft() {
     return mLeftPwm;
+}
+
+  }
 }

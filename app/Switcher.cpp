@@ -2,8 +2,12 @@
 
 namespace app{
 
-  Switcher::Switcher(Task* linetracer):
+  Switcher::Switcher(Task* linetracer,
+		     Task* stopper,
+		     Task* stairwalker):
   mLineTracerWithStarter(linetracer),
+  mStopper(stopper),
+  mStairWalker(stairwalker),
   mUsecase(UNDEFINED){
 
 }
@@ -47,9 +51,17 @@ void Switcher::execLookupGate(){
   //mUsecase = mUsecaseDetector->nextUsecase();
 }
 void Switcher::execGarage(){
+  mStopper->run();
+  if(mStopper -> isDone()){
+    mUsecase = GARAGE;
+  }
   //mUsecase = mUsecaseDetector->nextUsecase();
 }
 void Switcher::execStair(){
+    mStairWalker->run();
+  if(mStairWalker -> isDone()){
+    mUsecase = GARAGE;
+  }
   //mUsecase = mUsecaseDetector->nextUsecase();
 }
 

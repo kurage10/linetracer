@@ -5,15 +5,20 @@ APPL_COBJS += balancer.o balancer_param.o
 APPL_CXXOBJS += \
 	BalancingWalker.o \
 	LineMonitor.o \
+	LineMonitor.o \
 	BalancerCpp.o \
 	Starter.o \
-  TailController.o \
+	TailController.o \
 	LineTracer.o \
 	LineTracerWithStarter.o \
 	Switcher.o \
 	UsecaseDetector.o \
 	DistanceMonitor.o \
-	Stopper.o
+	Stopper.o \
+	ObstacleDitector.o \
+	StairTurner.o \
+	TailWalker.o \
+	StairWalker.o
 
 SRCLANG := c++
 
@@ -27,13 +32,19 @@ endif
 APPL_DIR += \
 	 $(mkfile_path)app \
 	 $(mkfile_path)unit \
-	 $(mkfile_path)/LineTrace/app \
-	 $(mkfile_path)/LineTrace/unit
+ 	 $(mkfile_path)Garage/app \
+	 $(mkfile_path)Stair/app \
+	 $(mkfile_path)Stair/unit \
+	 $(mkfile_path)LineTrace/app \
+ 	 $(mkfile_path)LineTrace/unit \
 
 INCLUDES += \
 	-I$(mkfile_path)app \
 	-I$(mkfile_path)unit \
-	-I$(mkfile_path)/LineTrace/app \
-	-I$(mkfile_path)/LineTrace/unit
+	-I$(mkfile_path)Garage/app \
+	-I$(mkfile_path)Stair/app \
+	-I$(mkfile_path)Stair/unit \
+	-I$(mkfile_path)LineTrace/app \
+	-I$(mkfile_path)LineTrace/unit \
 
 COPTS += -fno-use-cxa-atexit

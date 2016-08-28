@@ -8,6 +8,9 @@
 
 #include "Starter.h"
 
+namespace Stair{
+  namespace unit{
+
 /**
  * コンストラクタ
  * @param touchSensor タッチセンサ
@@ -23,4 +26,7 @@ Starter::Starter(const ev3api::TouchSensor& touchSensor)
  */
 bool Starter::isPushed() const {
     return mTouchSensor.isPressed();
+}
+
+  }
 }

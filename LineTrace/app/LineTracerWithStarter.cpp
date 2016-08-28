@@ -12,102 +12,108 @@
 namespace LineTrace{
   namespace app{
 
-/**
- * コンストラクタ
- * @param lineTracer ライントレーサ
- * @param starter    スタータ
- */
+    /**
+     * コンストラクタ
+     * @param lineTracer ライントレーサ
+     * @param starter    スタータ
+     */
     LineTracerWithStarter::LineTracerWithStarter(app::LineTracer* lineTracer,
 						 unit::Starter* starter,
 						 unit::TailController* tailController)
-    : mLineTracer(lineTracer),
-      mStarter(starter),
-      mTailController(tailController),
-      mState(UNDEFINED),
-      timeFromStart(0) {
-}
+      : mLineTracer(lineTracer),
+	mStarter(starter),
+	mTailController(tailController),
+	mState(UNDEFINED),
+	timeFromStart(0) {
+    }
 
-/**
- * ライントレースする
- */
-void LineTracerWithStarter::run() {
-    switch (mState) {
-    case UNDEFINED:
+    /**
+     * ライントレースする
+     */
+    void LineTracerWithStarter::run() {
+      switch (mState) {
+      case UNDEFINED:
         execUndefined();
         break;
-    case WAITING_FOR_START:
+      case WAITING_FOR_START:
         execWaitingForStart();
         break;
-    case PREPARE_STARTING:
+      case PREPARE_STARTING:
         execPrepare();
         break;
-    case ROCKET_STARTING:
+      case ROCKET_STARTING:
         execStarting();
 	break;
-    case WALKING:
+      case WALKING:
         execWalking();
         break;
-    default:
+      default:
         break;
+      }
     }
-}
 
-/**
- * 未定義状態の処理
- */
-void LineTracerWithStarter::execUndefined() {
-  mTailController->init();
-    mTailController->setAngle(102);
+    /**
+     * 未定義状態の処理
+     */
+    void LineTracerWithStarter::execUndefined() {
+      mTailController->init();
+      mTailController->setAngle(102);
 
-    mState = WAITING_FOR_START;
-}
-
-/**
- * 開始待ち状態の処理
- */
-void LineTracerWithStarter::execWaitingForStart() {
-    mTailController -> run();
-
-    if (mStarter->isPushed()) {
-      mLineTracer->init();
-      mTailController->setAngle(112);
-      mState = PREPARE_STARTING;
+      mState = WAITING_FOR_START;
     }
-}
 
-void LineTracerWithStarter::execPrepare() {
-  mTailController -> run();
+    /**
+     * 開始待ち状態の処理
+     */
+    void LineTracerWithStarter::execWaitingForStart() {
+      mTailController -> run();
 
-  if(mTailController -> getAngle() >= 108){
-    mTailController -> setAngle(0);
-    mState = ROCKET_STARTING;
-  }
-}
+      if (mStarter->isPushed()) {
+	mLineTracer->init();
+	mTailController->setAngle(112);
+	mState = PREPARE_STARTING;
+      }
+    }
 
-void LineTracerWithStarter::execStarting() {
-  mLineTracer->setStarting(true);
-  mLineTracer->run();
-  mTailController -> run();
+    void LineTracerWithStarter::execPrepare() {
+      mTailController -> run();
 
-  if(timeFromStart > 3000){
-    mState = WALKING;
-  }else{
-    timeFromStart += 4;
-  }
-}
+      if(mTailController -> getAngle() >= 108){
+	mTailController -> setAngle(0);
+	mState = ROCKET_STARTING;
+      }
+    }
 
-/**
- * 走行中状態の処理
- */
-void LineTracerWithStarter::execWalking() {
-  mLineTracer->setStarting(false);
-  mLineTracer->run();
-  mTailController -> run();
-}
+    void LineTracerWithStarter::execStarting() {
+      mLineTracer->setStarting(true);
+      mLineTracer->run();
+      mTailController -> run();
 
-bool LineTracerWithStarter::isDone(){
-  return mLineTracer -> isDone();
-}
+      if(timeFromStart > 3000){
+	mState = WALKING;
+      }else{
+	timeFromStart += 4;
+      }
+    }
 
+    /**
+     * 走行中状態の処理
+     */
+    void LineTracerWithStarter::execWalking() {
+      mLineTracer->setStarting(false);
+      mLineTracer->run();
+      mTailController -> run();
+    }
+
+    bool LineTracerWithStarter::isDone(){
+      return mLineTracer -> isDone();
+    }
+
+    LineTracerWithStarter::~LineTracerWithStarter(){
+      delete mLineTracer;
+      delete mStarter;
+      delete mTailController;
+      delete &mState;
+    }
   }
 }
