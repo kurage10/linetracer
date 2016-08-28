@@ -16,7 +16,7 @@ We have to fix the parameter KP,KI,KD
 // 定数宣言
 const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 
-const float LineMonitor::KP_80 = 1.15;
+const float LineMonitor::KP_80 = 1.10;
 const float LineMonitor::KI_80 = 1.28;
 const float LineMonitor::KD_80 = 0.050;
 

@@ -34,10 +34,7 @@ void LineTracer::run(bool starting, int timeFromStart) {
 
     float direction = mLineMonitor->calcDirection(starting);
 
-    //Right Course
-    //mSpeed = mLineMonitor->distanceMonitor();
-    //Left Course
-    mSpeed = 80;
+    mSpeed = mLineMonitor->distanceMonitor();
     
     // 走行体の向きを計算する
     //float speed = calcSpeed(direction);
