@@ -1,16 +1,19 @@
 #ifndef EV3_APP_SWITCHER_H_
 #define EV3_APP_SWITCHER_H_
-#include "LineTracerWithStarter.h"
-#include "Stopper.h"
+#include "../LineTrace/app/LineTracerWithStarter.h"
+#include "../Stair/app/LineTracerWithStarter.h"
+#include "../Garage/app/Stopper.h"
+#include "../LookUpGate/app/LookUpGate.h"
 #include "Task.h"
 
 namespace app{
 
 class Switcher{
 public:
-  Switcher(Task* linetracer,
-	   Task* stopper,
-	   Task* stairwalker);
+  Switcher(Task* linetrace,
+	   Task* garage,
+	   Task* stair,
+	   Task* gate);
   void run();
 private:
   enum Usecase{
@@ -22,9 +25,10 @@ private:
   };
 
   //LineTrace::app::LineTracerWithStarter* mLineTracerWithStarter;
-  Task* mLineTracerWithStarter;
-  Task* mStopper;
-  Task* mStairWalker;
+  Task* mLineTrace;
+  Task* mGarage;
+  Task* mStair;
+  Task* mGate;
 //  unit::UsecaseDetector* mUsecaseDetector;
   Usecase mUsecase;
   void execUndefined();

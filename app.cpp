@@ -14,12 +14,14 @@ using ev3api::ColorSensor;
 using ev3api::GyroSensor;
 using ev3api::TouchSensor;
 using ev3api::Motor;
+using ev3api::SonarSensor;
 
 // Device objects
 // オブジェクトを静的に確保する
 ColorSensor gColorSensor(PORT_3);
 GyroSensor  gGyroSensor(PORT_4);
 TouchSensor gTouchSensor(PORT_1);
+SonarSensor gSonarSensor(PORT_2);
 Motor       gLeftWheel(PORT_C);
 Motor       gRightWheel(PORT_B);
 Motor       gTailMotor(PORT_A);
@@ -47,6 +49,13 @@ static Stair::unit::StairTurner           *gStairTurner_S;
 static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
 
+static LookUpGate::app::LookUpGate *gLookUpGate_LG;
+//static LookUpGate::unit::LineMonitor     *gLineMonitor_LG;
+//static LookUpGate::unit::Balancer        *gBalancer_LG;
+//static LookUpGate::unit::BalancingWalker *gBalancingWalker_LG;
+//static LookUpGate::unit::Starter         *gStarter_LG;
+static LookUpGate::unit::TailController *gTailController_LG;
+
 static app::Switcher *gSwitcher;
 //static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
 
@@ -64,16 +73,16 @@ static void user_system_create() {
     gBalancingWalker_LT        = new LineTrace::unit::BalancingWalker(gGyroSensor,
 								   gLeftWheel,
 								   gRightWheel,
-								   gBalancer);
+								   gBalancer_LT);
     gLineMonitor_LT     = new LineTrace::unit::LineMonitor(gColorSensor,
 							   gLeftWheel,
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
-    gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor, gBalancingWalker);
-    gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer,
-								       gStarter,
-								       gTailController);
+    gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
+    gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
+								       gStarter_LT,
+								       gTailController_LT);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
     
@@ -102,10 +111,26 @@ static void user_system_create() {
     gLineTracerWithStarter_S  = new Stair::app::LineTracerWithStarter(gLineTracer_S,
 							  gStarter_S,
 							  gTailController_S);
-    
+
+    //gBalancer_LG               = new LookUpGate::unit::Balancer();
+    //gBalancingWalker_LG        = new LookUpGate::unit::BalancingWalker(gGyroSensor,
+    //								   gLeftWheel,
+    //								   gRightWheel,
+    //								   gBalancer_LG);
+    //gLineMonitor_LG     = new LookUpGate::unit::LineMonitor(gColorSensor,
+    //							    gLeftWheel,
+    //							    gRightWheel);
+//gStarter_LG         = new LookUpGate::unit::Starter(gTouchSensor);
+    gTailController_LG  = new LookUpGate::unit::TailController(gTailMotor);
+    gLookUpGate_LG = new LookUpGate::app::LookUpGate(gTailController_LG,
+						     gSonarSensor,
+						     gLeftWheel,
+						     gRightWheel);
+ 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 gStopper_G,
-					 gStairWalker_S);
+					 gStairWalker_S,
+					 gLookUpGate_LG);
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }
@@ -140,6 +165,13 @@ static void user_system_destroy() {
     delete gLineMonitor_S;
     delete gBalancingWalker_S;
     delete gBalancer_S;
+
+    delete gTailController_LG;
+    //delete gStarter_LG;
+    //delete gLineMonitor_LG;
+    //delete gBalancingWalker_LG;
+    //delete gBalancer_LG;
+    delete gLookUpGate_LG;
 }
 
 /**

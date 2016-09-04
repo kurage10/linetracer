@@ -6,13 +6,13 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_UNIT_LINEMONITOR_H_
-#define EV3_UNIT_LINEMONITOR_H_
+#ifndef EV3_LOOKUPGATE_UNIT_LINEMONITOR_H_
+#define EV3_LOOKUPGATE_UNIT_LINEMONITOR_H_
 
 #include "ColorSensor.h"
 #include "Motor.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 // 定義

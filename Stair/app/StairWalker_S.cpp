@@ -58,7 +58,8 @@ namespace Stair{
       }
     }
     void StairWalker::execWalking(){
-      mLineTracer->run(true);
+      mLineTracer->setStarting(true);
+      mLineTracer->run();
       //mTailWalker->run();
       mTailController->setAngle(0);
       mTailController->run();

@@ -19,10 +19,13 @@ namespace LineTrace{
 // 定数宣言
     const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 
-const float LineMonitor::KP_80 = 0.90;
-const float LineMonitor::KI_80 = 1.2;
-const float LineMonitor::KD_80 = 0.048;
-
+    //const float LineMonitor::KP_80 = 0.90;
+    //const float LineMonitor::KI_80 = 1.2;
+    //const float LineMonitor::KD_80 = 0.048;
+    const float LineMonitor::KP_80 = 1.15;
+    const float LineMonitor::KI_80 = 1.28;
+    const float LineMonitor::KD_80 = 0.050;
+    
 const float LineMonitor::KP_30 = 1.11;
 const float LineMonitor::KI_30 = 3.96;
 const float LineMonitor::KD_30 = 0.08;
@@ -83,7 +86,7 @@ float LineMonitor::calcDirection(bool starting){
     KD = 0.0;
     break;
   }
-  
+
   p=KP*diff[1];
   i=KI*integral;
   d=KD*(diff[1]-diff[0])/0.004;
@@ -93,14 +96,14 @@ float LineMonitor::calcDirection(bool starting){
   }else{
     speed=p+i+d;
   }
-    
+
   //右側走行化
   speed *= -1;
 
   if(mSpeed == 0){
     speed = 0;
   }
-  
+
   if(speed > DIRECTION_MAX) return DIRECTION_MAX;
   else if(speed < -DIRECTION_MAX)return -DIRECTION_MAX;
   else return speed;
@@ -110,31 +113,41 @@ float LineMonitor::calcDirection(bool starting){
 /**
  *距離を監視し条件に応じて速度を変更する
  */
-int LineMonitor::distanceMonitor(){
+int LineMonitor::calcSpeed(){
+  int distance=measureDistance();
+  if(distance > 2500 && startMeasuringEnc != 0){
+    mSpeed = 30;
+  }
+
+  //if(distance > 2770 && startMeasuringEnc != 0){
+  if(distance > 2870 && startMeasuringEnc != 0){
+    mSpeed = 80;
+  }
+
+  //if(distance > 3110 && startMeasuringEnc != 0){
+  if(distance > 3210 && startMeasuringEnc != 0){
+    mSpeed = 30;
+  }
+
+  //if(distance > 3380 && startMeasuringEnc != 0){
+  if(distance > 3430 && startMeasuringEnc != 0){
+    mSpeed = 80;
+  }
+
+  return mSpeed;
+}
+int LineMonitor::measureDistance(){
   leftWheelEnc = mLeftWheel.getCount();
   rightWheelEnc = mRightWheel.getCount();
 
-  if(rightWheelEnc > leftWheelEnc + ENC_THRESHOLD && startMeasuringEnc == 0){
+  if(rightWheelEnc - leftWheelEnc > ENC_THRESHOLD && startMeasuringEnc == 0){
     startMeasuringEnc = leftWheelEnc;
   }
 
-  if(leftWheelEnc - startMeasuringEnc > 2500 && startMeasuringEnc != 0){
-    mSpeed = 30;
+  if(startMeasuringEnc == 0){
+    return 0;
   }
-
-  if(leftWheelEnc - startMeasuringEnc > 2770 && startMeasuringEnc != 0){
-    mSpeed = 80;
-  }
-
-  if(leftWheelEnc - startMeasuringEnc > 3110 && startMeasuringEnc != 0){
-    mSpeed = 30;
-  }
-
-  if(leftWheelEnc - startMeasuringEnc > 3380 && startMeasuringEnc != 0){
-    mSpeed = 80;
-  }
-  
-  return mSpeed;
+  return leftWheelEnc - startMeasuringEnc;
 }
 
 /**

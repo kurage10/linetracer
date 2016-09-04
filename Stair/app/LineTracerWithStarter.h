@@ -14,41 +14,45 @@
 #include "TailController.h"
 #include "StairWalker.h"
 
+using app::Task;
+
 namespace Stair{
   namespace app{
 
-class LineTracerWithStarter {
-public:
-  LineTracerWithStarter(Stair::app::LineTracer* lineTracer,
-			Stair::unit::Starter* starter,
-			Stair::unit::TailController* tailController);
+    class LineTracerWithStarter : public Task{
+    public:
+      LineTracerWithStarter(app::LineTracer* lineTracer,
+			    unit::Starter* starter,
+			    unit::TailController* tailController);
 
-    void run();
-
-private:
-    enum State {
+      void run();
+      bool isDone();
+      ~LineTracerWithStarter();
+      
+    private:
+      enum State {
         UNDEFINED,
         WAITING_FOR_START,
 	PREPARE_STARTING,
 	ROCKET_STARTING,
         WALKING
+      };
+      
+      app::LineTracer* mLineTracer;
+      unit::Starter* mStarter;
+      unit::TailController* mTailController;
+      State mState;
+      
+      void execUndefined();
+      void execWaitingForStart();
+      void execPrepare();
+      void execStarting();
+      void execWalking();
+      
+      bool mStarting();
+      int timeFromStart;
     };
-
-    Stair::app::LineTracer* mLineTracer;
-    Stair::unit::Starter* mStarter;
-    Stair::unit::TailController* mTailController;
-    State mState;
-
-    void execUndefined();
-    void execWaitingForStart();
-    void execPrepare();
-    void execStarting();
-    void execWalking();
-
-    bool mStarting();
-    int timeFromStart;
-};
-
+    
   }
 }
  

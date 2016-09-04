@@ -8,9 +8,9 @@
 
 #include "balancer.h"
 
-#include "BalancerCpp.h"
+#include "./BalancerCpp.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 /**

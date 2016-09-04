@@ -6,9 +6,9 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#include "BalancingWalker.h"
+#include "./BalancingWalker.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 // 定数宣言

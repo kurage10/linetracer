@@ -16,8 +16,8 @@ namespace LineTrace{
      * @param lineMonitor     ライン判定
      * @param balancingWalker 倒立走行
      */
-    LineTracer::LineTracer(unit::LineMonitor* lineMonitor,
-			   unit::BalancingWalker* balancingWalker)
+    LineTracer::LineTracer(LineTrace::unit::LineMonitor* lineMonitor,
+			   LineTrace::unit::BalancingWalker* balancingWalker)
       : mLineMonitor(lineMonitor),
 	mBalancingWalker(balancingWalker),
 	mIsInitialized(false){
@@ -34,10 +34,13 @@ namespace LineTrace{
         mIsInitialized = true;
       }
 
-      float direction = mLineMonitor->calcDirection(mStarting);
-
+      //For Left Coutse
+      mSpeed = 80;
+      //For Right Course
       mSpeed = mLineMonitor->calcSpeed();
 
+      float direction = mLineMonitor->calcDirection(mStarting);
+      
       mBalancingWalker->setCommand(mSpeed, direction);
       // 倒立走行を行う
       mBalancingWalker->run();

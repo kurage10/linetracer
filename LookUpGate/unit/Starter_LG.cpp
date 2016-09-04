@@ -6,9 +6,9 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#include "Starter.h"
+#include "./Starter.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 /**

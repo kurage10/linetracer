@@ -6,12 +6,12 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_UNIT_STARTER_H_
-#define EV3_UNIT_STARTER_H_
+#ifndef EV3_LOOKUPGATE_UNIT_STARTER_H_
+#define EV3_LOOKUPGATE_UNIT_STARTER_H_
 
 #include "TouchSensor.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 class Starter {

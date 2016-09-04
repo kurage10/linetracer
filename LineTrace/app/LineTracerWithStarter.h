@@ -6,12 +6,12 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_APP_LINETRACERWITHSTARTER_H_
-#define EV3_APP_LINETRACERWITHSTARTER_H_
+#ifndef EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
+#define EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 
-#include "Starter.h"
-#include "LineTracer.h"
-#include "TailController.h"
+#include "../unit/Starter.h"
+#include "./LineTracer.h"
+#include "../unit/TailController.h"
 #include "Task.h"
 
 using app::Task;

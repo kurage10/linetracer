@@ -7,8 +7,8 @@ StairTurner::StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,Tail
   mLeftWheel(leftWheel),
   mRightWheel(rightWheel),
   mTailController(tailController),
-  mSpeed(30),
-  mIsInitialized(false){
+  mIsInitialized(false), 
+  mSpeed(30) {
 
 }
 

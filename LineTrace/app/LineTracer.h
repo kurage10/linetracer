@@ -6,11 +6,11 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_APP_LINETRACER_H_
-#define EV3_APP_LINETRACER_H_
+#ifndef EV3_LINETRACE_APP_LINETRACER_H_
+#define EV3_LINETRACE_APP_LINETRACER_H_
 
-#include "LineMonitor.h"
-#include "BalancingWalker.h"
+#include "../unit/LineMonitor.h"
+#include "../unit/BalancingWalker.h"
 #include "Task.h"
 
 using app::Task;
