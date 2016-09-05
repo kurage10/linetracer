@@ -52,14 +52,9 @@ namespace LineTrace{
     }
 
     bool LineTracer::isDone(){
-      int distance = mLineMonitor->measureDistance();
-      if(distance > 9000){
-	return true;
-      }
-      else{
-	return false;
-      }
+      return mLineMonitor->measureDistance() > 9000;
     }
+
     void LineTracer::setStarting(bool starting){
       mStarting = starting;
     }
