@@ -9,6 +9,8 @@
 #include "LineTracerWithStarter.h"
 #include "Task.h"
 
+#include <stdio.h>
+
 namespace LineTrace{
   namespace app{
 
@@ -19,12 +21,15 @@ namespace LineTrace{
      */
     LineTracerWithStarter::LineTracerWithStarter(app::LineTracer* lineTracer,
 						 unit::Starter* starter,
-						 unit::TailController* tailController)
+						 unit::TailController* tailController,
+						 ev3api::GyroSensor& gyroSensor)
       : mLineTracer(lineTracer),
 	mStarter(starter),
 	mTailController(tailController),
+	mGyroSensor(gyroSensor), 
 	mState(UNDEFINED),
 	timeFromStart(0) {
+      fp = fopen("angleLog.txt","w");
     }
 
     /**
@@ -70,6 +75,7 @@ namespace LineTrace{
 
       if (mStarter->isPushed()) {
 	mLineTracer->init();
+	mGyroSensor.reset();
 	mTailController->setAngle(112);
 	mState = PREPARE_STARTING;
       }
@@ -78,7 +84,9 @@ namespace LineTrace{
     void LineTracerWithStarter::execPrepare() {
       mTailController -> run();
 
-      if(mTailController -> getAngle() >= 108){
+      //      if(mTailController -> getAngle() >= 108){
+      fprintf(fp,"Angle = %d\n",mGyroSensor.getAngle());
+      if(mGyroSensor.getAngle() > 3){
 	mTailController -> setAngle(0);
 	mState = ROCKET_STARTING;
       }
@@ -113,6 +121,7 @@ namespace LineTrace{
       delete mLineTracer;
       delete mStarter;
       delete mTailController;
+      delete &mGyroSensor;
       delete &mState;
     }
   }

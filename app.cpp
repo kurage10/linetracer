@@ -81,8 +81,9 @@ static void user_system_create() {
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
-								       gStarter_LT,
-								       gTailController_LT);
+									  gStarter_LT,
+									  gTailController_LT,
+									  gGyroSensor);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
     

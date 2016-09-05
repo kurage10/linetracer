@@ -6,15 +6,15 @@ namespace app{
 		     Task* garage,
 		     Task* stair,
 		     Task* gate):
-  mLineTrace(linetrace),
-  mGarage(garage),
-  mStair(stair),
-  mGate(gate), 
-  mUsecase(UNDEFINED){
+    mLineTrace(linetrace),
+    mGarage(garage),
+    mStair(stair),
+    mGate(gate), 
+    mUsecase(UNDEFINED){
 
-}
-void Switcher::run(){
-  switch(mUsecase){
+  }
+  void Switcher::run(){
+    switch(mUsecase){
     case UNDEFINED:
       execUndefined();
       break;
@@ -32,43 +32,36 @@ void Switcher::run(){
       break;
     default:
       break;
+    }
   }
-}
-void Switcher::execUndefined(){
-  //各種初期化
-  mUsecase = LINETRACER;
-  //mUsecaseDetector->init();
-}
-void Switcher::execLineTracer(){
-  mLineTrace->run();
-  if(mLineTrace -> isDone()){
-    mUsecase = LOOKUPGATE;
+  void Switcher::execUndefined(){
+    //各種初期化
+    mUsecase = LINETRACER;
+    //mUsecase = STAIR;
   }
-/*
-  if(mUsecaseDetector->nextUsecase()){
-    mUsecase = xxxx
-  }*/
-}
-void Switcher::execLookupGate(){
-  mGate->run();
-  if(mGate -> isDone()){
-    mUsecase = GARAGE;
+  void Switcher::execLineTracer(){
+    mLineTrace->run();
+    if(mLineTrace -> isDone()){
+      mUsecase = LOOKUPGATE;
+    }
   }
-  //mUsecase = mUsecaseDetector->nextUsecase();
-}
-void Switcher::execGarage(){
-  mGarage->run();
-  if(mGarage -> isDone()){
-    mUsecase = GARAGE;
+  void Switcher::execLookupGate(){
+    mGate->run();
+    if(mGate -> isDone()){
+      mUsecase = GARAGE;
+    }
   }
-  //mUsecase = mUsecaseDetector->nextUsecase();
-}
-void Switcher::execStair(){
+  void Switcher::execGarage(){
+    mGarage->run();
+    if(mGarage -> isDone()){
+      mUsecase = GARAGE;
+    }
+  }
+  void Switcher::execStair(){
     mStair->run();
-  if(mStair -> isDone()){
-    mUsecase = GARAGE;
+    if(mStair -> isDone()){
+      mUsecase = GARAGE;
+    }
   }
-  //mUsecase = mUsecaseDetector->nextUsecase();
-}
 
 }

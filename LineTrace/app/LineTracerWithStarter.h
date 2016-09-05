@@ -9,6 +9,7 @@
 #ifndef EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 #define EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 
+#include "GyroSensor.h"
 #include "../unit/Starter.h"
 #include "./LineTracer.h"
 #include "../unit/TailController.h"
@@ -22,7 +23,8 @@ namespace LineTrace{
     public:
       LineTracerWithStarter(app::LineTracer* lineTracer,
 			    unit::Starter* starter,
-			    unit::TailController* tailController);
+			    unit::TailController* tailController,
+			    ev3api::GyroSensor& gyroSensor);
 
       ~LineTracerWithStarter();
 
@@ -41,7 +43,9 @@ namespace LineTrace{
       app::LineTracer* mLineTracer;
       unit::Starter* mStarter;
       unit::TailController* mTailController;
+      ev3api::GyroSensor& mGyroSensor;
       State mState;
+      FILE* fp;
 
       void execUndefined();
       void execWaitingForStart();
