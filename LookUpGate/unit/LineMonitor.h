@@ -6,13 +6,13 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_LINETRACE_UNIT_LINEMONITOR_H_
-#define EV3_LINETRACE_UNIT_LINEMONITOR_H_
+#ifndef EV3_LOOKUPGATE_UNIT_LINEMONITOR_H_
+#define EV3_LOOKUPGATE_UNIT_LINEMONITOR_H_
 
 #include "ColorSensor.h"
 #include "Motor.h"
 
-namespace LineTrace{
+namespace LookUpGate{
   namespace unit{
 
 // 定義
@@ -22,9 +22,8 @@ public:
 		       ev3api::Motor& leftMotor, ev3api::Motor& rightMotor);
     float calcDirection(bool starting);
     void setThreshold(int8_t threshold);
-    int calcSpeed();
-    int measureDistance();
-
+    int distanceMonitor();
+    
 private:
     static const int8_t INITIAL_THRESHOLD;
     static const float KP_80;        // 比例係数
@@ -46,7 +45,7 @@ private:
     int leftWheelEnc;
     int rightWheelEnc;
     int startMeasuringEnc;
-
+    
     FILE* fp;
     float time;
 };

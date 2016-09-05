@@ -14,35 +14,46 @@
 #include "TailController.h"
 #include "StairWalker.h"
 
-class LineTracerWithStarter {
-public:
-    LineTracerWithStarter(LineTracer* lineTracer,
-               Starter* starter,TailController* tailController);
+using app::Task;
 
-    void run();
+namespace Stair{
+  namespace app{
 
-private:
-    enum State {
+    class LineTracerWithStarter : public Task{
+    public:
+      LineTracerWithStarter(app::LineTracer* lineTracer,
+			    unit::Starter* starter,
+			    unit::TailController* tailController);
+
+      void run();
+      bool isDone();
+      ~LineTracerWithStarter();
+      
+    private:
+      enum State {
         UNDEFINED,
         WAITING_FOR_START,
 	PREPARE_STARTING,
 	ROCKET_STARTING,
         WALKING
+      };
+      
+      app::LineTracer* mLineTracer;
+      unit::Starter* mStarter;
+      unit::TailController* mTailController;
+      State mState;
+      
+      void execUndefined();
+      void execWaitingForStart();
+      void execPrepare();
+      void execStarting();
+      void execWalking();
+      
+      bool mStarting();
+      int timeFromStart;
     };
-
-    LineTracer* mLineTracer;
-    Starter* mStarter;
-    TailController* mTailController;
-    State mState;
-
-    void execUndefined();
-    void execWaitingForStart();
-    void execPrepare();
-    void execStarting();
-    void execWalking();
-
-    bool mStarting();
-    int timeFromStart;
-};
-
+    
+  }
+}
+ 
 #endif  // EV3_APP_LINETRACERWITHSTARTER_H_

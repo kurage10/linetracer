@@ -3,6 +3,10 @@
 
 #include "Motor.h"
 #include "TailController.h"
+
+namespace Stair{
+  namespace unit{
+
 class StairTurner{
 public:
   StairTurner(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController);
@@ -18,5 +22,7 @@ private:
   int mSpeed;
 };
 
-
+  }
+}
+ 
 #endif

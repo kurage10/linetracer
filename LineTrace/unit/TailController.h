@@ -1,5 +1,5 @@
-#ifndef EV3_APP_TAILCONTROLLER_H_
-#define EV3_APP_TAILCONTROLLER_H_
+#ifndef EV3_LINETRACE_UNIT_TAILCONTROLLER_H_
+#define EV3_LINETRACE_UNIT_TAILCONTROLLER_H_
 #include "Motor.h"
 #include <Clock.h>
 

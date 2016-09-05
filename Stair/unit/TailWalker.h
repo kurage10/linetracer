@@ -6,6 +6,9 @@
 #include "TailController.h"
 #include <stdio.h>
 
+namespace Stair{
+  namespace unit{
+
 class TailWalker {
 public:
   TailWalker(ev3api::Motor& leftWheel,ev3api::Motor& rightWheel,TailController* tailController);
@@ -21,4 +24,7 @@ private:
     FILE* file;
 };
 
+  }
+}
+ 
 #endif  // EV3_UNIT_BALANCINGWALKER_H_

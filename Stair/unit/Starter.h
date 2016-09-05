@@ -11,6 +11,9 @@
 
 #include "TouchSensor.h"
 
+namespace Stair{
+  namespace unit{
+
 class Starter {
 public:
     explicit Starter(const ev3api::TouchSensor& touchSensor);
@@ -21,4 +24,7 @@ protected:
     const ev3api::TouchSensor& mTouchSensor;
 };
 
+  }
+}
+ 
 #endif  // EV3_UNIT_STARTER_H_

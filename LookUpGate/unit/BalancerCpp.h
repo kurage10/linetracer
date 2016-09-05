@@ -6,12 +6,12 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_UNIT_BALANCERCPP_H_
-#define EV3_UNIT_BALANCERCPP_H_
+#ifndef EV3_LOOKUPGATE_UNIT_BALANCERCPP_H_
+#define EV3_LOOKUPGATE_UNIT_BALANCERCPP_H_
 
 #include "ev3api.h"
 
-namespace Stair{
+namespace LookUpGate{
   namespace unit{
 
 class Balancer {
@@ -34,5 +34,5 @@ private:
 
   }
 }
- 
+
 #endif  // EV3_UNIT_BALANCERCPP_H_

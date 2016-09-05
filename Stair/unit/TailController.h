@@ -2,6 +2,8 @@
 #define EV3_APP_TAILCONTROLLER_H_
 #include "Motor.h"
 
+namespace Stair{
+  namespace unit{
 
 class TailController{
 private:
@@ -16,6 +18,7 @@ public:
   int32_t getAngle();
 };
 
-
+  }
+}
 
 #endif
