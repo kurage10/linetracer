@@ -24,7 +24,7 @@ const int BalancingWalker::HIGH   = 70;    // 高速
  * @param rightWheel 右モータ
  * @param balancer   バランサ
  */
-BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
+BalancingWalker::BalancingWalker(ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& leftWheel,
                                  ev3api::Motor& rightWheel,
                                  unit::Balancer* balancer)
@@ -61,7 +61,8 @@ void BalancingWalker::run() {
  */
 void BalancingWalker::init() {
     int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-
+    //mGyroSensor.setOffset(offset);
+    
     // モータの回転を止める
     mLeftWheel.setPWM(0);
     mRightWheel.setPWM(0);

@@ -37,12 +37,12 @@ namespace app{
   void Switcher::execUndefined(){
     //各種初期化
     mUsecase = LINETRACER;
-    //mUsecase = STAIR;
   }
   void Switcher::execLineTracer(){
     mLineTrace->run();
     if(mLineTrace -> isDone()){
-      mUsecase = LOOKUPGATE;
+      //mUsecase = LOOKUPGATE;
+      mUsecase = STAIR;
     }
   }
   void Switcher::execLookupGate(){

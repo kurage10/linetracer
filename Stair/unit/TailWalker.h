@@ -15,12 +15,16 @@ public:
 
   void init();
   void run();
-
+  void setSpeed(int speed);
+  void setAngle(int32_t angle);
+  
 private:
     ev3api::Motor& mLeftWheel;
     ev3api::Motor& mRightWheel;
     TailController* mTailController;
+    int mSpeed;
     bool mIsInitialized;
+    int32_t mAngle;
     FILE* file;
 };
 

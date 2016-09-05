@@ -25,7 +25,7 @@ public:
     static const int NORMAL;
     static const int HIGH;
 
-    BalancingWalker(const ev3api::GyroSensor& gyroSensor,
+    BalancingWalker(ev3api::GyroSensor& gyroSensor,
                     ev3api::Motor& leftWheel,
                     ev3api::Motor& rightWheel,
                     unit::Balancer* balancer);
@@ -35,7 +35,7 @@ public:
     void setCommand(int forward, int turn);
 
 private:
-    const ev3api::GyroSensor& mGyroSensor;
+    ev3api::GyroSensor& mGyroSensor;
     ev3api::Motor& mLeftWheel;
     ev3api::Motor& mRightWheel;
     unit::Balancer* mBalancer;

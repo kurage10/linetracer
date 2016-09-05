@@ -104,11 +104,12 @@ static void user_system_create() {
 							    gRightWheel,
 							    gTailController_S);
     gStairWalker_S            = new Stair::app::StairWalker(gStairTurner_S,
-					      gLineTracer_S,
-					      gObstacleDitector_S,
-					      gTailWalker_S,
-					      gBalancingWalker_S,
-					      gTailController_S);
+							    gLineTracer_S,
+							    gObstacleDitector_S,
+							    gTailWalker_S,
+							    gBalancingWalker_S,
+							    gTailController_S,
+							    gGyroSensor);
     gLineTracerWithStarter_S  = new Stair::app::LineTracerWithStarter(gLineTracer_S,
 							  gStarter_S,
 							  gTailController_S);

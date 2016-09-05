@@ -3,25 +3,34 @@
 namespace Stair{
   namespace unit{
 
-TailWalker::TailWalker(ev3api::Motor& leftWheel,
-                       ev3api::Motor& rightWheel,
-                       TailController* tailController)
-     :mLeftWheel(leftWheel),
-      mRightWheel(rightWheel),
-      mTailController(tailController){
+    TailWalker::TailWalker(ev3api::Motor& leftWheel,
+			   ev3api::Motor& rightWheel,
+			   TailController* tailController)
+      :mLeftWheel(leftWheel),
+       mRightWheel(rightWheel),
+       mTailController(tailController),
+       mSpeed(100) {
 
-}
-void TailWalker::run(){
+    }
+    void TailWalker::run(){
+      mTailController->setAngle(mAngle);
+      mTailController->run();
+      mLeftWheel.setPWM(mSpeed);
+      mRightWheel.setPWM(mSpeed);
+    }
 
-  mTailController->setAngle((int32_t)80);
-  mTailController->run();
-  mLeftWheel.setPWM(100);
-  mRightWheel.setPWM(100);
-}
-void TailWalker::init(){
-  mTailController->setAngle((int32_t)80);
-  mIsInitialized = true;
-}
+    void TailWalker::setSpeed(int speed){
+      mSpeed = speed;
+    }
+
+    void TailWalker::setAngle(int32_t angle){
+      mAngle = angle;
+    }
+    
+    void TailWalker::init(){
+      mTailController->setAngle((int32_t)80);
+      mIsInitialized = true;
+    }
 
   }
 }

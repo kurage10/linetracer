@@ -1,6 +1,7 @@
 #ifndef EV3_APP_STAIRWALKER_H_
 #define EV3_APP_STAIRWALKER_H_
 
+#include "GyroSensor.h"
 #include "StairTurner.h"
 #include "LineTracer.h"
 #include "GyroSensor.h"
@@ -22,7 +23,8 @@ namespace Stair{
 		  Stair::unit::ObstacleDitector* obstacleDitector,
 		  Stair::unit::TailWalker* tailWalker,
 		  Stair::unit::BalancingWalker* balancingWalker,
-		  Stair::unit::TailController* tailController);
+		  Stair::unit::TailController* tailController,
+		  ev3api::GyroSensor& gyroSensor);
       void run();
       bool isDone();
       ~StairWalker();
@@ -34,23 +36,30 @@ namespace Stair{
       Stair::unit::TailWalker* mTailWalker;
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
+      ev3api::GyroSensor& mGyroSensor;
       enum State {
 	UNDEFINED,
-	PREPARE,
-	WALKING,
+	CHANGE_INTO_TAILWALK,
+	WALKING_WITH_TAIL,
 	CLIMBING,
-	TURNING
+	MOVE_TO_CENTER, 
+	TURNING,
+	WALKING_WITHOUT_TAIL, 
+	GET_OFF
       };
       State mState;
-      int timefromstart;
       int mCount;
       void execUndefined();
-      void execPrepare();
-      void execWalking();
+      void execChangeIntoTailwalk();
+      void execTailwalking();
       void execClimbing();
+      void execMoving();
       void execTurning();
-    };
+      void execWalking();
+      void execGetOff();
 
+      FILE* fp;
+    };
   }
 }
 #endif

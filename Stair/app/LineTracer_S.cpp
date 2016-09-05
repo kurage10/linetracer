@@ -79,5 +79,6 @@ namespace Stair{
     void LineTracer::setStarting(bool starting){
       mStarting = starting;
     }
+
   }
 }
