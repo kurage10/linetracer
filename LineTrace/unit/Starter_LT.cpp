@@ -17,6 +17,7 @@ namespace LineTrace{
  */
 Starter::Starter(const ev3api::TouchSensor& touchSensor)
     : mTouchSensor(touchSensor) {
+      mBt = ev3_serial_open_file(EV3_SERIAL_BT);
 }
 
 /**
@@ -24,8 +25,16 @@ Starter::Starter(const ev3api::TouchSensor& touchSensor)
  * @retval true  押下している
  * @retval false 押下していない
  */
-bool Starter::isPushed() const {
-    return mTouchSensor.isPressed();
+bool Starter::isPushed(){
+    uint8_t c = fgetc(mBt); /* 受信 */
+    if(c=='1'){
+      bt_cmd=true;
+    }else{
+      bt_cmd=false;
+    }
+    fputc(c, mBt); /* エコーバック */
+    return (bt_cmd || mTouchSensor.isPressed());
+
 }
 
   }
