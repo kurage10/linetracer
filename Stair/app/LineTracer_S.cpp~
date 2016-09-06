@@ -6,44 +6,65 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#include "LineTracer.h"
-#include <math.h>
+#include "./LineTracer.h"
 
-namespace LineTrace{
+namespace Stair{
   namespace app{
+  
     /**
      * コンストラクタ
      * @param lineMonitor     ライン判定
      * @param balancingWalker 倒立走行
      */
-    LineTracer::LineTracer(LineTrace::unit::LineMonitor* lineMonitor,
-			   LineTrace::unit::BalancingWalker* balancingWalker)
+    LineTracer::LineTracer(Stair::unit::LineMonitor* lineMonitor,
+			   Stair::unit::BalancingWalker* balancingWalker)
       : mLineMonitor(lineMonitor),
 	mBalancingWalker(balancingWalker),
-	mIsInitialized(false){
+	mIsInitialized(false),
+	mSpeed(Stair::unit::BalancingWalker::LOW){
+    }
+
+    LineTracer::~LineTracer(){
+      delete mLineMonitor;
+      delete mBalancingWalker;
+      delete &mIsInitialized;
+      delete &mSpeed;
     }
 
     /**
      * ライントレースする
      */
     void LineTracer::run() {
-      int mSpeed;
-
       if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
       }
 
-      //For Left Coutse
-      mSpeed = 80;
-      //For Right Course
-      mSpeed = mLineMonitor->calcSpeed();
+      float direction = mLineMonitor->calcVecSpeed(mStarting);
 
-      float direction = mLineMonitor->calcDirection(mStarting);
-      
+      // 走行体の向きを計算する
+      //float speed = calcSpeed(direction);
+
       mBalancingWalker->setCommand(mSpeed, direction);
+
       // 倒立走行を行う
       mBalancingWalker->run();
+    }
+
+    /**
+     * 走行体の向きを計算する
+     * @param isOnLine true:ライン上/false:ライン外
+     * @retval 30  ライン上にある場合(右旋回指示)
+     * @retval -30 ライン外にある場合(左旋回指示)
+     */
+    float LineTracer::calcSpeed(float direction) {
+      if (direction > 0) {
+        // ライン上にある場合
+        return direction;
+      } else {
+        // ライン外にある場合
+        return -direction;
+      }
     }
 
     void LineTracer::init(){
@@ -52,18 +73,12 @@ namespace LineTrace{
     }
 
     bool LineTracer::isDone(){
-      //return mLineMonitor->measureDistance() > 9000;
-      return mLineMonitor->measureDistance() > 150;
+      return false;
     }
 
     void LineTracer::setStarting(bool starting){
       mStarting = starting;
     }
 
-    LineTracer::~LineTracer(){
-      delete mLineMonitor;
-      delete mBalancingWalker;
-      delete &mIsInitialized;
-    }
   }
 }

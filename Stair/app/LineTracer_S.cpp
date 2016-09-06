@@ -40,7 +40,7 @@ namespace Stair{
         mIsInitialized = true;
       }
 
-      float direction = mLineMonitor->calcVecSpeed(mStarting);
+      float direction = mLineMonitor->calcDirection();
 
       // 走行体の向きを計算する
       //float speed = calcSpeed(direction);

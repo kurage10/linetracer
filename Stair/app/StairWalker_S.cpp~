@@ -82,14 +82,8 @@ namespace Stair{
 	  mTailWalker->setSpeed(0);
 	  mTailWalker->setAngle(90);
 	  mTailController->run();
-	  if(mCount > 500){
-	    mCount = 0;
-	    mTailWalker->setSpeed(30);
-	    mState=CLIMBING;
-	  }else{
-	    mTailWalker->run();
-	    mCount++;
-	  }
+	  mCount = 0;
+	  mState=WALKING_WITH_TAIL;
 	}
       }
     }
@@ -97,7 +91,7 @@ namespace Stair{
       mTailWalker->run();
     }
     void StairWalker::execClimbing(){
-      mTailWalker->run();
+
     }
     void StairWalker::execMoving(){
 

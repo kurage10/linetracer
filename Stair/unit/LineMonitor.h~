@@ -18,7 +18,7 @@ namespace Stair{
     class LineMonitor {
     public:
       explicit LineMonitor(const ev3api::ColorSensor& colorSensor);
-      float calcDirection();
+      float calcVecSpeed(bool starting);
       void setThreshold(int8_t threshold);
 
     private:
