@@ -16,8 +16,13 @@ namespace LineTrace{
  * @param touchSensor タッチセンサ
  */
 Starter::Starter(const ev3api::TouchSensor& touchSensor)
-    : mTouchSensor(touchSensor) {
-      mBt = ev3_serial_open_file(EV3_SERIAL_BT);
+    : mTouchSensor(touchSensor),
+    bt_cmd(false){
+
+}
+void Starter::setRemote(bool flag){
+  bt_cmd=flag;
+
 }
 
 /**
@@ -26,13 +31,8 @@ Starter::Starter(const ev3api::TouchSensor& touchSensor)
  * @retval false 押下していない
  */
 bool Starter::isPushed(){
-    uint8_t c = fgetc(mBt); /* 受信 */
-    if(c=='1'){
-      bt_cmd=true;
-    }else{
-      bt_cmd=false;
-    }
-    fputc(c, mBt); /* エコーバック */
+    //if(ev3_bluetooth_is_connected()){
+
     return (bt_cmd || mTouchSensor.isPressed());
 
 }

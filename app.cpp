@@ -8,6 +8,7 @@
 
 #include "app.h"
 #include "Switcher.h"
+#include <stdio.h>
 
 // using宣言
 using ev3api::ColorSensor;
@@ -50,6 +51,8 @@ static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
 
 static LookUpGate::app::LookUpGate *gLookUpGate_LG;
+static FILE* gBt= ev3_serial_open_file(EV3_SERIAL_BT);
+bool bt_cmd;
 //static LookUpGate::unit::LineMonitor     *gLineMonitor_LG;
 //static LookUpGate::unit::Balancer        *gBalancer_LG;
 //static LookUpGate::unit::BalancingWalker *gBalancingWalker_LG;
@@ -86,7 +89,7 @@ static void user_system_create() {
 									  gGyroSensor);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
-    
+
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
                                                   gLeftWheel,
@@ -127,7 +130,7 @@ static void user_system_create() {
 						     gSonarSensor,
 						     gLeftWheel,
 						     gRightWheel);
- 
+
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 gStopper_G,
 					 gStairWalker_S,
@@ -143,6 +146,7 @@ static void user_system_destroy() {
     gLeftWheel.reset();
     gRightWheel.reset();
     gTailMotor.reset();
+    fclose(gBt);
     delete gSwitcher;
 
     delete gLineTracerWithStarter_LT;
@@ -152,7 +156,7 @@ static void user_system_destroy() {
     delete gLineMonitor_LT;
     delete gBalancingWalker_LT;
     delete gBalancer_LT;
-    
+
     delete gStopper_G;
 
     delete gTailWalker_S;
@@ -182,6 +186,10 @@ void ev3_cyc_tracer(intptr_t exinf) {
     act_tsk(TRACER_TASK);
 }
 
+void ev3_cyc_remote(intptr_t exinf) {
+    act_tsk(REMOTE_TASK);
+}
+
 /**
  * メインタスク
  */
@@ -190,10 +198,12 @@ void main_task(intptr_t unused) {
 
     // 周期ハンドラ開始
     ev3_sta_cyc(EV3_CYC_TRACER);
+    ev3_sta_cyc(EV3_CYC_REMOTE);
 
     slp_tsk();  // バックボタンが押されるまで待つ
 
     // 周期ハンドラ停止
+    ev3_stp_cyc(EV3_CYC_REMOTE);
     ev3_stp_cyc(EV3_CYC_TRACER);
 
     user_system_destroy();  // 終了処理
@@ -212,4 +222,20 @@ void tracer_task(intptr_t exinf) {
     }
 
     ext_tsk();
+}
+void remote_task(intptr_t exinf){
+
+  if(gBt != NULL){
+    uint8_t c = fgetc(gBt); /* 受信 */
+    if(c=='1'){
+      gStarter_LT->setRemote(true);
+    }else{
+      gStarter_LT->setRemote(false);
+    }
+    fputc(c, gBt); /* エコーバック */
+
+  }else{
+    gStarter_LT->setRemote(false);
+  }
+  ext_tsk();
 }

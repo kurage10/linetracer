@@ -21,11 +21,11 @@ public:
     explicit Starter(const ev3api::TouchSensor& touchSensor);
 
     bool isPushed();
+    void setRemote(bool flag);
 
 protected:
     const ev3api::TouchSensor& mTouchSensor;
     bool bt_cmd;     /* Bluetoothコマンド 1:リモートスタート */
-    FILE* mBt;     /* Bluetoothファイルハンドル */
 
 };
 
