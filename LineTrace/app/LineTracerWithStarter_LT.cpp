@@ -84,9 +84,9 @@ namespace LineTrace{
     void LineTracerWithStarter::execPrepare() {
       mTailController -> run();
 
-            if(mTailController -> getAngle() >= 108){
-      //fprintf(fp,"Angle = %d\n",mGyroSensor.getAngle());
-      //if(mGyroSensor.getAngle() > 3){
+      //if(mTailController -> getAngle() >= 108){
+      fprintf(fp,"Angle = %d\n",mGyroSensor.getAngle());
+      if(mGyroSensor.getAngle() > 3){
 	mTailController -> setAngle(0);
 	mState = ROCKET_STARTING;
       }
