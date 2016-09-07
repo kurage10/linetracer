@@ -8,16 +8,29 @@
 
 #include "LineTracerWithStarter.h"
 
+
 /**
  * コンストラクタ
  * @param lineTracer ライントレーサ
  * @param starter    スタータ
  */
-LineTracerWithStarter::LineTracerWithStarter(LineTracer* lineTracer,Starter* starter,TailController* tailController)
+LineTracerWithStarter::LineTracerWithStarter(LineTracer* lineTracer,
+                                              Starter* starter,
+                                              TailController* tailController,
+                                              ev3api::SonarSensor& sonar,
+                                              LookUpGate* lookUpGate,
+                                              // ev3api::Motor& leftWheel,
+                                              // ev3api::Motor& rightWheel,
+                                              Balancer* balancer)
     : mLineTracer(lineTracer),
       mStarter(starter),
       mTailController(tailController),
       mState(UNDEFINED),
+      mSonar(sonar),
+      mLookUpGate(lookUpGate),
+      // mLeftWheel(leftWheel),
+      // mRightWheel(rightWheel),
+      mBalancer(balancer),
       timeFromStart(0) {
 }
 
@@ -37,9 +50,12 @@ void LineTracerWithStarter::run() {
         break;
     case ROCKET_STARTING:
         execStarting();
-	break;
+      	break;
     case WALKING:
         execWalking();
+        break;
+    case LOOKUPGATE:
+        execLookUpGate();
         break;
     default:
         break;
@@ -66,6 +82,7 @@ void LineTracerWithStarter::execWaitingForStart() {
       mLineTracer->init();
       mTailController->setAngle(112);
       mState = PREPARE_STARTING;
+      file2 = fopen("/gateDistance.txt","w");
     }
 }
 
@@ -93,6 +110,28 @@ void LineTracerWithStarter::execStarting() {
  * 走行中状態の処理
  */
 void LineTracerWithStarter::execWalking() {
+  int dis = mSonar.getDistance();
+  if (60 < dis && dis < 65) {      
+    mTailController -> setAngle(85); 
+  } else if (15 < dis && dis <= 20) {   
+    mState = LOOKUPGATE;
+  }
   mLineTracer->run(false, timeFromStart);
   mTailController -> run();
+}
+
+void LineTracerWithStarter::execLookUpGate() {
+    // fprintf(file2,"LOOKUPGATE\n");
+    mLookUpGate->run();
+  //   mLeftWheel.setPWM(base_speed);
+  //   mRightWheel.setPWM(base_speed);
+  //   int dis = mSonar.getDistance();
+  //   if (dis <= 20) {
+  //     mTailController -> setAngle(80); 
+  //   }
+
+  // mTailController -> run();
+
+
+
 }

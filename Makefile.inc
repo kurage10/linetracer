@@ -9,6 +9,7 @@ APPL_CXXOBJS += \
 	Starter.o \
   TailController.o \
 	LineTracer.o \
+	LookUpGate.o\
 	LineTracerWithStarter.o \
 	Switcher.o
 
