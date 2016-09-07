@@ -1,5 +1,4 @@
 # LookUpGate
-***
 ## Do not merge this branch!
 - This version is used to test parameters on the second trial.
 - The robot now can pass the gate twice.
