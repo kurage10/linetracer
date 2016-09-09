@@ -1,6 +1,7 @@
 #include "Switcher.h"
 
 namespace app{
+<<<<<<< HEAD
   
   Switcher::Switcher(LineTrace::app::LineTracerWithStarter* linetracer,
 		     unit::UsecaseDetector* usecasedetector, Stopper* stopper):
@@ -8,23 +9,29 @@ namespace app{
   mUsecaseDetector(usecasedetector), 
   mUsecase(unit::UsecaseDetector::UNDEFINED),
   mStopper(stopper){
+=======
+
+  Switcher::Switcher(Task* linetracer):
+  mLineTracerWithStarter(linetracer),
+  mUsecase(UNDEFINED){
+>>>>>>> refs/remotes/origin/master
 
 }
 void Switcher::run(){
   switch(mUsecase){
-    case unit::UsecaseDetector::UNDEFINED:
+    case UNDEFINED:
       execUndefined();
       break;
-    case unit::UsecaseDetector::LINETRACER:
+    case LINETRACER:
       execLineTracer();
       break;
-    case unit::UsecaseDetector::LOOKUPGATE:
+    case LOOKUPGATE:
       execLookupGate();
       break;
-    case unit::UsecaseDetector::GARAGE:
+    case GARAGE:
       execGarage();
       break;
-    case unit::UsecaseDetector::STAIR:
+    case STAIR:
       execStair();
       break;
     default:
@@ -33,22 +40,32 @@ void Switcher::run(){
 }
 void Switcher::execUndefined(){
   //各種初期化
-  mUsecase= unit::UsecaseDetector::LINETRACER;
-  mUsecaseDetector->init();
+  mUsecase = LINETRACER;
+  //mUsecaseDetector->init();
 }
 void Switcher::execLineTracer(){
   mLineTracerWithStarter->run();
-  mUsecase = mUsecaseDetector->nextUsecase();
+  if(mLineTracerWithStarter -> isDone()){
+    mUsecase = LOOKUPGATE;
+  }
+/*
+  if(mUsecaseDetector->nextUsecase()){
+    mUsecase = xxxx
+  }*/
 }
 void Switcher::execLookupGate(){
-  mUsecase = mUsecaseDetector->nextUsecase();
+  //mUsecase = mUsecaseDetector->nextUsecase();
 }
 void Switcher::execGarage(){
+<<<<<<< HEAD
   mStopper->run();
   mUsecase = mUsecaseDetector->nextUsecase();
+=======
+  //mUsecase = mUsecaseDetector->nextUsecase();
+>>>>>>> refs/remotes/origin/master
 }
 void Switcher::execStair(){
-  mUsecase = mUsecaseDetector->nextUsecase();
+  //mUsecase = mUsecaseDetector->nextUsecase();
 }
 
 }

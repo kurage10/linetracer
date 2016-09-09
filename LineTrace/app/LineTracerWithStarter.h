@@ -12,17 +12,20 @@
 #include "Starter.h"
 #include "LineTracer.h"
 #include "TailController.h"
+#include "Task.h"
 
+using app::Task;
 namespace LineTrace{
   namespace app{
 
-class LineTracerWithStarter {
+class LineTracerWithStarter : public Task{
 public:
   LineTracerWithStarter(app::LineTracer* lineTracer,
 			unit::Starter* starter,
 			unit::TailController* tailController);
 
     void run();
+    bool isDone();
 
 private:
     enum State {
@@ -43,7 +46,7 @@ private:
     void execPrepare();
     void execStarting();
     void execWalking();
-
+    bool isFinished();
     bool mStarting();
     int timeFromStart;
 };

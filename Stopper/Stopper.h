@@ -25,6 +25,9 @@ private:
 	
 	int currentPWM;
 	
+	int leftAngle;
+	int rightAngle;
+	
 	void updatePWM();
 	bool isEndReached();
 	bool bIsInitialized;

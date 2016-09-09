@@ -33,9 +33,13 @@ static LineTrace::unit::Starter         *gStarter;
 static LineTrace::unit::TailController *gTailController;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter;
 static app::Switcher *gSwitcher;
+<<<<<<< HEAD
 static unit::UsecaseDetector *gUsecaseDetector;
 static unit::DistanceMonitor *gDistanceMonitor;
 static Stopper *gStopper;
+=======
+//static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
+>>>>>>> refs/remotes/origin/master
 
 void *__dso_handle = 0;
 
@@ -60,9 +64,13 @@ static void user_system_create() {
     gLineTracerWithStarter = new LineTrace::app::LineTracerWithStarter(gLineTracer,
 								       gStarter,
 								       gTailController);
+<<<<<<< HEAD
     gDistanceMonitor = new unit::DistanceMonitor(gLeftWheel, gRightWheel);
     gUsecaseDetector = new unit::UsecaseDetector(gDistanceMonitor);
     gSwitcher        = new app::Switcher(gLineTracerWithStarter, gUsecaseDetector, gStopper);
+=======
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter);
+>>>>>>> refs/remotes/origin/master
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }
