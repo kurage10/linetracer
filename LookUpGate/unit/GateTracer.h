@@ -24,7 +24,7 @@ private:
   ev3api::Motor mRightWheel;
   ev3api::ColorSensor mColorSensor;
   const int8_t mThreshold = 20;
-  const int8_t pwm = (ev3api::Motor::PWM_MAX) / 6;
+  const int8_t pwm = (ev3api::Motor::PWM_MAX) / 5;
 };
   }
 }

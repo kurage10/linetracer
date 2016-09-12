@@ -75,7 +75,7 @@ namespace LookUpGate{
         mBalancingWalker -> setCommand(0, 0);
         mBalancingWalker -> run();
         if(timer > 100 && timer < 400){
-          mBalancingWalker -> setCommand(-35,0);
+          mBalancingWalker -> setCommand(-25,0);
           mBalancingWalker -> run();
         } else if (400 <= timer && timer < 500) {
           mLeftWheel.setPWM(0);
@@ -100,7 +100,7 @@ namespace LookUpGate{
 
     void LookUpGate::firstPass() {
         mTailController -> run();
-        if (timer < 500) {
+        if (timer < 400) {
           mGateTracer -> run();
         } else if (timer % 70 == 0) {
             int n = setSpeed(0, 0);
@@ -113,18 +113,17 @@ namespace LookUpGate{
     }
 
     void LookUpGate::backWard() {
-        // mTailController -> setAngle(80);
+        mTailController -> setAngle(83);
         mTailController -> run();
-
-        if (timer % 20 == 0) {
-            setSpeed(-5, 0);
-        }
-        if (timer == 2100) {
+        // if (timer % 20 == 0) {
+        //     setSpeed(-5, 0);
+        // }
+        if (timer >= 2100) {
             state = SECOND;
             setSpeed(0, 0);
             timer = 0;
         }
-        // mGateTracer -> back();
+        mGateTracer -> back();
         timer ++;
     }
 
