@@ -4,19 +4,22 @@ namespace LookUpGate{
     int current_speed = 0;
     int base_speed = 40;
     int timer = 1;
+    int flag = 0;
 
     LookUpGate::LookUpGate(LineTrace::unit::TailController* tailController,
                     ev3api::SonarSensor& sonar,
                     ev3api::Motor& leftWheel,
                     ev3api::Motor& rightWheel,
                     unit::GateTracer* gateTracer,
-                    LineTrace::app::LineTracer* lineTracer)
+                    LineTrace::app::LineTracer* lineTracer,
+                    LineTrace::unit::BalancingWalker* balancingWalker)
         : mTailController(tailController),
           mSonar(sonar),
           mLeftWheel(leftWheel),
           mRightWheel(rightWheel),
           mGateTracer(gateTracer),
           mLineTracer(lineTracer),
+          mBalancingWalker(balancingWalker),
           state(SEEK) {
     }
 
@@ -26,6 +29,7 @@ namespace LookUpGate{
           delete &mLeftWheel;
           delete &mRightWheel;
           delete &mLineTracer;
+          delete &mBalancingWalker;
           delete &state;
     }
 
@@ -57,6 +61,9 @@ namespace LookUpGate{
       int dis = mSonar.getDistance();
       if (60 < dis && dis < 65) {
         mTailController -> setAngle(85);
+        flag = 1;
+      }
+      if (dis < 50 && flag == 1) {
         state = INIT;
       }
       mLineTracer->setStarting(false);
@@ -65,22 +72,35 @@ namespace LookUpGate{
     }
 
     void LookUpGate::init() {
-        mLeftWheel.setPWM(base_speed);
-        mRightWheel.setPWM(base_speed);
-        current_speed = base_speed;
+        mBalancingWalker -> setCommand(0, 0);
+        mBalancingWalker -> run();
+        if(timer > 100 && timer < 400){
+          mBalancingWalker -> setCommand(-35,0);
+          mBalancingWalker -> run();
+        } else if (400 <= timer && timer < 500) {
+          mLeftWheel.setPWM(0);
+          mRightWheel.setPWM(0);
+        } else if (timer >= 500) {
+          mGateTracer -> run();
+        }
+
+        // mLeftWheel.setPWM(base_speed);
+        // mRightWheel.setPWM(base_speed);
+        // current_speed = base_speed;
         // mGateTracer -> run();
         int dis = mSonar.getDistance();
         if (dis <= 15) {
           mTailController -> setAngle(80);
           state = FIRST;
+          timer = 1;
         }
         mTailController -> run();
-
+        timer ++;
     }
 
     void LookUpGate::firstPass() {
         mTailController -> run();
-        if (timer < 210) {
+        if (timer < 500) {
           mGateTracer -> run();
         } else if (timer % 70 == 0) {
             int n = setSpeed(0, 0);
@@ -93,7 +113,7 @@ namespace LookUpGate{
     }
 
     void LookUpGate::backWard() {
-        mTailController -> setAngle(80);
+        // mTailController -> setAngle(80);
         mTailController -> run();
 
         if (timer % 20 == 0) {

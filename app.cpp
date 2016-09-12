@@ -133,7 +133,8 @@ static void user_system_create() {
                                     						     gLeftWheel,
                                     						     gRightWheel,
                                                      gGateTracer_LG,
-                                                     gLineTracer_LT);
+                                                     gLineTracer_LT,
+                                                     gBalancingWalker_LT);
 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 gStopper_G,
