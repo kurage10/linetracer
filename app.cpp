@@ -203,9 +203,9 @@ void main_task(intptr_t unused) {
     slp_tsk();  // バックボタンが押されるまで待つ
 
     // 周期ハンドラ停止
-    ev3_stp_cyc(EV3_CYC_REMOTE);
-    ev3_stp_cyc(EV3_CYC_TRACER);
 
+    ev3_stp_cyc(EV3_CYC_TRACER);
+    ev3_stp_cyc(EV3_CYC_REMOTE);
     user_system_destroy();  // 終了処理
 
     ext_tsk();
