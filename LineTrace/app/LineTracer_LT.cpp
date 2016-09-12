@@ -40,7 +40,7 @@ namespace LineTrace{
       mSpeed = mLineMonitor->calcSpeed();
 
       float direction = mLineMonitor->calcDirection(mStarting);
-      
+
       mBalancingWalker->setCommand(mSpeed, direction);
       // 倒立走行を行う
       mBalancingWalker->run();

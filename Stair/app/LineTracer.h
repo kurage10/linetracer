@@ -24,11 +24,12 @@ namespace Stair{
 		 Stair::unit::BalancingWalker* balancingWalker);
 
       ~LineTracer();
-      
+
       void run();
       bool isDone();
       void init();
       void stop();
+      void setSpeed(int speed);
       void setStarting(bool starting);
 
     private:
@@ -37,7 +38,8 @@ namespace Stair{
       bool mIsInitialized;
       int mSpeed;
       bool mStarting;
-      
+      int timeFromStart;
+
       float calcSpeed(float direction);
     };
 

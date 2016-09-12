@@ -101,7 +101,8 @@ static void user_system_create() {
     gStarter_S                = new Stair::unit::Starter(gTouchSensor);
     gStairTurner_S            = new Stair::unit::StairTurner(gLeftWheel,
 							     gRightWheel,
-							     gTailController_S);
+							     gTailController_S,
+                    gColorSensor);
     gLineTracer_S             = new Stair::app::LineTracer(gLineMonitor_S, gBalancingWalker_S);
     gTailWalker_S             = new Stair::unit::TailWalker(gLeftWheel,
 							    gRightWheel,
@@ -131,7 +132,7 @@ static void user_system_create() {
 						     gLeftWheel,
 						     gRightWheel);
 
-    gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter_S,
 					 gStopper_G,
 					 gStairWalker_S,
 					 gLookUpGate_LG);

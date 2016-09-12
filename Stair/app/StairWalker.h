@@ -26,7 +26,7 @@ namespace Stair{
       void run();
       bool isDone();
       ~StairWalker();
-      
+
     private:
       Stair::unit::StairTurner* mStairTurner;
       Stair::app::LineTracer* mLineTracer;
@@ -35,19 +35,24 @@ namespace Stair{
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
       enum State {
-	UNDEFINED,
-	PREPARE,
-	WALKING,
-	CLIMBING,
-	TURNING
+	      UNDEFINED,
+	      PREPARE,
+        STAY,
+	      WALKING,
+	      CLIMBING,
+        PREPARE_TURNING,
+	      TURNING
       };
       State mState;
       int timefromstart;
       int mCount;
+      bool endLine;
       void execUndefined();
       void execPrepare();
+      void execStay();
       void execWalking();
       void execClimbing();
+      void execPrepareTurning();
       void execTurning();
     };
 

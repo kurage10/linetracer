@@ -9,7 +9,7 @@ namespace app{
     mLineTrace(linetrace),
     mGarage(garage),
     mStair(stair),
-    mGate(gate), 
+    mGate(gate),
     mUsecase(UNDEFINED){
 
   }
@@ -42,7 +42,7 @@ namespace app{
   void Switcher::execLineTracer(){
     mLineTrace->run();
     if(mLineTrace -> isDone()){
-      mUsecase = LOOKUPGATE;
+      mUsecase = STAIR;
     }
   }
   void Switcher::execLookupGate(){
@@ -60,7 +60,7 @@ namespace app{
   void Switcher::execStair(){
     mStair->run();
     if(mStair -> isDone()){
-      mUsecase = GARAGE;
+      mUsecase = LINETRACER;
     }
   }
 
