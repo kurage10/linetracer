@@ -24,7 +24,7 @@ namespace Stair{
       int diff=max-min;
       fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,max_liveness,min_liveness, 200*(int)mCliming,200*(int)detectStair);
 
-      if(diff > 130 || mCliming){
+      if(diff > 80 || mCliming){
 	mCliming=true;
 	return true;
       }/*

@@ -18,10 +18,13 @@ namespace Stair{
 
 
 // 定数宣言
-const int8_t LineMonitor::INITIAL_THRESHOLD = 9;  // 黒色の光センサ値
-const float LineMonitor::KP = 2.22;
-const float LineMonitor::KI = 7.92;
-const float LineMonitor::KD = 0.16;
+const int8_t LineMonitor::THRESHOLD_Tail = 9;  // 黒色の光センサ値
+const float LineMonitor::KP_Tail = 9.22;
+    //const float LineMonitor::KP_Tail = 2.22;
+const float LineMonitor::KI_Tail = 0.0;
+    //const float LineMonitor::KI_Tail = 7.92;
+const float LineMonitor::KD_Tail = 0.0;
+    //const float LineMonitor::KD_Tail = 0.16;
 
 /**
  * コンストラクタ
@@ -29,7 +32,7 @@ const float LineMonitor::KD = 0.16;
  */
 LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor)
     : mColorSensor(colorSensor),
-      mThreshold(INITIAL_THRESHOLD),
+      mThreshold(THRESHOLD_Tail),
       diff(),
       integral(0){
 }
@@ -39,10 +42,26 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor)
  * @retval true  ライン上
  * @retval false ライン外
  */
-float LineMonitor::calcDirection(){
+float LineMonitor::calcDirection(State state){
     // 光センサからの取得値を見て
     // PID制御を行う
   float p,i,d,direction;
+  float KP,KI,KD;
+  
+  switch(state){
+  case TailWalking:
+    //ev3_speaker_play_tone(NOTE_C6,500);
+    KP = KP_Tail;
+    KI = KI_Tail;
+    KD = KD_Tail;
+    mThreshold = THRESHOLD_Tail;
+    break;
+  case BalanceWalking:
+    break;
+  default:
+    break;
+  }
+  
   diff[0]=diff[1];
   diff[1] = mColorSensor.getBrightness() - mThreshold;
   integral=integral+(diff[1]+diff[0])/2.0*0.004;

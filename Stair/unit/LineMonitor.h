@@ -17,15 +17,20 @@ namespace Stair{
     // 定義
     class LineMonitor {
     public:
+      enum State{
+	TailWalking,
+	BalanceWalking
+      };
+      
       explicit LineMonitor(const ev3api::ColorSensor& colorSensor);
-      float calcDirection();
+      float calcDirection(State state);
       void setThreshold(int8_t threshold);
 
     private:
-      static const int8_t INITIAL_THRESHOLD;
-      static const float KP;        // 比例係数
-      static const float KI;
-      static const float KD;
+      static const int8_t THRESHOLD_Tail;
+      static const float KP_Tail;        // 比例係数
+      static const float KI_Tail;
+      static const float KD_Tail;
       const ev3api::ColorSensor& mColorSensor;
       int8_t mThreshold;
       float diff[2];

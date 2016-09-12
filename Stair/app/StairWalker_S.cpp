@@ -1,4 +1,3 @@
-
 #include "StairWalker.h"
 #include <stdio.h>
 
@@ -84,8 +83,9 @@ namespace Stair{
 	  mTailController->run();
 	  if(mCount > 500){
 	    mCount = 0;
-	    mTailWalker->setSpeed(30);
-	    mState=CLIMBING;
+	    mTailWalker->setSpeed(15);//スピードを下げる？
+	    mTailWalker->setDoTrace(true);
+	    mState=WALKING_WITH_TAIL;
 	  }else{
 	    mTailWalker->run();
 	    mCount++;
@@ -94,22 +94,45 @@ namespace Stair{
       }
     }
     void StairWalker::execTailwalking(){
-      mTailWalker->run();
+      mTailWalker->run();//距離で段への衝突を検知->一旦停止
+      if(mObstacleDitector->isObstacle()){
+	mTailWalker->setSpeed(-5);
+	mTailWalker->setDoTrace(false);
+	mCount++;
+	if(mCount > 500){
+	  mTailWalker->setSpeed(0);
+	}
+	if(mCount > 1000){
+	  mCount = 0;
+	  mTailWalker->setSpeed(30);
+	  mGyroSensor.reset();
+	  mState = CLIMBING;
+	}
+      }
     }
     void StairWalker::execClimbing(){
       mTailWalker->run();
+      if(mGyroSensor.getAngle() < -3){
+	mGyroSensor.reset();
+	mTailWalker->setSpeed(0);
+	mTailWalker->setDoTrace(true);
+	mState = MOVE_TO_CENTER;
+      }
+      //速度を上げて昇段->走行体の角度で昇段完了を検知->execMoving()
     }
     void StairWalker::execMoving(){
-
+      mTailWalker->run();
+      //倒立走行に移って段中央へ移動->尻尾走行へ->execTurning()
     }
     void StairWalker::execTurning(){
-
+      //スピン->一定角回転後にラインエッジを検知したら終了->(1段目)execClimbing()
+      //(2段目)execWalking()
     }
     void StairWalker::execWalking(){
-
+      //倒立走行に移る->ラインが黒から白になったタイミングでexecGetOff()
     }
     void StairWalker::execGetOff(){
-
+      //ライントレースせずに直進->降段完了を検知->ラインを検出後isDone()をtrue
     }
 
     bool StairWalker::isDone(){
