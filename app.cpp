@@ -57,7 +57,8 @@ bool bt_cmd;
 //static LookUpGate::unit::Balancer        *gBalancer_LG;
 //static LookUpGate::unit::BalancingWalker *gBalancingWalker_LG;
 //static LookUpGate::unit::Starter         *gStarter_LG;
-static LookUpGate::unit::TailController *gTailController_LG;
+// static LookUpGate::unit::TailController *gTailController_LG;
+static LookUpGate::unit::GateTracer *gGateTracer_LG;
 
 static app::Switcher *gSwitcher;
 //static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
@@ -125,11 +126,14 @@ static void user_system_create() {
     //							    gLeftWheel,
     //							    gRightWheel);
 //gStarter_LG         = new LookUpGate::unit::Starter(gTouchSensor);
-    gTailController_LG  = new LookUpGate::unit::TailController(gTailMotor);
-    gLookUpGate_LG = new LookUpGate::app::LookUpGate(gTailController_LG,
-						     gSonarSensor,
-						     gLeftWheel,
-						     gRightWheel);
+    // gTailController_LG = new LookUpGate::unit::TailController(gTailMotor);
+    gGateTracer_LG = new LookUpGate::unit::GateTracer(gLeftWheel, gRightWheel, gColorSensor);
+    gLookUpGate_LG = new LookUpGate::app::LookUpGate(gTailController_LT,
+                                    						     gSonarSensor,
+                                    						     gLeftWheel,
+                                    						     gRightWheel,
+                                                     gGateTracer_LG,
+                                                     gLineTracer_LT);
 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 gStopper_G,
@@ -171,11 +175,12 @@ static void user_system_destroy() {
     delete gBalancingWalker_S;
     delete gBalancer_S;
 
-    delete gTailController_LG;
+    // delete gTailController_LG;
     //delete gStarter_LG;
     //delete gLineMonitor_LG;
     //delete gBalancingWalker_LG;
     //delete gBalancer_LG;
+    delete gGateTracer_LG;
     delete gLookUpGate_LG;
 }
 
