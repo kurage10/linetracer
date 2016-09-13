@@ -18,7 +18,7 @@ namespace Stair{
 
 
 // 定数宣言
-const int8_t LineMonitor::THRESHOLD_Tail = 9;  // 黒色の光センサ値
+const int8_t LineMonitor::THRESHOLD_Tail = 8;  // 黒色の光センサ値
 const float LineMonitor::KP_Tail = 9.22;
     //const float LineMonitor::KP_Tail = 2.22;
 const float LineMonitor::KI_Tail = 0.0;

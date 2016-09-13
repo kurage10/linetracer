@@ -31,5 +31,14 @@ namespace Stair{
       return mTailMotor.getCount();
     }
 
+    void TailController::getUp(){
+      int speed = (160 - mTailMotor.getCount())*10;
+      
+      if(speed > 0){
+	mTailMotor.setPWM(speed);
+      }else{
+	mTailMotor.setPWM(0);
+      }
+    }
   }
 }

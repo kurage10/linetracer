@@ -12,6 +12,7 @@ public:
   ObstacleDitector(const ev3api::GyroSensor& gyroSensor);
   bool isObstacle();
   void init();
+  void setThreshold(int threshold);
 private:
   const ev3api::GyroSensor& mGyroSensor;
   static const int INITIAL_LIVENESS;
@@ -22,6 +23,7 @@ private:
   int max_liveness;
   int min;
   int min_liveness;
+  int mThreshold;
   FILE* file;
 };
 

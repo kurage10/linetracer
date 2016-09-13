@@ -16,6 +16,7 @@ public:
   void run();
   void setAngle(int32_t angle);
   int32_t getAngle();
+  void getUp();
 };
 
   }

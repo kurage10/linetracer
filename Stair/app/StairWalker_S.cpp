@@ -1,3 +1,4 @@
+
 #include "StairWalker.h"
 #include <stdio.h>
 
@@ -54,12 +55,11 @@ namespace Stair{
     }
     
     void StairWalker::execUndefined(){
-      //mGyroSensor.reset();
       mBalancingWalker->setCommand(0,0);
       mBalancingWalker->run();
 
       mCount++;
-      if(mCount > 250){
+      if(mCount > 500){
 	mCount = 0;
 	mState=CHANGE_INTO_TAILWALK;
       }
@@ -94,7 +94,7 @@ namespace Stair{
       }
     }
     void StairWalker::execTailwalking(){
-      mTailWalker->run();//距離で段への衝突を検知->一旦停止
+      mTailWalker->run();//段への衝突を検知->一旦停止
       if(mObstacleDitector->isObstacle()){
 	mTailWalker->setSpeed(-5);
 	mTailWalker->setDoTrace(false);
@@ -104,24 +104,40 @@ namespace Stair{
 	}
 	if(mCount > 1000){
 	  mCount = 0;
+	  mObstacleDitector->init();
 	  mTailWalker->setSpeed(30);
+	  mTailWalker->setAngle(100);
 	  mGyroSensor.reset();
 	  mState = CLIMBING;
 	}
       }
     }
     void StairWalker::execClimbing(){
-      mTailWalker->run();
-      if(mGyroSensor.getAngle() < -3){
-	mGyroSensor.reset();
-	mTailWalker->setSpeed(0);
-	mTailWalker->setDoTrace(true);
-	mState = MOVE_TO_CENTER;
-      }
       //速度を上げて昇段->走行体の角度で昇段完了を検知->execMoving()
+      if(mObstacleDitector->isObstacle()){
+	mTailWalker->setAngle(105);
+	//}
+      //if(mGyroSensor.getAngle() < -7){
+	mCount++;
+	if(mCount > 100){
+	  if(mCount > 300){
+	    mGyroSensor.reset();
+	    mCount = 0;
+	    mTailController->setAngle(45);
+	    mState = MOVE_TO_CENTER;
+	  }
+	  mTailWalker->setSpeed(0);
+	}
+      }
+      mTailWalker->run();
     }
     void StairWalker::execMoving(){
-      mTailWalker->run();
+      //if(mGyroSensor.getAngle() > 10){
+      //mTailController->run();
+	/*mLineTracer->run();
+	}else{*/
+      	mTailController->getUp();
+	//}
       //倒立走行に移って段中央へ移動->尻尾走行へ->execTurning()
     }
     void StairWalker::execTurning(){
