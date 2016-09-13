@@ -29,12 +29,14 @@ namespace LineTrace{
       void init();
       bool isDone();
       void setStarting(bool starting);
-
+      void setSpeed(int speed);
+      
     private:
       unit::LineMonitor* mLineMonitor;
       unit::BalancingWalker* mBalancingWalker;
       bool mIsInitialized;
       bool mStarting;
+      int mSpeed;
 
     };
 
