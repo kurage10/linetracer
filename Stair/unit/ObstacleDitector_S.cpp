@@ -14,7 +14,7 @@ namespace Stair{
       max_liveness(INITIAL_LIVENESS),
       min(0),
       min_liveness(INITIAL_LIVENESS),
-      mThreshold(70) {
+      mThreshold(80) {
       file = fopen("/stairLog.csv","w");
       fprintf(file,"angle,diff,max,min,max_liveness,min_liveness,mCliming,detectStair\n");
     }

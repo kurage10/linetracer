@@ -125,12 +125,12 @@ int LineMonitor::calcSpeed(){
   }
 
   //if(distance > 3110 && startMeasuringEnc != 0){
-  if(distance > 3210 && startMeasuringEnc != 0){
+  if(distance > 3180 && startMeasuringEnc != 0){
     mSpeed = 30;
   }
 
   //if(distance > 3380 && startMeasuringEnc != 0){
-  if(distance > 3430 && startMeasuringEnc != 0){
+  if(distance > 3400 && startMeasuringEnc != 0){
     mSpeed = 80;
   }
 

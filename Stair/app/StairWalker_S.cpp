@@ -96,17 +96,17 @@ namespace Stair{
     void StairWalker::execTailwalking(){
       mTailWalker->run();//段への衝突を検知->一旦停止
       if(mObstacleDitector->isObstacle()){
-	mTailWalker->setSpeed(-5);
+	mTailWalker->setSpeed(-1);
 	mTailWalker->setDoTrace(false);
 	mCount++;
-	if(mCount > 500){
+	if(mCount > 200){
 	  mTailWalker->setSpeed(0);
 	}
-	if(mCount > 1000){
+	if(mCount > 700){
 	  mCount = 0;
 	  mObstacleDitector->init();
 	  mTailWalker->setSpeed(30);
-	  mTailWalker->setAngle(100);
+	  mTailWalker->setAngle(102);
 	  mGyroSensor.reset();
 	  mState = CLIMBING;
 	}
@@ -115,7 +115,7 @@ namespace Stair{
     void StairWalker::execClimbing(){
       //速度を上げて昇段->走行体の角度で昇段完了を検知->execMoving()
       if(mObstacleDitector->isObstacle()){
-	mTailWalker->setAngle(105);
+	mTailWalker->setAngle(110);
 	//}
       //if(mGyroSensor.getAngle() < -7){
 	mCount++;

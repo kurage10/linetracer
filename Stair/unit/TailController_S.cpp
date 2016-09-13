@@ -18,7 +18,7 @@ namespace Stair{
     }
     int TailController::calcDirection(){
       //int diff=(mTailMotor.getCount()-mAngle)*0.25;
-      int diff=(mTailMotor.getCount()-mAngle)*0.35;
+      int diff=(mTailMotor.getCount()-mAngle)*0.40;
       if(diff > 100) return -100;
       else if(diff < -100)return 100;
       else return -diff;
