@@ -30,7 +30,8 @@ namespace Stair{
       void init();
       void stop();
       void setStarting(bool starting);
-
+      void setSpeed(int speed);
+      
     private:
       Stair::unit::LineMonitor* mLineMonitor;
       Stair::unit::BalancingWalker* mBalancingWalker;

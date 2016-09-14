@@ -22,6 +22,7 @@ public:
   void setSpeed(int speed);
   void setAngle(int32_t angle);
   void setDoTrace(bool doTrace);
+  void setDirection(int direction);
   
 private:
     ev3api::Motor& mLeftWheel;
@@ -32,6 +33,7 @@ private:
     bool mIsInitialized;
     int32_t mAngle;
     bool mDoTrace;
+    int mDirection;
     FILE* file;
 };
 

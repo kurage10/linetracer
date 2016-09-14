@@ -21,7 +21,7 @@ namespace Stair{
       : mLineMonitor(lineMonitor),
 	mBalancingWalker(balancingWalker),
 	mIsInitialized(false),
-	mSpeed(Stair::unit::BalancingWalker::LOW){
+	mSpeed(0){
     }
 
     LineTracer::~LineTracer(){
@@ -80,5 +80,8 @@ namespace Stair{
       mStarting = starting;
     }
 
+    void LineTracer::setSpeed(int speed){
+      mSpeed = speed;
+    }
   }
 }

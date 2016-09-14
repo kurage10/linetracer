@@ -93,7 +93,7 @@ namespace LineTrace{
       mLineTracer->run();
       timeFromStart += 4;
       
-      if(timeFromStart > 50){
+      if(timeFromStart > 200){
 	mLineTracer->setSpeed(80);
 	timeFromStart = 0;
 	mState = ROCKET_STARTING;

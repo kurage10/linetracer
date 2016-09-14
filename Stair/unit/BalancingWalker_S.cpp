@@ -63,8 +63,8 @@ void BalancingWalker::init() {
     int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
 
     // モータエンコーダをリセットする
-    mLeftWheel.reset();
-    mRightWheel.reset();
+    //mLeftWheel.reset();
+    //mRightWheel.reset();
 
     // 倒立振子制御初期化
     mBalancer->init(offset);

@@ -14,7 +14,7 @@ namespace Stair{
       max_liveness(INITIAL_LIVENESS),
       min(0),
       min_liveness(INITIAL_LIVENESS),
-      mThreshold(80) {
+      mThreshold(75) {
       file = fopen("/stairLog.csv","w");
       fprintf(file,"angle,diff,max,min,max_liveness,min_liveness,mCliming,detectStair\n");
     }
@@ -44,7 +44,7 @@ namespace Stair{
     void ObstacleDitector::init(){
       mCliming=false;
       max=0;min=0;
-      mThreshold = 70;
+      mThreshold = 75;
       max_liveness=INITIAL_LIVENESS;
       min_liveness=INITIAL_LIVENESS;
     }

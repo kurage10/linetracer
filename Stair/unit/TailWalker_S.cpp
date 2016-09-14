@@ -12,19 +12,18 @@ namespace Stair{
        mTailController(tailController),
        mLineMonitor(lineMonitor), 
        mSpeed(20),
-       mDoTrace(true) {
+       mDoTrace(true),
+       mDirection() {
 
     }
     void TailWalker::run(){
-      float direction;
+      float direction = mDirection;
       
       mTailController->setAngle(mAngle);
       mTailController->run();
 
       if(mDoTrace){
 	direction = mLineMonitor->calcDirection(Stair::unit::LineMonitor::TailWalking);
-      }else{
-	direction = 0;
       }
       
       mLeftWheel.setPWM(mSpeed + (direction/100)*mSpeed);
@@ -41,6 +40,10 @@ namespace Stair{
 
     void TailWalker::setDoTrace(bool doTrace){
       mDoTrace = doTrace;
+    }
+
+    void TailWalker::setDirection(int direction){
+      mDirection = direction;
     }
     
     void TailWalker::init(){
