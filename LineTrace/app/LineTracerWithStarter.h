@@ -13,6 +13,7 @@
 #include "../unit/Starter.h"
 #include "./LineTracer.h"
 #include "../unit/TailController.h"
+#include "../unit/Waker.h"
 #include "Task.h"
 
 using app::Task;
@@ -24,6 +25,7 @@ namespace LineTrace{
       LineTracerWithStarter(app::LineTracer* lineTracer,
 			    unit::Starter* starter,
 			    unit::TailController* tailController,
+			    unit::Waker* waker, 
 			    ev3api::GyroSensor& gyroSensor);
 
       ~LineTracerWithStarter();
@@ -43,6 +45,7 @@ namespace LineTrace{
       app::LineTracer* mLineTracer;
       unit::Starter* mStarter;
       unit::TailController* mTailController;
+      unit::Waker* mWaker;
       ev3api::GyroSensor& mGyroSensor;
       State mState;
       FILE* fp;

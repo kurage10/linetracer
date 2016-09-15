@@ -46,6 +46,7 @@ namespace Stair{
       }
     }
     void StairWalker::execUndefined(){
+      mLineTracer->init();
       mState=WALKING;
     }
     void StairWalker::execPrepare(){

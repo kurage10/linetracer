@@ -20,27 +20,30 @@ namespace LineTrace{
 			   LineTrace::unit::BalancingWalker* balancingWalker)
       : mLineMonitor(lineMonitor),
 	mBalancingWalker(balancingWalker),
-	mIsInitialized(false){
+	mIsInitialized(false),
+	mSpeed(0) {
     }
 
     /**
      * ライントレースする
      */
     void LineTracer::run() {
-      int mSpeed;
-
+      float direction = 0;
+      
       if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
       }
 
-      //For Left Coutse
-      mSpeed = 80;
-      //For Right Course
-      mSpeed = mLineMonitor->calcSpeed();
+      if(mSpeed != 0){
+	//For Left Coutse
+	//mSpeed = 80;
+	//For Right Course
+	mSpeed = mLineMonitor->calcSpeed();
 
-      float direction = mLineMonitor->calcDirection(mStarting);
-
+	direction = mLineMonitor->calcDirection(mStarting);
+      }
+      
       mBalancingWalker->setCommand(mSpeed, direction);
       // 倒立走行を行う
       mBalancingWalker->run();
@@ -52,7 +55,7 @@ namespace LineTrace{
     }
 
     bool LineTracer::isDone(){
-      return mLineMonitor->measureDistance() > 9000;
+      return mLineMonitor->measureDistance() > 7300;
     }
 
     void LineTracer::setStarting(bool starting){
@@ -63,6 +66,10 @@ namespace LineTrace{
       delete mLineMonitor;
       delete mBalancingWalker;
       delete &mIsInitialized;
+    }
+
+    void LineTracer::setSpeed(int speed){
+      mSpeed = speed;
     }
   }
 }
