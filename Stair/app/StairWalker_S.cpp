@@ -20,7 +20,8 @@ namespace Stair{
        mTailController(tailController),
        mGyroSensor(gyroSensor), 
        mState(UNDEFINED),
-       mCount(0){
+       mCount(0),
+       currentStep(0) {
       fp = fopen("AnglerVelocityLog.txt","w");
     }
     void StairWalker::run(){
@@ -98,19 +99,20 @@ namespace Stair{
     void StairWalker::execTailwalking(){
       mTailWalker->run();//段への衝突を検知->一旦停止
       if(mObstacleDitector->isObstacle()){
-	mTailWalker->setSpeed(-2);
+	mTailWalker->setSpeed(-1);
 	mTailWalker->setDoTrace(false);
 	mCount++;
-	if(mCount > 200){
+	if(mCount > 400){
 	  mTailWalker->setSpeed(0);
-	  mTailWalker->setAngle(101);
+	  mTailWalker->setAngle(100);
 	}
-	if(mCount > 500){
+	if(mCount > 700){
 	  mCount = 0;
 	  mObstacleDitector->init();
+	  mTailWalker->setDoTrace(true);//added
 	  mTailWalker->setSpeed(40);
 	  mTailWalker->setDirection(0);
-	  mTailWalker->setAngle(110);
+	  mTailWalker->setAngle(108);
 	  //mGyroSensor.reset();
 	  mState = CLIMBING;
 	  ev3_speaker_play_tone(NOTE_A5,300);
@@ -122,7 +124,7 @@ namespace Stair{
       int speed = 10;
       
       if(mObstacleDitector->isObstacle()){
-	mTailWalker->setAngle(111);//112
+	mTailWalker->setAngle(111);//111 -> 112
 
 	mCount++;
 	if(mCount > 70){
@@ -132,12 +134,14 @@ namespace Stair{
 	  }
 	  mTailWalker->setSpeed(speed);
 	  if(mCount > 500){
+	    mTailWalker->setDoTrace(false);//added
 	    mTailWalker->setSpeed(5);
 
 	    if(mCount > 1150){
+	      mTailWalker->setDoTrace(false);//added
 	      mTailWalker->setSpeed(-7);
 	      if(mCount > 1250){
-		mTailWalker->setAngle(114);//116
+		mTailWalker->setAngle(114);//116 -> 114
 	      }
 	      if(mCount > 1300){
 		mTailWalker->setSpeed(0);
@@ -145,10 +149,12 @@ namespace Stair{
 		if(mCount > 1400){
 		  //mGyroSensor.reset();
 		  mCount = 0;
+		  currentStep++;
+		  mObstacleDitector->init();
 		  mState = MOVE_TO_CENTER;
 		  ev3_speaker_play_tone(NOTE_A5,300);
 
-		  mTailWalker->setSpeed(75);
+		  mTailWalker->setSpeed(70);
 		  mTailWalker->setAngle(90);
 		}
 	      }
@@ -164,15 +170,33 @@ namespace Stair{
     }
     void StairWalker::execMoving(){
       //倒立走行に移って段中央へ移動->尻尾走行へ->execTurning()
-      int speed = 75;
+      int speed = 70;//75 -> 70
       mCount++;
-      if(mCount > 100){
-	speed -= (mCount - 100)/1.5;
+
+      if(mCount > 80){
+	mTailWalker->setDoTrace(true);//added
+	speed -= (mCount - 80)/1.5;
 	if(speed < 0){
 	  speed = 0;
 	}
 	mTailWalker->setSpeed(speed);
       }
+
+      if(speed == 0 && mCount > 300){
+	mTailWalker->setDoTrace(false);//added
+	mTailWalker->setSpeed(-5);
+	if(mTailWalker->onLine()){
+	  mTailWalker->setSpeed(12);
+	  mTailWalker->setDoTrace(true);//added
+	  if(currentStep == 1){
+	    mCount = 0;
+	    mTailWalker->resetOnLine();
+	    mState = WALKING_WITH_TAIL;
+	    ev3_speaker_play_tone(NOTE_A5,300);
+	  }
+	}
+      }
+
       mTailWalker->run();
     }
     void StairWalker::execTurning(){

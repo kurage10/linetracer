@@ -34,7 +34,8 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor)
     : mColorSensor(colorSensor),
       mThreshold(THRESHOLD_Tail),
       diff(),
-      integral(0){
+      integral(0),
+      onLineFlag() {
 }
 
 /**
@@ -88,5 +89,15 @@ void LineMonitor::setThreshold(int8_t threshold) {
     mThreshold = threshold;
 }
 
+    bool LineMonitor::onLine(){
+      if(mColorSensor.getBrightness() < THRESHOLD_Tail){
+	onLineFlag = true;
+      }
+      return onLineFlag;
+    }
+
+    void LineMonitor::resetOnLine(){
+      onLineFlag = false;
+    }
   }
 }

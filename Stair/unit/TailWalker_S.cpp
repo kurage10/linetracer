@@ -51,5 +51,13 @@ namespace Stair{
       mIsInitialized = true;
     }
 
+    bool TailWalker::onLine(){
+      return mLineMonitor->onLine();
+    }
+
+    void TailWalker::resetOnLine(){
+      mLineMonitor->resetOnLine();
+    }
+
   }
 }

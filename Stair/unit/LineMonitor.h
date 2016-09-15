@@ -25,7 +25,9 @@ namespace Stair{
       explicit LineMonitor(const ev3api::ColorSensor& colorSensor);
       float calcDirection(State state);
       void setThreshold(int8_t threshold);
-
+      bool onLine();
+      void resetOnLine();
+      
     private:
       static const int8_t THRESHOLD_Tail;
       static const float KP_Tail;        // 比例係数
@@ -35,6 +37,7 @@ namespace Stair{
       int8_t mThreshold;
       float diff[2];
       float integral;
+      bool onLineFlag;
     };
 
   }

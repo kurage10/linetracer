@@ -49,6 +49,8 @@ namespace Stair{
       };
       State mState;
       int mCount;
+      int currentStep;
+      
       void execUndefined();
       void execChangeIntoTailwalk();
       void execTailwalking();

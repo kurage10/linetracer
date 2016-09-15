@@ -23,6 +23,8 @@ public:
   void setAngle(int32_t angle);
   void setDoTrace(bool doTrace);
   void setDirection(int direction);
+  bool onLine();
+  void resetOnLine();
   
 private:
     ev3api::Motor& mLeftWheel;
