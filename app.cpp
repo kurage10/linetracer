@@ -33,13 +33,7 @@ static LineTrace::unit::Starter         *gStarter;
 static LineTrace::unit::TailController *gTailController;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter;
 static app::Switcher *gSwitcher;
-<<<<<<< HEAD
-static unit::UsecaseDetector *gUsecaseDetector;
-static unit::DistanceMonitor *gDistanceMonitor;
 static Stopper *gStopper;
-=======
-//static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
->>>>>>> refs/remotes/origin/master
 
 void *__dso_handle = 0;
 
