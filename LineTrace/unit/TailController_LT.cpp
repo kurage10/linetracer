@@ -23,7 +23,7 @@ void TailController::init(){
 int TailController::calcDirection(){
   int diff=mTailMotor.getCount()-mAngle;
   if(diff==0)return 0;
-  else return -diff*0.20;
+  else return -diff*0.25;//0.20
 }
 void TailController::setAngle(int32_t angle){
   mAngle=angle;

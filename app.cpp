@@ -35,6 +35,7 @@ static LineTrace::app::LineTracer      *gLineTracer_LT;
 static LineTrace::unit::Starter         *gStarter_LT;
 static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
+static LineTrace::unit::Waker           *gWaker_LT;
 
 static Garage::app::Stopper *gStopper_G;
 
@@ -82,10 +83,14 @@ static void user_system_create() {
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
+    gWaker_LT           = new LineTrace::unit::Waker(gGyroSensor,
+						     gTailController_LT,
+						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
+									  gWaker_LT,
 									  gGyroSensor);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
@@ -151,6 +156,7 @@ static void user_system_destroy() {
 
     delete gLineTracerWithStarter_LT;
     delete gLineTracer_LT;
+    delete gWaker_LT;
     delete gTailController_LT;
     delete gStarter_LT;
     delete gLineMonitor_LT;

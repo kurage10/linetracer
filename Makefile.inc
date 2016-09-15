@@ -3,6 +3,7 @@ mkfile_path := $(dir $(lastword $(MAKEFILE_LIST)))
 APPL_COBJS += balancer.o balancer_param.o
 
 APPL_CXXOBJS += \
+	Waker_LT.o \
 	BalancingWalker_LT.o \
 	LineMonitor_LT.o \
 	BalancerCpp_LT.o \
