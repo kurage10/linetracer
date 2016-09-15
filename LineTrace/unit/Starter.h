@@ -26,7 +26,7 @@ public:
 protected:
     const ev3api::TouchSensor& mTouchSensor;
     bool bt_cmd;     /* Bluetoothコマンド 1:リモートスタート */
-
+    bool wasPushed;
 };
 
   }

@@ -11,31 +11,34 @@
 namespace LineTrace{
   namespace unit{
 
-/**
- * コンストラクタ
- * @param touchSensor タッチセンサ
- */
-Starter::Starter(const ev3api::TouchSensor& touchSensor)
-    : mTouchSensor(touchSensor),
-    bt_cmd(false){
+    /**
+     * コンストラクタ
+     * @param touchSensor タッチセンサ
+     */
+    Starter::Starter(const ev3api::TouchSensor& touchSensor)
+      : mTouchSensor(touchSensor),
+	bt_cmd(false),
+	wasPushed(false) {
 
-}
-void Starter::setRemote(bool flag){
-  bt_cmd=flag;
+    }
+    void Starter::setRemote(bool flag){
+      bt_cmd=flag;
 
-}
+    }
 
-/**
- * 押下中か否か
- * @retval true  押下している
- * @retval false 押下していない
- */
-bool Starter::isPushed(){
-    //if(ev3_bluetooth_is_connected()){
+    /**
+     * 押下中か否か
+     * @retval true  押下している
+     * @retval false 押下していない
+     */
+    bool Starter::isPushed(){
+      if(mTouchSensor.isPressed()){
+	wasPushed = true;
+      }
 
-    return (bt_cmd || mTouchSensor.isPressed());
+      return (bt_cmd || (wasPushed && !mTouchSensor.isPressed()));
 
-}
+    }
 
   }
 }
