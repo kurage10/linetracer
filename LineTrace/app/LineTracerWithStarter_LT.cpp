@@ -64,7 +64,7 @@ namespace LineTrace{
      */
     void LineTracerWithStarter::execUndefined() {
       mTailController->init();
-      mTailController->setAngle(102);//メモ：107で直立
+      mTailController->setAngle(102);//メモ：107で直立、現在102
 
       mState = WAITING_FOR_START;
     }

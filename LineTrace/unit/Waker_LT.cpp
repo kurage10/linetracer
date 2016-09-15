@@ -3,11 +3,9 @@
 namespace LineTrace{
   namespace unit{
 
-    Waker::Waker(const ev3api::GyroSensor& gyroSensor,
-		     unit::TailController* tailController,
-		     unit::BalancingWalker* balancingWalker)
-      : mGyroSensor(gyroSensor),
-	mTailController(tailController),
+    Waker::Waker(unit::TailController* tailController,
+		 unit::BalancingWalker* balancingWalker)
+      : mTailController(tailController),
 	mBalancingWalker(balancingWalker),
 	pushUp(false) {
     }
@@ -33,7 +31,7 @@ namespace LineTrace{
 	mTailController->setAngle(0);
 	mTailController->run();
       }else{
-	if(mTailController->getAngle() >= 104){//103
+	if(mTailController->getAngle() >= 104){
 	  mBalancingWalker->setCommand(0,0);
 	  mBalancingWalker->run();
 	  mTailController->setAngle(0);

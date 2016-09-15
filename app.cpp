@@ -83,8 +83,7 @@ static void user_system_create() {
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
-    gWaker_LT           = new LineTrace::unit::Waker(gGyroSensor,
-						     gTailController_LT,
+    gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT,
 						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
