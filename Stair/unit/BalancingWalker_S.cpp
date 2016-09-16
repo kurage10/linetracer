@@ -27,11 +27,13 @@ namespace Stair{
 BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& leftWheel,
                                  ev3api::Motor& rightWheel,
-                                 Stair::unit::Balancer* balancer)
+                                 Stair::unit::Balancer* balancer,
+				 InitValues* initValues)
     : mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),
       mBalancer(balancer),
+      mInitValues(initValues),
       mForward(LOW),
       mTurn(LOW) {
 }
@@ -60,8 +62,9 @@ void BalancingWalker::run() {
  * バランス走行に必要なものをリセットする
  */
 void BalancingWalker::init() {
-    int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-
+  //int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
+  int offset = mInitValues->get(InitValues::GYRO_OFFSET);
+  
     // モータエンコーダをリセットする
     mLeftWheel.reset();
     mRightWheel.reset();

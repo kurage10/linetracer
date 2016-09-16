@@ -35,6 +35,7 @@ static LineTrace::app::LineTracer      *gLineTracer_LT;
 static LineTrace::unit::Starter         *gStarter_LT;
 static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
+static LineTrace::unit::Waker           *gWaker_LT;
 
 static Garage::app::Stopper *gStopper_G;
 
@@ -60,6 +61,7 @@ bool bt_cmd;
 static LookUpGate::unit::TailController *gTailController_LG;
 
 static app::Switcher *gSwitcher;
+static unit::InitValues *gInitValues;
 //static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
 
 void *__dso_handle = 0;
@@ -72,30 +74,38 @@ static void user_system_create() {
     tslp_tsk(2);
 
     // オブジェクトの作成
+    gInitValues = new unit::InitValues();
+
     gBalancer_LT               = new LineTrace::unit::Balancer();
     gBalancingWalker_LT        = new LineTrace::unit::BalancingWalker(gGyroSensor,
-								   gLeftWheel,
-								   gRightWheel,
-								   gBalancer_LT);
+								      gLeftWheel,
+								      gRightWheel,
+								      gBalancer_LT,
+								      gInitValues);
     gLineMonitor_LT     = new LineTrace::unit::LineMonitor(gColorSensor,
 							   gLeftWheel,
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
+    gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT,
+						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
+									  gWaker_LT,
 									  gGyroSensor);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
 
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
-                                                  gLeftWheel,
-	                                          gRightWheel,
-                                                  gBalancer_S);
+								 gLeftWheel,
+								 gRightWheel,
+								 gBalancer_S,
+								 gInitValues);
     gObstacleDitector_S       = new Stair::unit::ObstacleDitector(gGyroSensor,gLeftWheel,gRightWheel);
+
     gTailController_S         = new Stair::unit::TailController(gTailMotor);
     gLineMonitor_S            = new Stair::unit::LineMonitor(gColorSensor);
     gStarter_S                = new Stair::unit::Starter(gTouchSensor);
@@ -132,7 +142,7 @@ static void user_system_create() {
 						     gLeftWheel,
 						     gRightWheel);
 
-    gSwitcher        = new app::Switcher(gLineTracerWithStarter_S,
+    gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 gStopper_G,
 					 gStairWalker_S,
 					 gLookUpGate_LG);
@@ -149,9 +159,11 @@ static void user_system_destroy() {
     gTailMotor.reset();
     fclose(gBt);
     delete gSwitcher;
+    delete gInitValues;
 
     delete gLineTracerWithStarter_LT;
     delete gLineTracer_LT;
+    delete gWaker_LT;
     delete gTailController_LT;
     delete gStarter_LT;
     delete gLineMonitor_LT;
