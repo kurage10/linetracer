@@ -55,7 +55,7 @@ namespace LineTrace{
     }
 
     bool LineTracer::isDone(){
-      return mLineMonitor->measureDistance() > 6800;
+      return mLineMonitor->measureDistance() > 6300;
     }
 
     void LineTracer::setStarting(bool starting){

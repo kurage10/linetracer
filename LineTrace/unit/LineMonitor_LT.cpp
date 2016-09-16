@@ -140,14 +140,19 @@ int LineMonitor::measureDistance(){
   leftWheelEnc = mLeftWheel.getCount();
   rightWheelEnc = mRightWheel.getCount();
 
-  if(rightWheelEnc - leftWheelEnc > ENC_THRESHOLD && startMeasuringEnc == 0){
-    startMeasuringEnc = leftWheelEnc;
+  // if(rightWheelEnc - leftWheelEnc > ENC_THRESHOLD && startMeasuringEnc == 0){
+  //   startMeasuringEnc = leftWheelEnc;
+  // }
+
+  if(leftWheelEnc - rightWheelEnc > ENC_THRESHOLD && startMeasuringEnc == 0){
+    startMeasuringEnc = rightWheelEnc;
   }
 
   if(startMeasuringEnc == 0){
     return 0;
   }
-  return leftWheelEnc - startMeasuringEnc;
+  // return leftWheelEnc - startMeasuringEnc;
+  return rightWheelEnc - startMeasuringEnc;
 }
 
 /**

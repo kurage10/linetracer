@@ -24,7 +24,8 @@ namespace LookUpGate{
 
     void GateTracer::run() {
       const float Kp = 3;        // 比例係数
-      const int target = 5;        // 白・黒の中間値
+      // target = 5, 8
+      const int target = 8;        // 白・黒の中間値
       const int bias = 0;
       // msg_f("running...", 1);
       int diff = mColorSensor.getBrightness() - target;

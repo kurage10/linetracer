@@ -60,11 +60,12 @@ namespace LookUpGate{
 
     void LookUpGate::seek() {
       int dis = mSonar.getDistance();
-      if (60 < dis && dis < 65) {
-        mTailController -> setAngle(80);
+      if (50 < dis && dis < 55) {
+        mTailController -> setAngle(85);
         flag = 1;
       }
-      if (dis < 50 && flag == 1) {
+      // dis = 35, 45
+      if (dis < 45 && flag == 1) {
         state = INIT;
       }
       mLineTracer->setStarting(false);
@@ -84,14 +85,13 @@ namespace LookUpGate{
         } else if (timer >= 500) {
           mGateTracer -> run();
         }
-
         // mLeftWheel.setPWM(base_speed);
         // mRightWheel.setPWM(base_speed);
         // current_speed = base_speed;
         // mGateTracer -> run();
         int dis = mSonar.getDistance();
         if (dis <= 15) {
-          // mTailController -> setAngle(80);
+          mTailController -> setAngle(80);
           state = FIRST;
           timer = 1;
         }
@@ -138,7 +138,8 @@ namespace LookUpGate{
         //     setSpeed(base_speed, 0);
         // }
 
-        if (timer > 600) {
+        if (timer > 500) {
+          ev3_speaker_play_tone(NOTE_A5,300);
           done = true;
         }
         timer ++;
