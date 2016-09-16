@@ -43,7 +43,13 @@ namespace Garage{
 
     void TailWalker::setDirection(float direction){
       mDoTrace = false;
-      mDirection = direction;
+      if(direction > 100){
+	mDirection = 100;
+      }else if(direction < -100){
+	mDirection = -100;
+      }else{
+	mDirection = direction;
+      }
     }
 
     void TailWalker::init(){

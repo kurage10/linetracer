@@ -5,7 +5,7 @@ namespace unit{
   int8_t GrayDetector::GRAY_THRESHOLD = 7;
   int GrayDetector::TIME_THRESHOLD = 350;
   const float GrayDetector::KP_Balance = 2.00;
-  const float GrayDetector::KP_Tail = 4.00;
+  const float GrayDetector::KP_Tail = 15.0;//25で振動(20~25?):24.5?
   
   GrayDetector::GrayDetector(LineTrace::unit::LineMonitor* lineMonitor,
 			     LineTrace::unit::BalancingWalker* balancingWalker,
@@ -23,24 +23,41 @@ namespace unit{
 
   bool GrayDetector::isGray(){
     int8_t Brightness = mColorSensor.getBrightness() - TRACE_THRESHOLD;
+    fprintf(fp,"%d\n",Brightness);
 
-    if(TRACE_THRESHOLD == 28){
+    
+    if(TRACE_THRESHOLD > 20){
       mBalancingWalker->setCommand(20, -1 * KP_Balance * Brightness);
       mBalancingWalker->run();
-    }else{
-      mTailWalker->setDirection(-1 * KP_Tail * Brightness);
-      mTailWalker->run();
-    }
 
-    fprintf(fp,"%d\n",Brightness);
-    if(Brightness*Brightness < GRAY_THRESHOLD*GRAY_THRESHOLD){
-      mCount++;
-    }else{
-      if(mCount > TIME_THRESHOLD){
-	ev3_speaker_play_tone(NOTE_A5,300);
-	mDetected = true;
+      if(Brightness*Brightness <= GRAY_THRESHOLD*GRAY_THRESHOLD){
+	mCount++;
       }else{
-	mCount = 0;
+	if(mCount > TIME_THRESHOLD){
+	  ev3_speaker_play_tone(NOTE_A5,300);
+	  mDetected = true;
+	}else{
+	  mCount = 0;
+	}
+      }
+      
+    }else{
+      if(Brightness > 0){
+	mTailWalker->setDirection(-1 * KP_Tail * Brightness * Brightness);
+      }else{
+	mTailWalker->setDirection(KP_Tail * Brightness * Brightness);
+      }
+      mTailWalker->run();
+
+      if(Brightness >= -1*GRAY_THRESHOLD){
+	mCount++;
+      }else{
+	if(mCount > TIME_THRESHOLD){
+	  ev3_speaker_play_tone(NOTE_A5,300);
+	  mDetected = true;
+	}else{
+	  mCount = 0;
+	}
       }
     }
 

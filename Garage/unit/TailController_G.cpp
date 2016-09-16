@@ -24,7 +24,7 @@ namespace Garage{
     }
     int TailController::calcDirection(){
       //int diff=(mTailMotor.getCount()-mAngle)*0.25;
-      int diff=(mTailMotor.getCount()-mAngle)*0.40;
+      int diff=(mTailMotor.getCount()-mAngle)*2.0;
       if(diff > 100) return -100;
       else if(diff < -100)return 100;
       else return -diff;
