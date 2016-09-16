@@ -4,7 +4,7 @@
 namespace Stair{
   namespace unit{
 
-    const int ObstacleDitector::INITIAL_LIVENESS = 80;
+    const int ObstacleDitector::INITIAL_LIVENESS = 30;
 
     ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel):
       mGyroSensor(gyroSensor),
@@ -24,11 +24,16 @@ namespace Stair{
       if(angle > max){max=angle;max_liveness=INITIAL_LIVENESS;}
       else if(angle < min){min=angle;min_liveness=INITIAL_LIVENESS;}
       int diff=max-min;
-      fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,max_liveness,min_liveness, 200*(int)mCliming,200*(int)detectStair);
+      int left,right;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      timefromstart=timefromstart+1;
+      vec_left=left-pre_left;
+      vec_right=right-pre_left;
+      fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,left,right, 200*(int)mCliming,200*(int)detectStair);
 
       if(diff > 130 || mCliming){
-        left_offset = mLeftWheel.getCount();
-        right_offset = mRightWheel.getCount();
+        setOffset();
 	      mCliming=true;
 	      return true;
       }/*
@@ -41,17 +46,18 @@ namespace Stair{
       min_liveness=min_liveness-1;
       if(max_liveness <= 0)max=0;
       if(min_liveness <= 0)min=0;
+      pre_left=left;
+      pre_right=right;
+
 
       return false;
     }
     bool ObstacleDitector::isDistance(int goal){
       int left,right;
-      if(mCliming){
-        left = mLeftWheel.getCount();
-        right = mRightWheel.getCount();
-        if(left-left_offset >= goal && right - right_offset >= goal){
-          return true;
-        }
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      if(left-left_offset >= goal && right - right_offset >= goal){
+        return true;
       }
       return false;
     }
@@ -60,6 +66,13 @@ namespace Stair{
       max=0;min=0;
       max_liveness=INITIAL_LIVENESS;
       min_liveness=INITIAL_LIVENESS;
+    }
+    void ObstacleDitector::setOffset(){
+      left_offset = mLeftWheel.getCount();
+      right_offset = mRightWheel.getCount();
+      pre_left = left_offset;
+      pre_right = right_offset;
+      timefromstart=0;
     }
 
   }

@@ -15,6 +15,7 @@ public:
   bool isObstacle();
   void init();
   bool isDistance(int goal);
+  void setOffset();
 
 private:
   const ev3api::GyroSensor& mGyroSensor;
@@ -27,7 +28,11 @@ private:
   bool detectStair;
   int left_offset;
   int right_offset;
-
+  int pre_left;
+  int pre_right;
+  int vec_left;
+  int vec_right;
+  int timefromstart;
   int max;
   int max_liveness;
   int min;

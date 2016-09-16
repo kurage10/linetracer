@@ -40,6 +40,7 @@ namespace Stair{
         STAY,
         STAND,
 	      WALKING,
+        PREPARE_CLIMB,
 	      CLIMBING,
         PREPARE_TURNING,
 	      TURNING,
@@ -55,6 +56,7 @@ namespace Stair{
       void execStand();
       void execStay();
       void execWalking();
+      void execPrepareClimb();
       void execClimbing();
       void execPrepareTurning();
       void execTurning();
