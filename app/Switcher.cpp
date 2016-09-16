@@ -1,24 +1,18 @@
 #include "Switcher.h"
 
 namespace app{
-<<<<<<< HEAD
-  
-  Switcher::Switcher(LineTrace::app::LineTracerWithStarter* linetracer,
-		     unit::UsecaseDetector* usecasedetector, Stopper* stopper):
-  mLineTracerWithStarter(linetracer),
-  mUsecaseDetector(usecasedetector), 
-  mUsecase(unit::UsecaseDetector::UNDEFINED),
-  mStopper(stopper){
-=======
-
-  Switcher::Switcher(Task* linetracer):
-  mLineTracerWithStarter(linetracer),
-  mUsecase(UNDEFINED){
->>>>>>> refs/remotes/origin/master
-
-}
-void Switcher::run(){
-  switch(mUsecase){
+  Switcher::Switcher(Task* linetrace,
+		     Task* garage,
+		     Task* stair,
+		     Task* gate):
+    mLineTrace(linetrace),
+    mGarage(garage),
+    mStair(stair),
+    mGate(gate),
+    mUsecase(UNDEFINED){
+  }
+  void Switcher::run(){
+    switch(mUsecase){
     case UNDEFINED:
       execUndefined();
       break;
@@ -36,36 +30,35 @@ void Switcher::run(){
       break;
     default:
       break;
+    }
   }
-}
-void Switcher::execUndefined(){
-  //各種初期化
-  mUsecase = LINETRACER;
-  //mUsecaseDetector->init();
-}
-void Switcher::execLineTracer(){
-  mLineTracerWithStarter->run();
-  if(mLineTracerWithStarter -> isDone()){
-    mUsecase = LOOKUPGATE;
+  void Switcher::execUndefined(){
+    //各種初期化
+    mUsecase = LINETRACER;
+    //mUsecase = STAIR;
   }
-/*
-  if(mUsecaseDetector->nextUsecase()){
-    mUsecase = xxxx
-  }*/
-}
-void Switcher::execLookupGate(){
-  //mUsecase = mUsecaseDetector->nextUsecase();
-}
-void Switcher::execGarage(){
-<<<<<<< HEAD
-  mStopper->run();
-  mUsecase = mUsecaseDetector->nextUsecase();
-=======
-  //mUsecase = mUsecaseDetector->nextUsecase();
->>>>>>> refs/remotes/origin/master
-}
-void Switcher::execStair(){
-  //mUsecase = mUsecaseDetector->nextUsecase();
-}
-
+  void Switcher::execLineTracer(){
+    mLineTrace->run();
+    if(mLineTrace -> isDone()){
+      mUsecase = STAIR;
+    }
+  }
+  void Switcher::execLookupGate(){
+    mGate->run();
+    if(mGate -> isDone()){
+      mUsecase = GARAGE;
+    }
+  }
+  void Switcher::execGarage(){
+    mGarage->run();
+    if(mGarage -> isDone()){
+      mUsecase = GARAGE;
+    }
+  }
+  void Switcher::execStair(){
+    mStair->run();
+    if(mStair -> isDone()){
+      mUsecase = GARAGE;
+    }
+  }
 }

@@ -11,6 +11,9 @@
 
 #include "ev3api.h"
 
+namespace Stair{
+  namespace unit{
+
 class Balancer {
 public:
     Balancer();
@@ -29,4 +32,7 @@ private:
     int8_t mLeftPwm;
 };
 
+  }
+}
+ 
 #endif  // EV3_UNIT_BALANCERCPP_H_

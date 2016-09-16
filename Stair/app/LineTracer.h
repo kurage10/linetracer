@@ -6,27 +6,43 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_APP_LINETRACER_H_
-#define EV3_APP_LINETRACER_H_
+#ifndef EV3_STAIR_APP_LINETRACER_H_
+#define EV3_STAIR_APP_LINETRACER_H_
 
-#include "LineMonitor.h"
-#include "BalancingWalker.h"
+#include "../unit/LineMonitor.h"
+#include "../unit/BalancingWalker.h"
+#include "Task.h"
 
-class LineTracer {
-public:
-    LineTracer(LineMonitor* lineMonitor,
-               BalancingWalker* balancingWalker);
+using app::Task;
 
-    void run(bool starting);
-    void init();
-    void stop();
+namespace Stair{
+  namespace app{
 
-private:
-    LineMonitor* mLineMonitor;
-    BalancingWalker* mBalancingWalker;
-    bool mIsInitialized;
-    int mSpeed;
-    float calcSpeed(float direction);
-};
+    class LineTracer : public Task {
+    public:
+      LineTracer(Stair::unit::LineMonitor* lineMonitor,
+		 Stair::unit::BalancingWalker* balancingWalker);
 
+      ~LineTracer();
+
+      void run();
+      bool isDone();
+      void init();
+      void stop();
+      void setSpeed(int speed);
+      void setStarting(bool starting);
+
+    private:
+      Stair::unit::LineMonitor* mLineMonitor;
+      Stair::unit::BalancingWalker* mBalancingWalker;
+      bool mIsInitialized;
+      int mSpeed;
+      bool mStarting;
+      int timeFromStart;
+
+      float calcSpeed(float direction);
+    };
+
+  }
+}
 #endif  // EV3_APP_LINETRACER_H_

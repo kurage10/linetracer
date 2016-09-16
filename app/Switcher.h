@@ -1,48 +1,39 @@
 #ifndef EV3_APP_SWITCHER_H_
 #define EV3_APP_SWITCHER_H_
-#include "LineTracerWithStarter.h"
-<<<<<<< HEAD
-#include "Stopper.h"
-#include "UsecaseDetector.h"
-=======
+
+#include "../LineTrace/app/LineTracerWithStarter.h"
+#include "../Stair/app/LineTracerWithStarter.h"
+#include "../Garage/app/Stopper.h"
+#include "../LookUpGate/app/LookUpGate.h"
 #include "Task.h"
->>>>>>> refs/remotes/origin/master
 
 namespace app{
 
 class Switcher{
 public:
-<<<<<<< HEAD
-  Switcher(LineTrace::app::LineTracerWithStarter* linetracer,
-	   unit::UsecaseDetector* usecasedetector, Stopper* stopper);
-=======
-  Switcher(Task* linetracer);
->>>>>>> refs/remotes/origin/master
+  Switcher(Task* linetrace,
+	   Task* garage,
+	   Task* stair,
+	   Task* gate);
+
   void run();
-private:
+
+ private:
   enum Usecase{
     UNDEFINED,
     LINETRACER,
     LOOKUPGATE,
     GARAGE,
     STAIR
-<<<<<<< HEAD
-    };*/
-  
-  LineTrace::app::LineTracerWithStarter* mLineTracerWithStarter;
-  unit::UsecaseDetector* mUsecaseDetector;
-  unit::UsecaseDetector::Usecase mUsecase;
-  
-  Stopper* mStopper;
-  
-=======
   };
 
   //LineTrace::app::LineTracerWithStarter* mLineTracerWithStarter;
-  Task* mLineTracerWithStarter;
+  Task* mLineTrace;
+  Task* mGarage;
+  Task* mStair;
+  Task* mGate;
 //  unit::UsecaseDetector* mUsecaseDetector;
   Usecase mUsecase;
->>>>>>> refs/remotes/origin/master
   void execUndefined();
   void execLineTracer();
   void execLookupGate();

@@ -6,50 +6,61 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_APP_LINETRACERWITHSTARTER_H_
-#define EV3_APP_LINETRACERWITHSTARTER_H_
+#ifndef EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
+#define EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 
-#include "Starter.h"
-#include "LineTracer.h"
-#include "TailController.h"
+#include "GrayDetector.h"
+#include "GyroSensor.h"
+#include "../unit/Starter.h"
+#include "./LineTracer.h"
+#include "../unit/TailController.h"
+#include "../unit/Waker.h"
 #include "Task.h"
 
 using app::Task;
+
 namespace LineTrace{
   namespace app{
 
-class LineTracerWithStarter : public Task{
-public:
-  LineTracerWithStarter(app::LineTracer* lineTracer,
-			unit::Starter* starter,
-			unit::TailController* tailController);
+    class LineTracerWithStarter : public Task{
+    public:
+      LineTracerWithStarter(app::LineTracer* lineTracer,
+			    unit::Starter* starter,
+			    unit::TailController* tailController,
+			    unit::Waker* waker, 
+			    ev3api::GyroSensor& gyroSensor);
 
-    void run();
-    bool isDone();
+      ~LineTracerWithStarter();
 
-private:
-    enum State {
+      void run();
+      bool isDone();
+
+    private:
+      enum State {
         UNDEFINED,
         WAITING_FOR_START,
 	PREPARE_STARTING,
 	ROCKET_STARTING,
         WALKING
+      };
+
+      app::LineTracer* mLineTracer;
+      unit::Starter* mStarter;
+      unit::TailController* mTailController;
+      unit::Waker* mWaker;
+      ev3api::GyroSensor& mGyroSensor;
+      State mState;
+      FILE* fp;
+
+      void execUndefined();
+      void execWaitingForStart();
+      void execPrepare();
+      void execStarting();
+      void execWalking();
+      bool isFinished();
+      bool mStarting();
+      int timeFromStart;
     };
-
-    app::LineTracer* mLineTracer;
-    unit::Starter* mStarter;
-    unit::TailController* mTailController;
-    State mState;
-
-    void execUndefined();
-    void execWaitingForStart();
-    void execPrepare();
-    void execStarting();
-    void execWalking();
-    bool isFinished();
-    bool mStarting();
-    int timeFromStart;
-};
 
   }
 }

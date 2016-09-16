@@ -6,14 +6,17 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_UNIT_BALANCINGWALKER_H_
-#define EV3_UNIT_BALANCINGWALKER_H_
+#ifndef EV3_LINETRACE_UNIT_BALANCINGWALKER_H_
+#define EV3_LINETRACE_UNIT_BALANCINGWALKER_H_
 
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "BalancerCpp.h"
+#include "InitValues.h"
 
 #include <stdio.h>
+
+using unit::InitValues;
 
 namespace LineTrace{
   namespace unit{
@@ -28,7 +31,8 @@ public:
     BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                     ev3api::Motor& leftWheel,
                     ev3api::Motor& rightWheel,
-                    unit::Balancer* balancer);
+                    unit::Balancer* balancer,
+		    InitValues* initValues);
 
     void init();
     void run();
@@ -39,6 +43,7 @@ private:
     ev3api::Motor& mLeftWheel;
     ev3api::Motor& mRightWheel;
     unit::Balancer* mBalancer;
+    InitValues* mInitValues;
     int mForward;
     int mTurn;
 
