@@ -26,7 +26,6 @@ APPL_CXXOBJS += \
 	TailController_S.o \
 	TailWalker_S.o \
 	LookUpGate_LG.o \
-	TailController_LG.o \
 	GateTracer.o
 
 SRCLANG := c++
