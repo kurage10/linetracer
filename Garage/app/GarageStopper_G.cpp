@@ -26,7 +26,7 @@ namespace Garage{
 
     }
 
-    void execUndefined(){
+    void GarageStopper::execUndefined(){
 
     }
     
