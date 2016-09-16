@@ -9,7 +9,7 @@ namespace app{
     mLineTrace(linetrace),
     mGarage(garage),
     mStair(stair),
-    mGate(gate), 
+    mGate(gate),
     mUsecase(UNDEFINED){
 
   }

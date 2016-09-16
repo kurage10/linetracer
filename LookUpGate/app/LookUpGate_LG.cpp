@@ -5,6 +5,7 @@ namespace LookUpGate{
     int base_speed = 40;
     int timer = 1;
     int flag = 0;
+    bool done = false;
 
     LookUpGate::LookUpGate(LineTrace::unit::TailController* tailController,
                     ev3api::SonarSensor& sonar,
@@ -113,17 +114,19 @@ namespace LookUpGate{
     }
 
     void LookUpGate::backWard() {
+        int dis = mSonar.getDistance();
         mTailController -> setAngle(83);
         mTailController -> run();
         // if (timer % 20 == 0) {
-        //     setSpeed(-5, 0);
+            setSpeed(-8, 0);
         // }
-        if (timer >= 2100) {
+        if (15 < dis && dis < 30) {
+            mTailController -> setAngle(80);
             state = SECOND;
             setSpeed(0, 0);
             timer = 0;
         }
-        mGateTracer -> back();
+        // mGateTracer -> back();
         timer ++;
     }
 
@@ -133,6 +136,10 @@ namespace LookUpGate{
         // if (timer % 50 == 0) {
         //     setSpeed(base_speed, 0);
         // }
+
+        if (timer > 600) {
+          done = true;
+        }
         timer ++;
     }
 
@@ -158,6 +165,10 @@ namespace LookUpGate{
     }
 
     bool LookUpGate::isDone(){
+          if (done == true) {
+            mLeftWheel.setPWM(30);
+            mRightWheel.setPWM(-30);
+          }
           return false;
     }
   }
