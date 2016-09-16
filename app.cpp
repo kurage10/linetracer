@@ -62,6 +62,7 @@ static LookUpGate::unit::TailController *gTailController_LG;
 
 static app::Switcher *gSwitcher;
 static unit::InitValues *gInitValues;
+static unit::GrayDetector *gGrayDetector;
 //static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
 
 void *__dso_handle = 0;
@@ -90,12 +91,17 @@ static void user_system_create() {
     gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT,
 						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
+
+    gGrayDetector = new unit::GrayDetector(gLineMonitor_LT,
+					   gBalancingWalker_LT,
+					   gColorSensor);
+
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
 									  gWaker_LT,
 									  gGyroSensor);
-
+    
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
 
     gBalancer_S               = new Stair::unit::Balancer();
@@ -159,6 +165,7 @@ static void user_system_destroy() {
     fclose(gBt);
     delete gSwitcher;
     delete gInitValues;
+    delete gGrayDetector;
 
     delete gLineTracerWithStarter_LT;
     delete gLineTracer_LT;

@@ -13,6 +13,7 @@ APPL_CXXOBJS += \
 	LineTracerWithStarter_LT.o \
 	Switcher.o \
 	InitValues.o \
+	GrayDetector.o \
 	UsecaseDetector.o \
 	DistanceMonitor.o \
 	Stopper_G.o \

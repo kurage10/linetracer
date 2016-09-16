@@ -9,6 +9,7 @@
 #ifndef EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 #define EV3_LINETRACE_APP_LINETRACERWITHSTARTER_H_
 
+#include "GrayDetector.h"
 #include "GyroSensor.h"
 #include "../unit/Starter.h"
 #include "./LineTracer.h"
@@ -17,6 +18,7 @@
 #include "Task.h"
 
 using app::Task;
+
 namespace LineTrace{
   namespace app{
 

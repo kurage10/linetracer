@@ -53,7 +53,7 @@ namespace LineTrace{
 	break;
       case WALKING:
         execWalking();
-        break;
+	break;
       default:
         break;
       }
@@ -111,6 +111,7 @@ namespace LineTrace{
       mTailController -> run();
 
       if(timeFromStart > 3000){
+	//mState = WALKING;
 	mState = WALKING;
       }else{
 	timeFromStart += 4;

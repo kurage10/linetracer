@@ -12,7 +12,7 @@ namespace unit{
     InitValues();
     
     void put(Name name, int value);
-    float get(Name name);
+    int get(Name name);
 
   private:
     int GyroOffset;
