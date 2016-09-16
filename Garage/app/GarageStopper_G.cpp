@@ -58,7 +58,7 @@ namespace Garage{
       mTailWalker->run();
       
       if(mStarter->isPushed()){
-	mTailWalker->setSpeed(20);
+	mTailWalker->setSpeed(10);
 	ev3_speaker_play_tone(NOTE_A5,300);
 	mState = GRAY;
       }
@@ -67,12 +67,16 @@ namespace Garage{
     void GarageStopper::execGray(){
       if(mGrayDetector->isGray()){
 	mTailWalker->init();
+	mTailWalker->setSpeed(10);
 	mState = STOP;
       }
     }
 
     void GarageStopper::execStop(){
       mTailWalker->run();
+      if(mTailWalker->getDistance() > 543){
+	mTailWalker->setSpeed(0);
+      }
     }
     
   }

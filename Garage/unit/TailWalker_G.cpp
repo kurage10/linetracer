@@ -15,8 +15,8 @@ namespace Garage{
        mIsInitialized(false),
        mAngle(90),
        mDirection(),
-       mDoTrace(false){
-
+       mDoTrace(false),
+       mStartMeasuringDistance(){
     }
     
     void TailWalker::run(){
@@ -29,8 +29,8 @@ namespace Garage{
 	direction = mDirection;
       }
       
-      mLeftWheel.setPWM(mSpeed + (direction/100)*mSpeed);
-      mRightWheel.setPWM(mSpeed - (direction/100)*mSpeed);
+      mLeftWheel.setPWM(mSpeed + (direction/100)*mSpeed*2);
+      mRightWheel.setPWM(mSpeed - (direction/100)*mSpeed*2);
     }
 
     void TailWalker::setSpeed(int speed){
@@ -59,6 +59,11 @@ namespace Garage{
       mTailController->setAngle(mAngle);
       mIsInitialized = true;
       mDoTrace = true;
+      mStartMeasuringDistance = mLeftWheel.getCount();
+    }
+
+    int TailWalker::getDistance(){
+      return mLeftWheel.getCount() - mStartMeasuringDistance;
     }
 
   }

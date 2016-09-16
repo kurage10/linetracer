@@ -5,7 +5,7 @@ namespace unit{
   int8_t GrayDetector::GRAY_THRESHOLD = 7;
   int GrayDetector::TIME_THRESHOLD = 350;
   const float GrayDetector::KP_Balance = 2.00;
-  const float GrayDetector::KP_Tail = 15.0;//25で振動(20~25?):24.5?
+  const float GrayDetector::KP_Tail = 20.0;//25で振動(20~25?):24.5?//speed20で15.0
   
   GrayDetector::GrayDetector(LineTrace::unit::LineMonitor* lineMonitor,
 			     LineTrace::unit::BalancingWalker* balancingWalker,
@@ -42,6 +42,7 @@ namespace unit{
       }
       
     }else{
+      mTailWalker->setSpeed(10);
       if(Brightness > 0){
 	mTailWalker->setDirection(-1 * KP_Tail * Brightness * Brightness);
       }else{

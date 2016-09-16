@@ -20,7 +20,8 @@ namespace Garage{
       void setSpeed(int speed);
       void setAngle(int32_t angle);
       void setDirection(float direction);
-  
+      int  getDistance();
+      
     private:
       ev3api::Motor& mLeftWheel;
       ev3api::Motor& mRightWheel;
@@ -31,6 +32,7 @@ namespace Garage{
       int32_t mAngle;
       float mDirection;
       bool mDoTrace;
+      int mStartMeasuringDistance;
     };
 
   }

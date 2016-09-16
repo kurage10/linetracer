@@ -269,13 +269,16 @@ void remote_task(intptr_t exinf){
     uint8_t c = fgetc(gBt); /* 受信 */
     if(c=='1'){
       gStarter_LT->setRemote(true);
+      gStarter_G->setRemote(true);
     }else{
       gStarter_LT->setRemote(false);
+      gStarter_G->setRemote(false);
     }
     fputc(c, gBt); /* エコーバック */
 
   }else{
     gStarter_LT->setRemote(false);
+    gStarter_G->setRemote(false);
   }
   ext_tsk();
 }
