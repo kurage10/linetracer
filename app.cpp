@@ -37,7 +37,12 @@ static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
 static LineTrace::unit::Waker           *gWaker_LT;
 
-static Garage::app::Stopper *gStopper_G;
+static Garage::app::Stopper             *gStopper_G;
+static Garage::app::GarageStopper       *gGarageStopper_G;
+static Garage::unit::Starter            *gStarter_G;
+static Garage::unit::LineMonitor        *gLineMonitor_G;
+static Garage::unit::TailController     *gTailController_G;
+static Garage::unit::TailWalker         *gTailWalker_G;
 
 static Stair::unit::LineMonitor           *gLineMonitor_S;
 static Stair::unit::Balancer              *gBalancer_S;
@@ -91,18 +96,28 @@ static void user_system_create() {
 						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
 
-    gGrayDetector = new unit::GrayDetector(gLineMonitor_LT,
-					   gBalancingWalker_LT,
-					   gColorSensor);
-
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
 									  gWaker_LT,
 									  gGyroSensor);
-    
-    gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
 
+    gLineMonitor_G     = new Garage::unit::LineMonitor(gColorSensor);
+    gTailController_G  = new Garage::unit::TailController(gTailMotor);
+    gStarter_G         = new Garage::unit::Starter(gTouchSensor);
+    gTailWalker_G      = new Garage::unit::TailWalker(gLeftWheel,
+						      gRightWheel,
+						      gTailController_G,
+						      gLineMonitor_G);
+    gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
+    gGrayDetector = new unit::GrayDetector(gLineMonitor_LT,
+					   gBalancingWalker_LT,
+					   gTailWalker_G,
+					   gColorSensor);
+    gGarageStopper_G   = new Garage::app::GarageStopper(gTailWalker_G,
+							gStarter_G,
+							gGrayDetector);
+    
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
 								 gLeftWheel,
@@ -147,7 +162,8 @@ static void user_system_create() {
 						     gRightWheel);
 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
-					 gStopper_G,
+					 //gStopper_G,
+					 gGarageStopper_G,
 					 gStairWalker_S,
 					 gLookUpGate_LG);
 
@@ -177,6 +193,11 @@ static void user_system_destroy() {
     delete gBalancer_LT;
 
     delete gStopper_G;
+    delete gGarageStopper_G;
+    delete gLineMonitor_G;
+    delete gStarter_G;
+    delete gTailController_G;
+    delete gTailWalker_G;
 
     delete gTailWalker_S;
     delete gStairWalker_S;

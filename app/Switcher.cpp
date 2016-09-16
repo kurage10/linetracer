@@ -34,8 +34,8 @@ namespace app{
   }
   void Switcher::execUndefined(){
     //各種初期化
-    mUsecase = LINETRACER;
-    //mUsecase = STAIR;
+    //mUsecase = LINETRACER;
+    mUsecase = GARAGE;
   }
   void Switcher::execLineTracer(){
     mLineTrace->run();

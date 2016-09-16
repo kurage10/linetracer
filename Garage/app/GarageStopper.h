@@ -1,6 +1,11 @@
 #ifndef EV3_GARAGE_APP_GARAGE_STOPPER_H_
 #define EV3_GARAGE_APP_GARAGE_STOPPER_H_
 
+#include "../unit/TailWalker.h"
+#include "../unit/TailController.h"
+#include "../unit/LineMonitor.h"
+#include "../unit/Starter.h"
+#include "GrayDetector.h"
 #include "Task.h"
 
 using app::Task;
@@ -25,7 +30,7 @@ namespace Garage{
 	TEST_START,//For testing
 	GRAY,
 	STOP
-      }
+      };
 
       void execUndefined();
       void execTestStart();
@@ -37,7 +42,7 @@ namespace Garage{
       GrayDetector* mGrayDetector;
 
       State mState;
-    }
+    };
     
   }
 }

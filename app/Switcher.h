@@ -4,6 +4,7 @@
 #include "../LineTrace/app/LineTracerWithStarter.h"
 #include "../Stair/app/LineTracerWithStarter.h"
 #include "../Garage/app/Stopper.h"
+#include "../Garage/app/GarageStopper.h"
 #include "../LookUpGate/app/LookUpGate.h"
 #include "Task.h"
 
