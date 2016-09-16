@@ -60,7 +60,7 @@ namespace app{
   void Switcher::execStair(){
     mStair->run();
     if(mStair -> isDone()){
-      mUsecase = LINETRACER;
+      mUsecase = GARAGE;
     }
   }
 

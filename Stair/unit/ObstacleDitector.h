@@ -2,6 +2,8 @@
 #define EV3_APP_OBSTACLEDITECTOR_H_
 
 #include "GyroSensor.h"
+
+#include "Motor.h"
 #include<stdio.h>
 
 namespace Stair{
@@ -9,16 +11,23 @@ namespace Stair{
 
 class ObstacleDitector{
 public:
-  ObstacleDitector(const ev3api::GyroSensor& gyroSensor);
+  ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel);
   bool isObstacle();
   void init();
-  bool isLanding();
+  bool isDistance(int goal);
+
 private:
   const ev3api::GyroSensor& mGyroSensor;
+  const ev3api::Motor& mLeftWheel;
+  const ev3api::Motor& mRightWheel;
+
   static const int INITIAL_LIVENESS;
   float mColorLog[3];
   bool mCliming;
   bool detectStair;
+  int left_offset;
+  int right_offset;
+
   int max;
   int max_liveness;
   int min;

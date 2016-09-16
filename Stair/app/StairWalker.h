@@ -38,22 +38,27 @@ namespace Stair{
 	      UNDEFINED,
 	      PREPARE,
         STAY,
+        STAND,
 	      WALKING,
 	      CLIMBING,
         PREPARE_TURNING,
-	      TURNING
+	      TURNING,
+        FINISH
       };
       State mState;
       int timefromstart;
       int mCount;
+      bool isFinished;
       bool endLine;
       void execUndefined();
       void execPrepare();
+      void execStand();
       void execStay();
       void execWalking();
       void execClimbing();
       void execPrepareTurning();
       void execTurning();
+      void execFinish();
     };
 
   }

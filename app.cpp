@@ -95,7 +95,7 @@ static void user_system_create() {
                                                   gLeftWheel,
 	                                          gRightWheel,
                                                   gBalancer_S);
-    gObstacleDitector_S       = new Stair::unit::ObstacleDitector(gGyroSensor);
+    gObstacleDitector_S       = new Stair::unit::ObstacleDitector(gGyroSensor,gLeftWheel,gRightWheel);
     gTailController_S         = new Stair::unit::TailController(gTailMotor);
     gLineMonitor_S            = new Stair::unit::LineMonitor(gColorSensor);
     gStarter_S                = new Stair::unit::Starter(gTouchSensor);

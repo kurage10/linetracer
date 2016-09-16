@@ -6,8 +6,10 @@ namespace Stair{
 
     const int ObstacleDitector::INITIAL_LIVENESS = 80;
 
-    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor):
+    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel):
       mGyroSensor(gyroSensor),
+      mLeftWheel(leftWheel),
+      mRightWheel(rightWheel),
       mCliming(false),
       detectStair(false),
       max(0),
@@ -24,9 +26,11 @@ namespace Stair{
       int diff=max-min;
       fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,max_liveness,min_liveness, 200*(int)mCliming,200*(int)detectStair);
 
-      if(diff > 80 || mCliming){
-	mCliming=true;
-	return true;
+      if(diff > 130 || mCliming){
+        left_offset = mLeftWheel.getCount();
+        right_offset = mRightWheel.getCount();
+	      mCliming=true;
+	      return true;
       }/*
 	 if(mCliming && diff < 80 && 40 < diff){
 	 mCliming=false;
@@ -40,12 +44,16 @@ namespace Stair{
 
       return false;
     }
-    bool ObstacleDitector::isLanding(){
-      if(mGyroSensor.getAngle() < -3){
-        return true;
-      }else{
-        return false;
+    bool ObstacleDitector::isDistance(int goal){
+      int left,right;
+      if(mCliming){
+        left = mLeftWheel.getCount();
+        right = mRightWheel.getCount();
+        if(left-left_offset >= goal && right - right_offset >= goal){
+          return true;
+        }
       }
+      return false;
     }
     void ObstacleDitector::init(){
       mCliming=false;

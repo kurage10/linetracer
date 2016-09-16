@@ -58,7 +58,7 @@ bool StairTurner::detectCrossLine(){
     max=0;
     min=100;
   }
-  if(min > 11 && min < 50){
+  if(min > 6 && min < 50){
       if(mCount == 2)return true;
       mOnline = false;
   }

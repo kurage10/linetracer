@@ -67,7 +67,7 @@ namespace Stair{
      * 未定義状態の処理
      */
     void LineTracerWithStarter::execUndefined() {
-      mTailController->setAngle(94);
+      mTailController->setAngle(96);
 
       mState = WAITING_FOR_START;
     }
