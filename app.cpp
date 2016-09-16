@@ -35,6 +35,7 @@ static LineTrace::app::LineTracer      *gLineTracer_LT;
 static LineTrace::unit::Starter         *gStarter_LT;
 static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
+static LineTrace::unit::Waker             *gWaker_LT;
 
 static Garage::app::Stopper *gStopper_G;
 
@@ -61,6 +62,7 @@ bool bt_cmd;
 static LookUpGate::unit::GateTracer *gGateTracer_LG;
 
 static app::Switcher *gSwitcher;
+static unit::InitValues *gInitValues;
 //static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
 
 void *__dso_handle = 0;
@@ -73,20 +75,24 @@ static void user_system_create() {
     tslp_tsk(2);
 
     // オブジェクトの作成
+    gInitValues                 = new unit::InitValues();
     gBalancer_LT               = new LineTrace::unit::Balancer();
     gBalancingWalker_LT        = new LineTrace::unit::BalancingWalker(gGyroSensor,
 								   gLeftWheel,
 								   gRightWheel,
-								   gBalancer_LT);
+								   gBalancer_LT,
+                   gInitValues);
     gLineMonitor_LT     = new LineTrace::unit::LineMonitor(gColorSensor,
 							   gLeftWheel,
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
+    gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT, gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
+                    gWaker_LT,
 									  gGyroSensor);
 
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
@@ -153,7 +159,7 @@ static void user_system_destroy() {
     gTailMotor.reset();
     fclose(gBt);
     delete gSwitcher;
-
+    delete gInitValues;
     delete gLineTracerWithStarter_LT;
     delete gLineTracer_LT;
     delete gTailController_LT;
@@ -209,8 +215,8 @@ void main_task(intptr_t unused) {
     slp_tsk();  // バックボタンが押されるまで待つ
 
     // 周期ハンドラ停止
-    ev3_stp_cyc(EV3_CYC_REMOTE);
     ev3_stp_cyc(EV3_CYC_TRACER);
+    ev3_stp_cyc(EV3_CYC_REMOTE);
 
     user_system_destroy();  // 終了処理
 

@@ -61,7 +61,7 @@ namespace LookUpGate{
     void LookUpGate::seek() {
       int dis = mSonar.getDistance();
       if (60 < dis && dis < 65) {
-        mTailController -> setAngle(85);
+        mTailController -> setAngle(80);
         flag = 1;
       }
       if (dis < 50 && flag == 1) {
@@ -91,7 +91,7 @@ namespace LookUpGate{
         // mGateTracer -> run();
         int dis = mSonar.getDistance();
         if (dis <= 15) {
-          mTailController -> setAngle(80);
+          // mTailController -> setAngle(80);
           state = FIRST;
           timer = 1;
         }
@@ -106,6 +106,7 @@ namespace LookUpGate{
         } else if (timer % 70 == 0) {
             int n = setSpeed(0, 0);
             if (1 == n) {
+                mTailController -> setAngle(82);
                 state = BACK;
                 timer = 0;
             }
@@ -115,7 +116,7 @@ namespace LookUpGate{
 
     void LookUpGate::backWard() {
         int dis = mSonar.getDistance();
-        mTailController -> setAngle(83);
+
         mTailController -> run();
         // if (timer % 20 == 0) {
             setSpeed(-8, 0);
@@ -165,11 +166,11 @@ namespace LookUpGate{
     }
 
     bool LookUpGate::isDone(){
-          if (done == true) {
-            mLeftWheel.setPWM(30);
-            mRightWheel.setPWM(-30);
-          }
-          return false;
+          // if (done == true) {
+          //   mLeftWheel.setPWM(30);
+          //   mRightWheel.setPWM(-30);
+          // }
+          return done;
     }
   }
 }
