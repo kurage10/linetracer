@@ -17,22 +17,36 @@ namespace Stair{
       min(0),
       min_liveness(INITIAL_LIVENESS) {
       file = fopen("/stairLog.csv","w");
-      fprintf(file,"angle,diff,max,min,max_liveness,min_liveness,mCliming,detectStair\n");
+      fprintf(file,"angle,max,min,mCliming,detectStair\n");
     }
     bool ObstacleDitector::isObstacle(){
-      int16_t angle = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-      if(angle > max){max=angle;max_liveness=INITIAL_LIVENESS;}
-      else if(angle < min){min=angle;min_liveness=INITIAL_LIVENESS;}
+      //int16_t angle = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
+      int angle = mLeftWheel.getCount();
+      if(angle > max){min=angle;max=angle;max_liveness=INITIAL_LIVENESS;}
+      else {min=angle;min_liveness=INITIAL_LIVENESS;}
       int diff=max-min;
       int left,right;
-      left = mLeftWheel.getCount();
-      right = mRightWheel.getCount();
-      timefromstart=timefromstart+1;
-      vec_left=left-pre_left;
-      vec_right=right-pre_left;
-      fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,left,right, 200*(int)mCliming,200*(int)detectStair);
 
-      if(diff > 130 || mCliming){
+      timefromstart=timefromstart+1;
+      //fprintf(file,"%d,%d,%d,%d,%d,%d\n",left-left_offset,right-right_offset,vec_left,vec_right,200*(int)mCliming,200*(int)detectStair);
+      fprintf(file,"%d,%d,%d,%d,%d\n",angle,max,min,200*(int)mCliming,200*(int)detectStair);
+      /*
+      if(timefromstart % 100==0){
+        left = mLeftWheel.getCount();
+        right = mRightWheel.getCount();
+
+        vec_left=left-pre_left;
+        vec_right=right-pre_left;
+
+        if(left-left_offset > 20 && right-right_offset >20 && vec_left < 0 && vec_right < 0){
+          mCliming=true;
+          return true;
+        }
+        pre_left=left;
+        pre_right=right;
+      }*/
+
+      if(diff > 20){
         setOffset();
 	      mCliming=true;
 	      return true;
@@ -46,8 +60,7 @@ namespace Stair{
       min_liveness=min_liveness-1;
       if(max_liveness <= 0)max=0;
       if(min_liveness <= 0)min=0;
-      pre_left=left;
-      pre_right=right;
+
 
 
       return false;

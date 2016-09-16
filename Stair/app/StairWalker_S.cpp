@@ -69,8 +69,9 @@ namespace Stair{
       if(timefromstart < 1000){
         mTailController->run();
         mTailController->setAngle(0);
-        mBalancingWalker->setCommand(0,0);
-        mBalancingWalker->run();
+        mLineTracer->setStarting(false);
+        mLineTracer->setSpeed(/*Stair::unit::BalancingWalker::LOW*/10);
+        mLineTracer->run();
       }else{
         mState=WALKING;
       }
@@ -79,8 +80,8 @@ namespace Stair{
       timefromstart = timefromstart+1;
       mTailController->run();
       if(timefromstart > 500){
-        mTailController->setAngle(100);
-        if(mTailController->getAngle() >= 96){
+        mTailController->setAngle(108);
+        if(mTailController->getAngle() >= 100){
           mTailController->setAngle(0);
           timefromstart=0;
 
@@ -104,7 +105,7 @@ namespace Stair{
       if(mObstacleDitector->isObstacle() && mCount < 2){
 	      //timefromstart = 1300;
         timefromstart = 0;
-	      //mState = PREPARE_CLIMB;
+	      mState = PREPARE_CLIMB;
         ev3_speaker_play_tone(NOTE_A5,300);
       }
       /*if(mObstacleDitector->isDistance(160) && mCount==1){
@@ -157,8 +158,7 @@ namespace Stair{
         }
       }
       mBalancingWalker->run();*/
-
-      if(!mObstacleDitector->isDistance(180)){
+      if(!mObstacleDitector->isDistance(450)){
         //mBalancingWalker->setCommand(Stair::unit::BalancingWalker::LOW,0);
         mBalancingWalker->setCommand(10,0);
         mBalancingWalker->run();
@@ -202,17 +202,17 @@ namespace Stair{
       mTailController->run();
 
       timefromstart=timefromstart+1;
-      if(timefromstart < 400){
+      if(timefromstart < 500){
         mBalancingWalker->setCommand(0,0);
         mBalancingWalker->run();
         mTailController->setAngle(0);
 
-      }else if(timefromstart < 700){
+      }else if(timefromstart < 800){
         mBalancingWalker->setCommand(-20,0);
         mBalancingWalker->run();
         mTailController->setAngle(85);
       }
-      else if(timefromstart < 1000){
+      else if(timefromstart < 1100){
   	    //timefromstart=0;
   	    mStairTurner->init();
         //mBalancingWalker->init();
