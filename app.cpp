@@ -297,6 +297,7 @@ void remote_task(intptr_t exinf){
 
       prepare_restart();
 
+      gStarter_LT->reset();
       gLineTracer_LT->reset();
       gLineTracerWithStarter_LT->reset();
       gLineTracer_S->reset();
