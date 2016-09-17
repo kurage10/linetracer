@@ -5,7 +5,7 @@ namespace unit{
   int8_t GrayDetector::GRAY_THRESHOLD = 7;
   int GrayDetector::TIME_THRESHOLD = 350;
   const float GrayDetector::KP_Balance = 2.00;
-  const float GrayDetector::KP_Tail = 20.0;//25で振動(20~25?):24.5?//speed20で15.0
+  const float GrayDetector::KP_Tail = 20.0;//25で振動(20~25?):24.5?//speed20で15.0//20?
   
   GrayDetector::GrayDetector(LineTrace::unit::LineMonitor* lineMonitor,
 			     LineTrace::unit::BalancingWalker* balancingWalker,

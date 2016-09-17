@@ -44,9 +44,9 @@ namespace Garage{
     void GarageStopper::execUndefined(){
       mTailWalker->init();
       mGrayDetector->init();
-      mGrayDetector->setTraceThreshold(12);//9?
-      mGrayDetector->setGrayThreshold(4);//5
-      mGrayDetector->setTimeThreshold(170);
+      mGrayDetector->setTraceThreshold(10);//9?
+      mGrayDetector->setGrayThreshold(2);//5
+      mGrayDetector->setTimeThreshold(250);//170
 
       mState = TEST_START;//For testing
       mTailWalker->setSpeed(0);
