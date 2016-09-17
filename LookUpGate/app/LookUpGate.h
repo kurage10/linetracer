@@ -48,7 +48,7 @@ namespace LookUpGate{
 	int time;
 	int LeftCount;
 	int RightCount;
-	
+
         void seek();
         void init();
         void firstPass();
@@ -57,7 +57,7 @@ namespace LookUpGate{
         int setSpeed(int speed, int time);
         void delay(int time);
 	void getCount();
-	
+
     };
   }
 }

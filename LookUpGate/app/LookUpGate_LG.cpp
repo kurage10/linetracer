@@ -22,7 +22,7 @@ namespace LookUpGate{
           mLineTracer(lineTracer),
           mBalancingWalker(balancingWalker),
           state(SEEK),
-	  time(),
+	  time(0),
 	  LeftCount(),
 	  RightCount(){
     }
@@ -71,33 +71,36 @@ namespace LookUpGate{
       if (dis < 45 && flag == 1) {
         state = INIT;
       }
+      mLineTracer->setSpeed(10);
       mLineTracer->setStarting(false);
       mLineTracer->run();
       mTailController -> run();
     }
 
     void LookUpGate::init() {
-        mBalancingWalker -> setCommand(0, 0);
-        mBalancingWalker -> run();
-        if(timer > 100 && timer < 400){
+        if (timer <= 100) {
+          mBalancingWalker -> setCommand(0, 0);
+          mBalancingWalker -> run();
+        } else if(timer < 400){
           mBalancingWalker -> setCommand(-25,0);
           mBalancingWalker -> run();
-        } else if (400 <= timer && timer < 500) {
+        } else if (timer < 800) {
           mLeftWheel.setPWM(0);
           mRightWheel.setPWM(0);
-        } else if (timer >= 500) {
+        } else if (timer < 1000) {
+          // mLeftWheel.setPWM(0);
+          // mRightWheel.setPWM(0);
+          mTailController -> setAngle(80);
+        } else if (timer >= 1200) {
           mGateTracer -> run();
         }
-        // mLeftWheel.setPWM(base_speed);
-        // mRightWheel.setPWM(base_speed);
-        // current_speed = base_speed;
-        // mGateTracer -> run();
+
         int dis = mSonar.getDistance();
         if (dis <= 15) {
-          mTailController -> setAngle(80);
+          // mTailController -> setAngle(90);
           state = FIRST;
           timer = 1;
-	  getCount();
+          getCount();
         }
         mTailController -> run();
         timer ++;
@@ -110,45 +113,49 @@ namespace LookUpGate{
         } else if (timer >= 420) {
             int n = setSpeed(0, 0);
             if (1 == n) {
-	      mTailController -> setAngle(78);
-	      time++;
-	      if(time > 250){
-		time = 0;
-                state = BACK;
-		ev3_speaker_play_tone(NOTE_A5,300);
-                timer = 0;
-	      }
+      	      mTailController -> setAngle(78);
+      	      time++;
+      	      if (time > 250) {
+    		          time = 0;
+                  state = BACK;
+  		            ev3_speaker_play_tone(NOTE_A5,300);
+                  timer = 0;
+      	      }
             }
         }
         timer ++;
     }
 
     void LookUpGate::backWard() {
-      /*int dis = mSonar.getDistance();
-
-        mTailController -> run();
+// 1: no line trace when back
+// 0: do line trace when back
+#if 1
+      int dis = mSonar.getDistance();
+      mTailController -> run();
         // if (timer % 20 == 0) {
-	//setSpeed(-5, 0);
+	      setSpeed(-8, 0);
         // }
-        if (15 < dis && dis < 30) {
+        if (20 < dis && dis < 30) {
             mTailController -> setAngle(80);
-	    time++;
-	    if(time > 250){
-	      time = 0;
-	      state = SECOND;
-	      setSpeed(0, 0);
-	      timer = 0;
-	    }
+            setSpeed(0, 0);
+      	    time++;
+      	    if(time > 250){
+      	      time = 0;
+      	      state = SECOND;
+      	      timer = 0;
+      	    }
         }
-        mGateTracer -> back();
-        timer ++;*/
+        // mGateTracer -> back();
+        timer ++;
+#else
       mTailController->run();
-      if(mGateTracer->back(LeftCount,RightCount)){
-	mTailController->setAngle(80);
-	state = SECOND;
-	setSpeed(0,0);
-	timer = 0;
+      if (mGateTracer -> back(LeftCount,RightCount)) {
+      	mTailController -> setAngle(80);
+      	state = SECOND;
+      	setSpeed(0,0);
+      	timer = 0;
       }
+#endif
     }
 
     void LookUpGate::secondPass() {
@@ -157,8 +164,7 @@ namespace LookUpGate{
         // if (timer % 50 == 0) {
         //     setSpeed(base_speed, 0);
         // }
-
-        if (timer > 500) {
+        if (timer > 1000) {
           ev3_speaker_play_tone(NOTE_A5,300);
           done = true;
         }
@@ -169,7 +175,7 @@ namespace LookUpGate{
       LeftCount = mLeftWheel.getCount() - 300;
       RightCount = mRightWheel.getCount() - 300;
     }
-    
+
     int LookUpGate::setSpeed(int speed, int time) {
         double s = speed;
         int d = current_speed - speed;
@@ -188,15 +194,11 @@ namespace LookUpGate{
     }
 
     void LookUpGate::delay(int time) {
-      
+
     }
 
     bool LookUpGate::isDone(){
-          // if (done == true) {
-          //   mLeftWheel.setPWM(30);
-          //   mRightWheel.setPWM(-30);
-          // }
-          return done;
+        return done;
     }
   }
 }

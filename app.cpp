@@ -51,6 +51,8 @@ static Stair::unit::StairTurner           *gStairTurner_S;
 static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
 
+
+// static LookUpGate::unit::TailController *gTailController_LG;
 static LookUpGate::app::LookUpGate *gLookUpGate_LG;
 static FILE* gBt= ev3_serial_open_file(EV3_SERIAL_BT);
 bool bt_cmd;
@@ -58,7 +60,6 @@ bool bt_cmd;
 //static LookUpGate::unit::Balancer        *gBalancer_LG;
 //static LookUpGate::unit::BalancingWalker *gBalancingWalker_LG;
 //static LookUpGate::unit::Starter         *gStarter_LG;
-// static LookUpGate::unit::TailController *gTailController_LG;
 static LookUpGate::unit::GateTracer *gGateTracer_LG;
 
 static app::Switcher *gSwitcher;

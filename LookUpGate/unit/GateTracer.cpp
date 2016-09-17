@@ -2,7 +2,7 @@
 
 namespace LookUpGate{
   namespace unit{
-    
+
     GateTracer::GateTracer(ev3api::Motor& leftWheel,
 			   ev3api::Motor& rightWheel,
 			   ev3api::ColorSensor& colorSensor)
@@ -22,16 +22,28 @@ namespace LookUpGate{
     }
 
     void GateTracer::run() {
-      const float Kp = 15;//9        // 比例係数
+      const float Kp = 3;//9        // 比例係数
       // target = 5, 8
       const int target = 8;//8        // 白・黒の中間値
       const int bias = 0;
       // msg_f("running...", 1);
       int diff = mColorSensor.getBrightness() - target;
       float turn = Kp * diff + bias;
-      mLeftWheel.setPWM(pwm - (turn/100)*pwm);
-      mRightWheel.setPWM(pwm + (turn/100)*pwm);
+      mLeftWheel.setPWM(pwm - turn);
+      mRightWheel.setPWM(pwm + turn);
     }
+
+    // void GateTracer::run2() {
+    //   const float Kp = 15;//9        // 比例係数
+    //   // target = 5, 8
+    //   const int target = 8;//8        // 白・黒の中間値
+    //   const int bias = 0;
+    //   // msg_f("running...", 1);
+    //   int diff = mColorSensor.getBrightness() - target;
+    //   float turn = Kp * diff + bias;
+    //   mLeftWheel.setPWM(pwm - (turn/100)*pwm);
+    //   mRightWheel.setPWM(pwm + (turn/100)*pwm);
+    // }
 
     bool GateTracer::back(int LeftCount, int RightCount) {
       /* const float Kp = 7;//3        // 比例係数
@@ -53,7 +65,7 @@ namespace LookUpGate{
       int Rspeed = (RightCount - mRightCount)*bias;
 
       ev3_speaker_play_tone(NOTE_A5,300);
-      
+
       if(Lspeed > 10){
 	mLeftWheel.setPWM(10);
       }else if(Lspeed < -10){
@@ -70,7 +82,7 @@ namespace LookUpGate{
 	mRightWheel.setPWM(Rspeed);
       }
 
-      return Lspeed < 3 && Rspeed < 3;
+      return -3 < Lspeed && Lspeed < 3 && -3 < Rspeed && Rspeed < 3;
     }
 
   }

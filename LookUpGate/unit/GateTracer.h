@@ -15,6 +15,7 @@ namespace LookUpGate{
 
 
       void run();
+      void run2();
       void init();
       void terminate();
       bool back(int LeftCount, int RightCount);
