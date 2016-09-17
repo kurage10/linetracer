@@ -16,6 +16,7 @@ APPL_CXXOBJS += \
 	UsecaseDetector.o \
 	DistanceMonitor.o \
 	Stopper_G.o \
+	Waker_S.o \
 	LineTracerWithStarter_S.o \
 	LineTracer_S.o \
 	StairWalker_S.o \

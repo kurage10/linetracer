@@ -51,6 +51,7 @@ static Stair::unit::ObstacleDitector      *gObstacleDitector_S;
 static Stair::unit::StairTurner           *gStairTurner_S;
 static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
+static Stair::unit::Waker                 *gWaker_S;
 
 static LookUpGate::app::LookUpGate *gLookUpGate_LG;
 static FILE* gBt= ev3_serial_open_file(EV3_SERIAL_BT);
@@ -120,13 +121,15 @@ static void user_system_create() {
 							    gRightWheel,
 							    gTailController_S,
 							    gLineMonitorForTail_S);
+    gWaker_S           = new Stair::unit::Waker(gTailController_S,
+						     gBalancingWalker_S);
     gStairWalker_S            = new Stair::app::StairWalker(gStairTurner_S,
 					      gLineTracer_S,
 					      gObstacleDitector_S,
 					      gTailWalker_S,
 					      gBalancingWalker_S,
 					      gTailController_S,
-                gWaker_LT);
+							    gWaker_S);
     gLineTracerWithStarter_S  = new Stair::app::LineTracerWithStarter(gLineTracer_S,
 							  gStarter_S,
 							  gTailController_S);
@@ -178,6 +181,7 @@ static void user_system_destroy() {
 
     delete gTailWalker_S;
     delete gStairWalker_S;
+    delete gWaker_S;
     delete gStairTurner_S;
     delete gObstacleDitector_S;
     delete gLineTracerWithStarter_S;

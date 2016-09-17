@@ -9,10 +9,9 @@
 #include "BalancingWalker.h"
 #include "TailController.h"
 #include "Task.h"
-#include "Waker.h"
+#include "../unit/Waker.h"
 
 using app::Task;
-using LineTrace::unit::Waker;
 
 namespace Stair{
   namespace app{
@@ -25,7 +24,7 @@ namespace Stair{
 		  Stair::unit::TailWalker* tailWalker,
 		  Stair::unit::BalancingWalker* balancingWalker,
 		  Stair::unit::TailController* tailController,
-      Waker* waker);
+		  Stair::unit::Waker* waker);
       void run();
       bool isDone();
       ~StairWalker();
@@ -37,7 +36,7 @@ namespace Stair{
       Stair::unit::TailWalker* mTailWalker;
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
-      Waker* mWaker;
+      Stair::unit::Waker* mWaker;
       enum State {
 	      UNDEFINED,
 	      PREPARE,

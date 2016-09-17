@@ -38,6 +38,7 @@ public:
     void run();
     void setCommand(int forward, int turn);
     void changeMode(bool Balance);
+    void prepareStand();
     
 private:
     const ev3api::GyroSensor& mGyroSensor;

@@ -93,6 +93,11 @@ void BalancingWalker::setCommand(int forward, int turn) {
 	mBalancer->init(mInitValues->get(InitValues::GYRO_OFFSET) - 3);
       }
     }
+
+    void BalancingWalker::prepareStand(){
+      int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
+      mBalancer->init(offset);
+    }
     
   }
 }
