@@ -34,6 +34,7 @@ namespace LineTrace{
 
       void run();
       bool isDone();
+      void reset();
 
     private:
       enum State {

@@ -4,10 +4,16 @@
 namespace Stair{
   namespace unit{
 
-    const int ObstacleDitector::INITIAL_LIVENESS = 80;
+    const int ObstacleDitector::INITIAL_LIVENESS = 30;
 
-    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor):
+    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel,const ev3api::ColorSensor& colorSensor):
       mGyroSensor(gyroSensor),
+      mLeftWheel(leftWheel),
+      mRightWheel(rightWheel),
+      mColorSensor(colorSensor),
+      onRight(false),
+      straight(false),
+      firstLand(false),
       mCliming(false),
       detectStair(false),
       max(0),
@@ -15,18 +21,39 @@ namespace Stair{
       min(0),
       min_liveness(INITIAL_LIVENESS) {
       file = fopen("/stairLog.csv","w");
-      fprintf(file,"angle,diff,max,min,max_liveness,min_liveness,mCliming,detectStair\n");
+      fprintf(file,"angle,max,min,mCliming,detectStair\n");
     }
     bool ObstacleDitector::isObstacle(){
-      int16_t angle = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-      if(angle > max){max=angle;max_liveness=INITIAL_LIVENESS;}
-      else if(angle < min){min=angle;min_liveness=INITIAL_LIVENESS;}
+      //int16_t angle = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
+      int angle = mLeftWheel.getCount();
+      if(angle > max){min=angle;max=angle;max_liveness=INITIAL_LIVENESS;}
+      else {min=angle;min_liveness=INITIAL_LIVENESS;}
       int diff=max-min;
-      fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,max_liveness,min_liveness, 200*(int)mCliming,200*(int)detectStair);
+      //int left,right;
 
-      if(diff > 80 || mCliming){
-	mCliming=true;
-	return true;
+      timefromstart=timefromstart+1;
+      //fprintf(file,"%d,%d,%d,%d,%d,%d\n",left-left_offset,right-right_offset,vec_left,vec_right,200*(int)mCliming,200*(int)detectStair);
+      fprintf(file,"%d,%d,%d,%d,%d\n",angle,max,min,200*(int)mCliming,200*(int)detectStair);
+      /*
+      if(timefromstart % 100==0){
+        left = mLeftWheel.getCount();
+        right = mRightWheel.getCount();
+
+        vec_left=left-pre_left;
+        vec_right=right-pre_left;
+
+        if(left-left_offset > 20 && right-right_offset >20 && vec_left < 0 && vec_right < 0){
+          mCliming=true;
+          return true;
+        }
+        pre_left=left;
+        pre_right=right;
+      }*/
+
+      if(diff > 20){
+        setOffset();
+	      mCliming=true;
+	      return true;
       }/*
 	 if(mCliming && diff < 80 && 40 < diff){
 	 mCliming=false;
@@ -38,14 +65,21 @@ namespace Stair{
       if(max_liveness <= 0)max=0;
       if(min_liveness <= 0)min=0;
 
+
+
       return false;
     }
-    bool ObstacleDitector::isLanding(){
-      if(mGyroSensor.getAngle() < -3){
+    bool ObstacleDitector::isDistance(int goal){
+      int left,right;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      if(left-left_offset >= goal && right - right_offset >= goal){
         return true;
-      }else{
-        return false;
       }
+      return false;
+    }
+    int ObstacleDitector::calcSpeed(int goal){
+      return goal - (mLeftWheel.getCount() - left_offset);
     }
     void ObstacleDitector::init(){
       mCliming=false;
@@ -53,6 +87,50 @@ namespace Stair{
       max_liveness=INITIAL_LIVENESS;
       min_liveness=INITIAL_LIVENESS;
     }
-
+    void ObstacleDitector::setOffset(){
+      left_offset = mLeftWheel.getCount();
+      right_offset = mRightWheel.getCount();
+      pre_left = left_offset;
+      pre_right = right_offset;
+      timefromstart=0;
+    }
+    void ObstacleDitector::setFirst(){
+      if(!firstLand){
+        firstLeft=mLeftWheel.getCount();
+        firstRight=mRightWheel.getCount();
+        firstLand=false;
+      }
+    }
+    bool ObstacleDitector::isOnRight(){
+      int left,right,color,diff;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      color = mColorSensor.getBrightness();
+      diff = (left > right) ? left-right : right-left;
+      if(!onRight){
+        if(right > left && color < 20){
+          ev3_speaker_play_tone(NOTE_A5,300);
+          onRight=true;
+        }
+      }else{
+        if(diff < 20 || straight){
+          straight = true;
+          ev3_speaker_play_tone(NOTE_A5,300);
+          return true;
+        }
+      }
+      return false;
+    }
+    bool ObstacleDitector::onStraight(){
+      int left,right,diff;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      diff = (left > right) ? left-right : right-left;
+      if(diff < 17){
+        return true;
+      }else{
+        return false;
+      }
+    }
   }
 }

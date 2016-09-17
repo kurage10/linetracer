@@ -26,6 +26,11 @@ namespace Stair{
 	timeFromStart(0) {
     }
 
+    void LineTracerWithStarter::reset(){
+      mState = UNDEFINED;
+      timeFromStart = 0;
+    }
+    
     LineTracerWithStarter::~LineTracerWithStarter(){
       delete mLineTracer;
       delete mStarter;
@@ -67,7 +72,7 @@ namespace Stair{
      * 未定義状態の処理
      */
     void LineTracerWithStarter::execUndefined() {
-      mTailController->setAngle(94);
+      mTailController->setAngle(96);
 
       mState = WAITING_FOR_START;
     }

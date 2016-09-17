@@ -58,10 +58,10 @@ float LineMonitor::calcVecSpeed(bool starting){
   }else{
     speed=p+i+d;
   }
-    
+
   //右側走行化
   speed *= -1;
-  
+
   if(speed > 100) return 100;
   else if(speed < -100)return -100;
   else return speed;

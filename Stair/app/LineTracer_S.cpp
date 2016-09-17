@@ -23,6 +23,11 @@ namespace Stair{
 	      mSpeed(Stair::unit::BalancingWalker::LOW){
     }
 
+    void LineTracer::reset(){
+      mIsInitialized = false;
+      mSpeed = Stair::unit::BalancingWalker::LOW;
+    }
+
     LineTracer::~LineTracer(){
       delete mLineMonitor;
       delete mBalancingWalker;

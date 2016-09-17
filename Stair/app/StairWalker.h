@@ -9,6 +9,7 @@
 #include "../unit/BalancingWalker.h"
 #include "../unit/TailController.h"
 #include "Task.h"
+#include "../unit/Waker.h"
 
 using app::Task;
 
@@ -22,9 +23,11 @@ namespace Stair{
 		  Stair::unit::ObstacleDitector* obstacleDitector,
 		  Stair::unit::TailWalker* tailWalker,
 		  Stair::unit::BalancingWalker* balancingWalker,
-		  Stair::unit::TailController* tailController);
+		  Stair::unit::TailController* tailController,
+		  Stair::unit::Waker* waker);
       void run();
       bool isDone();
+      void reset();
       ~StairWalker();
 
     private:
@@ -34,26 +37,37 @@ namespace Stair{
       Stair::unit::TailWalker* mTailWalker;
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
+      Stair::unit::Waker* mWaker;
       enum State {
 	      UNDEFINED,
 	      PREPARE,
         STAY,
+        STAND,
 	      WALKING,
+        PREPARE_CLIMB,
 	      CLIMBING,
         PREPARE_TURNING,
-	      TURNING
+	      TURNING,
+        FINISH,
+        STOP
       };
       State mState;
       int timefromstart;
       int mCount;
+      bool isFinished;
       bool endLine;
       void execUndefined();
       void execPrepare();
+      void execStand();
       void execStay();
       void execWalking();
+      void execPrepareClimb();
       void execClimbing();
       void execPrepareTurning();
       void execTurning();
+      void execFinish();
+      void execStop();
+      void shortCutSpin();
     };
 
   }

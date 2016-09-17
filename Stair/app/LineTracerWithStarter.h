@@ -27,6 +27,7 @@ namespace Stair{
 
       void run();
       bool isDone();
+      void reset();
       ~LineTracerWithStarter();
       
     private:

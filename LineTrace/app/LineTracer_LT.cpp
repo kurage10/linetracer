@@ -24,6 +24,11 @@ namespace LineTrace{
 	mSpeed(0) {
     }
 
+    void LineTracer::reset(){
+      mIsInitialized = false;
+      mSpeed = 0;
+    }
+
     /**
      * ライントレースする
      */
@@ -70,5 +75,6 @@ namespace LineTrace{
     void LineTracer::setSpeed(int speed){
       mSpeed = speed;
     }
+
   }
 }

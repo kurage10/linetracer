@@ -27,6 +27,10 @@ namespace LookUpGate{
 	  RightCount(){
     }
 
+    void LookUpGate::reset(){
+      state = INIT;
+    }
+
     LookUpGate::~LookUpGate(){
           delete mTailController;
           delete &mSonar;

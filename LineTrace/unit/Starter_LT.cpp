@@ -21,6 +21,12 @@ namespace LineTrace{
 	wasPushed(false) {
 
     }
+
+    void Starter::reset(){
+      bt_cmd = false;
+      wasPushed = false;
+    }
+    
     void Starter::setRemote(bool flag){
       bt_cmd=flag;
 

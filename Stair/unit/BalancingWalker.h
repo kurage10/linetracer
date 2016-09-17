@@ -6,8 +6,8 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#ifndef EV3_UNIT_BALANCINGWALKER_H_
-#define EV3_UNIT_BALANCINGWALKER_H_
+#ifndef EV3_STAIR_UNIT_BALANCINGWALKER_H_
+#define EV3_STAIR_UNIT_BALANCINGWALKER_H_
 
 #include "InitValues.h"
 #include "GyroSensor.h"
@@ -37,7 +37,9 @@ public:
     void init();
     void run();
     void setCommand(int forward, int turn);
-
+    void changeMode(bool Balance);
+    void prepareStand();
+    
 private:
     const ev3api::GyroSensor& mGyroSensor;
     ev3api::Motor& mLeftWheel;

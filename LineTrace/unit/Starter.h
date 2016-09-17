@@ -22,8 +22,9 @@ public:
 
     bool isPushed();
     void setRemote(bool flag);
+    void reset();
 
-protected:
+ protected:
     const ev3api::TouchSensor& mTouchSensor;
     bool bt_cmd;     /* Bluetoothコマンド 1:リモートスタート */
     bool wasPushed;

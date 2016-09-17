@@ -33,7 +33,7 @@ void StairTurner::run(){
 void StairTurner::init(){
   mLeftWheel.setPWM(0);
   mRightWheel.setPWM(0);
-  mTailController->setAngle(85);
+  mTailController->setAngle(90);
   mIsInitialized=false;
   mCount=0;
   timefromstart=0;
@@ -58,7 +58,7 @@ bool StairTurner::detectCrossLine(){
     max=0;
     min=100;
   }
-  if(min > 11 && min < 50){
+  if(min > 6 && min < 50){
       if(mCount == 2)return true;
       mOnline = false;
   }

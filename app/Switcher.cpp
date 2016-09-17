@@ -11,6 +11,11 @@ namespace app{
     mGate(gate),
     mUsecase(UNDEFINED){
   }
+
+  void Switcher::reset(){
+    mUsecase = UNDEFINED;
+  }
+  
   void Switcher::run(){
     switch(mUsecase){
     case UNDEFINED:

@@ -19,21 +19,21 @@ namespace LineTrace{
 // 定数宣言
     const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 
-    const float LineMonitor::KP_80 = 1.23;
+    //const float LineMonitor::KP_80 = 0.90;
     //const float LineMonitor::KI_80 = 1.2;
-    const float LineMonitor::KD_80 = 0.069;
-    //const float LineMonitor::KP_80 = 1.15;
+    //const float LineMonitor::KD_80 = 0.048;
+    const float LineMonitor::KP_80 = 1.15;
     const float LineMonitor::KI_80 = 1.28;
-    //const float LineMonitor::KD_80 = 0.050;
+    const float LineMonitor::KD_80 = 0.050;
 
-const float LineMonitor::KP_30 = 1.11;
-const float LineMonitor::KI_30 = 3.96;
-const float LineMonitor::KD_30 = 0.08;
-
-const float LineMonitor::KP_Start = 0.35;
-const float LineMonitor::DIRECTION_MAX = 100;
-const int LineMonitor::ENC_THRESHOLD = 180; //内輪差判定値
-
+    const float LineMonitor::KP_30 = 1.11;
+    const float LineMonitor::KI_30 = 3.96;
+    const float LineMonitor::KD_30 = 0.08;
+    
+    const float LineMonitor::KP_Start = 0.35;
+    const float LineMonitor::DIRECTION_MAX = 100;
+    const int LineMonitor::ENC_THRESHOLD = 180; //内輪差判定値
+    
 /**
  * コンストラクタ
  * @param colorSensor カラーセンサ

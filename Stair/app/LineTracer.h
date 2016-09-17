@@ -28,6 +28,7 @@ namespace Stair{
       void run();
       bool isDone();
       void init();
+      void reset();
       void stop();
       void setSpeed(int speed);
       void setStarting(bool starting);

@@ -23,6 +23,7 @@ namespace Garage{
       
       void run();
       bool isDone();
+      void reset();
       
     private:
       enum State{

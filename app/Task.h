@@ -8,6 +8,7 @@ namespace app{
       virtual bool isDone() = 0;
       virtual void run() = 0;
       virtual ~Task(){};
+      virtual void reset() = 0;
   };
 }
 

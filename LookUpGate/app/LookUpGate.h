@@ -35,7 +35,8 @@ namespace LookUpGate{
         ~LookUpGate();
         void run();
         bool isDone();
-
+	void reset();
+      
     private:
         LineTrace::unit::TailController* mTailController;
         ev3api::SonarSensor& mSonar;

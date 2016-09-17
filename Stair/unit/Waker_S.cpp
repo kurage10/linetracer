@@ -1,6 +1,6 @@
 #include "./Waker.h"
 
-namespace LineTrace{
+namespace Stair{
   namespace unit{
 
     Waker::Waker(unit::TailController* tailController,unit::BalancingWalker* balancingWalker)
@@ -30,16 +30,16 @@ namespace LineTrace{
 	      mTailController->setAngle(0);
 	      mTailController->run();
       }else{
-        if(mTailController->getAngle() >= 104){
-	        mBalancingWalker->setCommand(0,0);
-	        mBalancingWalker->run();
-	        mTailController->setAngle(0);
-	        mTailController->run();
-	        pushUp = true;
-	      }else{
-	        mTailController->setAngle(107);
-	        mTailController->run();
-	      }
+        if(mTailController->getAngle() >= 105){//104
+	  mBalancingWalker->setCommand(0,0);
+	  mBalancingWalker->run();
+	  mTailController->setAngle(0);
+	  mTailController->run();
+	  pushUp = true;
+	}else{
+	  mTailController->setAngle(115);//107
+	  mTailController->run();
+	}
       }
       return false;
     }

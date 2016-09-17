@@ -17,6 +17,7 @@ APPL_CXXOBJS += \
 	UsecaseDetector.o \
 	DistanceMonitor.o \
 	Stopper_G.o \
+	Waker_S.o \
 	GarageStopper_G.o \
 	LineMonitor_G.o \
 	Starter_G.o \
@@ -28,6 +29,7 @@ APPL_CXXOBJS += \
 	BalancerCpp_S.o \
 	BalancingWalker_S.o \
 	LineMonitor_S.o \
+	LineMonitorForTail_S.o \
 	ObstacleDitector_S.o \
 	StairTurner_S.o \
 	Starter_S.o \
