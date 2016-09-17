@@ -46,7 +46,7 @@ void BalancingWalker::run() {
 
     fprintf(file,"angle = %d\n",angle);
     
-    mBalancer->setCommand(mForward, mTurn);
+    mBalancer->setCommand(0, 0);
 
     int battery = ev3_battery_voltage_mV();
     mBalancer->update(angle, rightWheelEnc, leftWheelEnc, battery);

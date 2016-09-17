@@ -1,8 +1,10 @@
 #ifndef EV3_APP_SWITCHER_H_
 #define EV3_APP_SWITCHER_H_
+
 #include "../LineTrace/app/LineTracerWithStarter.h"
 #include "../Stair/app/LineTracerWithStarter.h"
 #include "../Garage/app/Stopper.h"
+#include "../Garage/app/GarageStopper.h"
 #include "../LookUpGate/app/LookUpGate.h"
 #include "Task.h"
 
@@ -14,8 +16,10 @@ public:
 	   Task* garage,
 	   Task* stair,
 	   Task* gate);
+
   void run();
-private:
+
+ private:
   enum Usecase{
     UNDEFINED,
     LINETRACER,
