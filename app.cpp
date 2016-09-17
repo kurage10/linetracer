@@ -125,7 +125,8 @@ static void user_system_create() {
 					      gObstacleDitector_S,
 					      gTailWalker_S,
 					      gBalancingWalker_S,
-					      gTailController_S);
+					      gTailController_S,
+                gWaker_LT);
     gLineTracerWithStarter_S  = new Stair::app::LineTracerWithStarter(gLineTracer_S,
 							  gStarter_S,
 							  gTailController_S);
