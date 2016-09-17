@@ -22,9 +22,9 @@ namespace LineTrace{
     //const float LineMonitor::KP_80 = 0.90;
     //const float LineMonitor::KI_80 = 1.2;
     //const float LineMonitor::KD_80 = 0.048;
-    const float LineMonitor::KP_80 = 1.15;
+    const float LineMonitor::KP_80 = 1.45;
     const float LineMonitor::KI_80 = 1.28;
-    const float LineMonitor::KD_80 = 0.050;
+    const float LineMonitor::KD_80 = 0.080;
     
 const float LineMonitor::KP_30 = 1.11;
 const float LineMonitor::KI_30 = 3.96;
