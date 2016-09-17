@@ -91,13 +91,14 @@ namespace LookUpGate{
           // mLeftWheel.setPWM(0);
           // mRightWheel.setPWM(0);
           mTailController -> setAngle(80);
-        } else if (timer >= 1200) {
+        } else if (timer >= 1100) {
           mGateTracer -> run();
         }
 
         int dis = mSonar.getDistance();
         if (dis <= 15) {
           // mTailController -> setAngle(90);
+          ev3_speaker_play_tone(NOTE_A4,300);
           state = FIRST;
           timer = 1;
           getCount();
@@ -113,7 +114,7 @@ namespace LookUpGate{
         } else if (timer >= 420) {
             int n = setSpeed(0, 0);
             if (1 == n) {
-      	      mTailController -> setAngle(78);
+      	      mTailController -> setAngle(80);
       	      time++;
       	      if (time > 250) {
     		          time = 0;
@@ -133,9 +134,10 @@ namespace LookUpGate{
       int dis = mSonar.getDistance();
       mTailController -> run();
         // if (timer % 20 == 0) {
-	      setSpeed(-8, 0);
+        mLeftWheel.setPWM(-8);
+        mRightWheel.setPWM(-8);
         // }
-        if (20 < dis && dis < 30) {
+        if (15 < dis && dis < 40) {
             mTailController -> setAngle(80);
             setSpeed(0, 0);
       	    time++;
@@ -164,9 +166,13 @@ namespace LookUpGate{
         // if (timer % 50 == 0) {
         //     setSpeed(base_speed, 0);
         // }
-        if (timer > 1000) {
+        if (timer > 500) {
           ev3_speaker_play_tone(NOTE_A5,300);
-          done = true;
+          // done = true;
+          mTailController -> setAngle(90);
+          mLeftWheel.setPWM(0);
+          mRightWheel.setPWM(0);
+
         }
         timer ++;
     }
