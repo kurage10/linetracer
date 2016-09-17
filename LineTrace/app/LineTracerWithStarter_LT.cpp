@@ -127,10 +127,11 @@ namespace LineTrace{
     }
 
     bool LineTracerWithStarter::isDone(){
-      if(mLineTracer -> isDone()){
+      /*if(mLineTracer -> isDone()){
 	ev3_speaker_play_tone(NOTE_A5,300);
       }
-      return mLineTracer -> isDone();
+      return mLineTracer -> isDone();*/
+      return mState == WALKING;
     }
 
     LineTracerWithStarter::~LineTracerWithStarter(){

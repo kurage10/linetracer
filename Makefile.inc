@@ -22,6 +22,7 @@ APPL_CXXOBJS += \
 	BalancerCpp_S.o \
 	BalancingWalker_S.o \
 	LineMonitor_S.o \
+	LineMonitorForTail_S.o \
 	ObstacleDitector_S.o \
 	StairTurner_S.o \
 	Starter_S.o \

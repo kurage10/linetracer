@@ -33,7 +33,7 @@ void StairTurner::run(){
 void StairTurner::init(){
   mLeftWheel.setPWM(0);
   mRightWheel.setPWM(0);
-  mTailController->setAngle(85);
+  mTailController->setAngle(90);
   mIsInitialized=false;
   mCount=0;
   timefromstart=0;

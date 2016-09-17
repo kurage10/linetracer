@@ -40,6 +40,7 @@ static LineTrace::unit::Waker           *gWaker_LT;
 static Garage::app::Stopper *gStopper_G;
 
 static Stair::unit::LineMonitor           *gLineMonitor_S;
+static Stair::unit::LineMonitorForTail    *gLineMonitorForTail_S;
 static Stair::unit::Balancer              *gBalancer_S;
 static Stair::unit::BalancingWalker       *gBalancingWalker_S;
 static Stair::app::LineTracer            *gLineTracer_S;
@@ -108,15 +109,17 @@ static void user_system_create() {
 
     gTailController_S         = new Stair::unit::TailController(gTailMotor);
     gLineMonitor_S            = new Stair::unit::LineMonitor(gColorSensor);
+    gLineMonitorForTail_S     = new Stair::unit::LineMonitorForTail(gColorSensor);
     gStarter_S                = new Stair::unit::Starter(gTouchSensor);
     gStairTurner_S            = new Stair::unit::StairTurner(gLeftWheel,
 							     gRightWheel,
 							     gTailController_S,
-                    gColorSensor);
+							     gColorSensor);
     gLineTracer_S             = new Stair::app::LineTracer(gLineMonitor_S, gBalancingWalker_S);
     gTailWalker_S             = new Stair::unit::TailWalker(gLeftWheel,
 							    gRightWheel,
-							    gTailController_S);
+							    gTailController_S,
+							    gLineMonitorForTail_S);
     gStairWalker_S            = new Stair::app::StairWalker(gStairTurner_S,
 					      gLineTracer_S,
 					      gObstacleDitector_S,
@@ -181,6 +184,7 @@ static void user_system_destroy() {
     delete gTailController_S;
     delete gStarter_S;
     delete gLineMonitor_S;
+    delete gLineMonitorForTail_S;
     delete gBalancingWalker_S;
     delete gBalancer_S;
 

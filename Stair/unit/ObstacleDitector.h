@@ -16,7 +16,8 @@ public:
   void init();
   bool isDistance(int goal);
   void setOffset();
-
+  int calcSpeed(int goal);
+  
 private:
   const ev3api::GyroSensor& mGyroSensor;
   const ev3api::Motor& mLeftWheel;

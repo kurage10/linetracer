@@ -86,5 +86,13 @@ void BalancingWalker::setCommand(int forward, int turn) {
     mTurn    = turn;
 }
 
+    void BalancingWalker::changeMode(bool Balance){
+      if(Balance){
+	mBalancer->init(mInitValues->get(InitValues::GYRO_OFFSET));
+      }else{
+	mBalancer->init(mInitValues->get(InitValues::GYRO_OFFSET) - 3);
+      }
+    }
+    
   }
 }

@@ -37,7 +37,8 @@ public:
     void init();
     void run();
     void setCommand(int forward, int turn);
-
+    void changeMode(bool Balance);
+    
 private:
     const ev3api::GyroSensor& mGyroSensor;
     ev3api::Motor& mLeftWheel;

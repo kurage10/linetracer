@@ -25,7 +25,7 @@ namespace Stair{
       if(angle > max){min=angle;max=angle;max_liveness=INITIAL_LIVENESS;}
       else {min=angle;min_liveness=INITIAL_LIVENESS;}
       int diff=max-min;
-      int left,right;
+      //int left,right;
 
       timefromstart=timefromstart+1;
       //fprintf(file,"%d,%d,%d,%d,%d,%d\n",left-left_offset,right-right_offset,vec_left,vec_right,200*(int)mCliming,200*(int)detectStair);
@@ -73,6 +73,9 @@ namespace Stair{
         return true;
       }
       return false;
+    }
+    int ObstacleDitector::calcSpeed(int goal){
+      return goal - (mLeftWheel.getCount() - left_offset);
     }
     void ObstacleDitector::init(){
       mCliming=false;
