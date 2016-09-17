@@ -213,6 +213,7 @@ static void user_system_destroy() {
     delete gTailWalker_S;
     delete gStairWalker_S;
     delete gWaker_S;
+    delete gSeeker;
     delete gStairTurner_S;
     delete gObstacleDitector_S;
     delete gLineTracerWithStarter_S;

@@ -16,7 +16,7 @@ namespace Stair{
     }
       bool Seeker::isLost(){
       int color=mColorSensor.getBrightness();
-      if(color > 20){
+      if(color > 15){
         return true;
       }else{
         return false;
@@ -50,7 +50,7 @@ namespace Stair{
           if(color < 7){
             crossLine=true;
           }
-          if(crossLine && color > 20){
+          if(crossLine && isLost()){
             return true;
           }
           mBalancingWalker->setCommand(-10,0);

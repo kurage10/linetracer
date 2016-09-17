@@ -22,12 +22,12 @@ namespace LineTrace{
     LineTracerWithStarter::LineTracerWithStarter(app::LineTracer* lineTracer,
 						 unit::Starter* starter,
 						 unit::TailController* tailController,
-						 unit::Waker* waker, 
+						 unit::Waker* waker,
 						 ev3api::GyroSensor& gyroSensor)
       : mLineTracer(lineTracer),
 	mStarter(starter),
 	mTailController(tailController),
-	mWaker(waker), 
+	mWaker(waker),
 	mGyroSensor(gyroSensor),
 	mState(UNDEFINED),
 	timeFromStart(0){
@@ -87,16 +87,16 @@ namespace LineTrace{
 
     void LineTracerWithStarter::execPrepare() {
       //mTailController -> run();//
-      
+
       //if(mTailController -> getAngle() >= 108){
       //fprintf(fp,"Angle = %d\n",mGyroSensor.getAngle());
-      //if(mGyroSensor.getAngle()>1 || mTailController->getAngle() >= 106) {	
+      //if(mGyroSensor.getAngle()>1 || mTailController->getAngle() >= 106) {
       //if(mGyroSensor.getAngle()>2 || timeFromStart != 0) {
       //mTailController -> setAngle(0);
       mLineTracer->setStarting(true);
       //mLineTracer->run();//
       //timeFromStart += 4;//
-      
+
       //if(timeFromStart > 50){//
       if(mWaker->isWaked()){
 	mLineTracer->setSpeed(80);
@@ -128,11 +128,11 @@ namespace LineTrace{
     }
 
     bool LineTracerWithStarter::isDone(){
-      /*if(mLineTracer -> isDone()){
+      if(mLineTracer -> isDone()){
 	ev3_speaker_play_tone(NOTE_A5,300);
       }
-      return mLineTracer -> isDone();*/
-      return mState == WALKING;
+      return mLineTracer -> isDone();
+      //return mState == WALKING;
     }
 
     LineTracerWithStarter::~LineTracerWithStarter(){

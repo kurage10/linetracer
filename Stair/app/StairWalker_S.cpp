@@ -104,8 +104,12 @@ namespace Stair{
 	if(mWaker->isWaked()){
 	  mTailController->setAngle(0);
 	  timefromstart=0;
-	  mStairTurner->init();
-	  mState=STAY;
+    if(mCount < 2){
+      mStairTurner->init();
+      mState=STAY;
+    }else{
+      mState=SEEK;
+    }
 	  ev3_speaker_play_tone(NOTE_A5,300);
 
 	}/*else{
@@ -215,11 +219,11 @@ namespace Stair{
 	}
       */
 
-<<<<<<< HEAD
+
       if((mObstacleDitector->isDistance(243) && !mObstacleDitector->isDistance(247)) || timefromstart > 0){
       	mBalancingWalker->setCommand(0,0);
       	timefromstart++;
-      	if(timefromstart > 3000){
+      	if(timefromstart > 1500){
       	  // スピンの準備
       	  mTailController->setAngle(90);
       	  mTailController->run();
@@ -233,6 +237,7 @@ namespace Stair{
 
       	  //shortCutSpin();
       	}
+
       }else if(timefromstart == 0){
       	int speed = mObstacleDitector->calcSpeed(245);
       	if(speed > unit::BalancingWalker::LOW){
@@ -315,28 +320,30 @@ namespace Stair{
       	//mLineTracer->init();
       	//mBalancingWalker->init();
       	//mTailController->setAngle(100);
+
       	//mBalancingWalker->prepareStand();
       	mCount=mCount+1;
       	timefromstart = 0;
       	//mBalancingWalker->changeMode(true);
-      	mState=STAND;
-      	ev3_speaker_play_tone(NOTE_A5,300);
+        mState=STAND;
+        ev3_speaker_play_tone(NOTE_A5,300);
+
       }
 
     }
     void StairWalker::execFinish(){
 
       mTailController->run();
-
+      timefromstart = timefromstart + 1;
 
 	//mObstacleDitector->setOffset();
-      if(!mSeeker->onStraight()){
+      if(timefromstart < 500){
         ev3_speaker_play_tone(NOTE_A5,300);
       	mLineTracer->setStarting(true);
       	mLineTracer->setSpeed(10);
       	mLineTracer->run();
       }else{
-        if(!mObstacleDitector->isDistance(400)){
+        if(!mObstacleDitector->isDistance(300)){
           mBalancingWalker->setCommand(20,0);
           mBalancingWalker->run();
         }else{
@@ -383,10 +390,10 @@ namespace Stair{
     void StairWalker::execSeek(){
       if(mSeeker->seek()){
         mSeeker->setOffset();
+        timefromstart=0;
         mState=FINISH;
       }
     }
-
 
     StairWalker::~StairWalker(){
       delete mStairTurner;
