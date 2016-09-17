@@ -21,7 +21,7 @@ namespace LookUpGate{
       mRightWheel.stop();
     }
 
-    void GateTracer::run() {
+    /*void GateTracer::run() {
       const float Kp = 3;//9        // 比例係数
       // target = 5, 8
       const int target = 7;//8        // 白・黒の中間値
@@ -31,6 +31,23 @@ namespace LookUpGate{
       float turn = Kp * diff + bias;
       mLeftWheel.setPWM(pwm - turn);
       mRightWheel.setPWM(pwm + turn);
+      }*/
+
+    void GateTracer::run() {
+      const float Kp = 20;//9        // 比例係数
+      // target = 5, 8
+      const int target = 6;//8        // 白・黒の中間値
+      const int bias = 0;
+      // msg_f("running...", 1);
+      int diff = mColorSensor.getBrightness() - target;
+      float turn = Kp * diff + bias;
+      if(turn > 100){
+	turn = 100;
+      }else if(turn < -100){
+	turn = -100;
+      }
+      mLeftWheel.setPWM(pwm - (turn/100)*pwm);
+      mRightWheel.setPWM(pwm + (turn/100)*pwm);
     }
 
     // void GateTracer::run2() {

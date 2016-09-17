@@ -141,11 +141,11 @@ namespace LookUpGate{
         mLeftWheel.setPWM(-8);
         mRightWheel.setPWM(-8);
         // }
-        if (15 < dis && dis < 40) {
-            mTailController -> setAngle(80);
-            setSpeed(0, 0);
-      	    time++;
-      	    if(time > 250){
+        if (/*15*/30 < dis && dis < 40) {
+	      mTailController -> setAngle(80);
+	      setSpeed(0, 0);
+	      time++;
+	  if(time > 250){
       	      time = 0;
               ev3_speaker_play_tone(NOTE_A5,300);
       	      state = SECOND;
@@ -171,8 +171,8 @@ namespace LookUpGate{
         // if (timer % 50 == 0) {
         //     setSpeed(base_speed, 0);
         // }
-        if (timer > 500) {
-          if (timer < 501) {
+        if (timer > 650) {
+          if (timer < 651) {
             ev3_speaker_play_tone(NOTE_A5,300);
           }
 
@@ -181,15 +181,15 @@ namespace LookUpGate{
           mRightWheel.setPWM(0);
 
         }
-        if (timer > 1000) {
+        if (timer > 1150) {
           done = true;
         }
         timer ++;
     }
 
     void LookUpGate::getCount(){
-      LeftCount = mLeftWheel.getCount() - 300;
-      RightCount = mRightWheel.getCount() - 300;
+      LeftCount = mLeftWheel.getCount() - 480;
+      RightCount = mRightWheel.getCount() - 480;
     }
 
     int LookUpGate::setSpeed(int speed, int time) {
