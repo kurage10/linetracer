@@ -39,7 +39,9 @@ public:
     void setCommand(int forward, int turn);
     void changeMode(bool Balance);
     void prepareStand();
-    
+    int getLeftCount();
+    int getRightCount();
+
 private:
     const ev3api::GyroSensor& mGyroSensor;
     ev3api::Motor& mLeftWheel;
@@ -54,5 +56,5 @@ private:
 
   }
 }
- 
+
 #endif  // EV3_UNIT_BALANCINGWALKER_H_

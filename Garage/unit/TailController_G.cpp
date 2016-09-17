@@ -14,11 +14,11 @@ namespace Garage{
 
     void TailController::init(){
       ev3api::Clock mClock = ev3api::Clock();
-      
-      mTailMotor.setPWM(-100);
+
+      /*mTailMotor.setPWM(-100);
       mClock.sleep(1000);
       mTailMotor.setPWM(0);
-      mTailMotor.reset();
+      mTailMotor.reset();*/
 
       mTailMotor.setBrake(true);
     }

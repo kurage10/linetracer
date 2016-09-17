@@ -10,6 +10,7 @@
 #include "../unit/TailController.h"
 #include "Task.h"
 #include "../unit/Waker.h"
+#include "../unit/Seeker.h"
 
 using app::Task;
 
@@ -24,7 +25,8 @@ namespace Stair{
 		  Stair::unit::TailWalker* tailWalker,
 		  Stair::unit::BalancingWalker* balancingWalker,
 		  Stair::unit::TailController* tailController,
-		  Stair::unit::Waker* waker);
+		  Stair::unit::Waker* waker,
+      Stair::unit::Seeker* seeker);
       void run();
       bool isDone();
       ~StairWalker();
@@ -37,6 +39,7 @@ namespace Stair{
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
       Stair::unit::Waker* mWaker;
+      Stair::unit::Seeker* mSeeker;
       enum State {
 	      UNDEFINED,
 	      PREPARE,
@@ -47,6 +50,7 @@ namespace Stair{
 	      CLIMBING,
         PREPARE_TURNING,
 	      TURNING,
+        SEEK,
         FINISH,
         STOP
       };
@@ -64,6 +68,7 @@ namespace Stair{
       void execClimbing();
       void execPrepareTurning();
       void execTurning();
+      void execSeek();
       void execFinish();
       void execStop();
       void shortCutSpin();

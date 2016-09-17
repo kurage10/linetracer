@@ -32,6 +32,7 @@ APPL_CXXOBJS += \
 	LineMonitorForTail_S.o \
 	ObstacleDitector_S.o \
 	StairTurner_S.o \
+	Seeker.o \
 	Starter_S.o \
 	TailController_S.o \
 	TailWalker_S.o \

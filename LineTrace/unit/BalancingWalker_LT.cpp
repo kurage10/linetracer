@@ -47,7 +47,7 @@ void BalancingWalker::run() {
     int leftWheelEnc  = mLeftWheel.getCount();        // 左モータ回転角度
 
     fprintf(file,"angle = %d\n",angle);
-    
+
     mBalancer->setCommand(mForward, mTurn);
 
     int battery = ev3_battery_voltage_mV();
@@ -64,11 +64,10 @@ void BalancingWalker::run() {
 void BalancingWalker::init() {
     int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
     mInitValues->put(InitValues::GYRO_OFFSET, offset);
-    
+
     // モータの回転を止める
     mLeftWheel.setPWM(0);
     mRightWheel.setPWM(0);
-    
     // モータエンコーダをリセットする
     mLeftWheel.reset();
     mRightWheel.reset();
