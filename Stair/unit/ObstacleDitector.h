@@ -44,10 +44,14 @@ private:
   int vec_left;
   int vec_right;
   int timefromstart;
-  int max;
-  int max_liveness;
-  int min;
-  int min_liveness;
+  int max_left;
+  int max_left_liveness;
+  int min_left;
+  int min_left_liveness;
+  int max_right;
+  int max_right_liveness;
+  int min_right;
+  int min_right_liveness;
   FILE* file;
 };
 

@@ -16,24 +16,32 @@ namespace Stair{
       firstLand(false),
       mCliming(false),
       detectStair(false),
-      max(0),
-      max_liveness(INITIAL_LIVENESS),
-      min(0),
-      min_liveness(INITIAL_LIVENESS) {
+      max_left(0),
+      max_left_liveness(INITIAL_LIVENESS),
+      min_left(0),
+      min_left_liveness(INITIAL_LIVENESS),
+      max_right(0),
+      max_right_liveness(INITIAL_LIVENESS),
+      min_right(0),
+      min_right_liveness(INITIAL_LIVENESS){
       file = fopen("/stairLog.csv","w");
-      fprintf(file,"angle,max,min,mCliming,detectStair\n");
+      fprintf(file,"left,right,Climb\n");
     }
     bool ObstacleDitector::isObstacle(){
       //int16_t angle = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-      int angle = mLeftWheel.getCount();
-      if(angle > max){min=angle;max=angle;max_liveness=INITIAL_LIVENESS;}
-      else {min=angle;min_liveness=INITIAL_LIVENESS;}
-      int diff=max-min;
-      //int left,right;
+      int left = mLeftWheel.getCount();
+      if(left > max_left){min_left=left;max_left=left;max_left_liveness=INITIAL_LIVENESS;}
+      else {min_left=left;min_left_liveness=INITIAL_LIVENESS;}
+      int diff_left=max_left-min_left;
+
+      int right = mRightWheel.getCount();
+      if(right > max_right){min_right=right;max_right=right;max_right_liveness=INITIAL_LIVENESS;}
+      else {min_right=right;min_right_liveness=INITIAL_LIVENESS;}
+      int diff_right=max_right-min_right;
 
       timefromstart=timefromstart+1;
       //fprintf(file,"%d,%d,%d,%d,%d,%d\n",left-left_offset,right-right_offset,vec_left,vec_right,200*(int)mCliming,200*(int)detectStair);
-      fprintf(file,"%d,%d,%d,%d,%d\n",angle,max,min,200*(int)mCliming,200*(int)detectStair);
+      fprintf(file,"%d,%d,%d\n",left,right,200*(int)mCliming);
       /*
       if(timefromstart % 100==0){
         left = mLeftWheel.getCount();
@@ -50,7 +58,7 @@ namespace Stair{
         pre_right=right;
       }*/
 
-      if(diff > 20){
+      if(diff_left > 20 /*|| diff_right > 23*/){
         setOffset();
 	      mCliming=true;
 	      return true;
@@ -60,10 +68,15 @@ namespace Stair{
 	 detectStair=true;
 	 return true;
 	 }*/
-      max_liveness=max_liveness-1;
-      min_liveness=min_liveness-1;
-      if(max_liveness <= 0)max=0;
-      if(min_liveness <= 0)min=0;
+      max_left_liveness=max_left_liveness-1;
+      min_left_liveness=min_left_liveness-1;
+      if(max_left_liveness <= 0)max_left=0;
+      if(min_left_liveness <= 0)min_left=0;
+
+      max_right_liveness=max_right_liveness-1;
+      min_right_liveness=min_right_liveness-1;
+      if(max_right_liveness <= 0)max_right=0;
+      if(min_right_liveness <= 0)min_right=0;
 
 
 
@@ -82,10 +95,16 @@ namespace Stair{
       return goal - (mLeftWheel.getCount() - left_offset);
     }
     void ObstacleDitector::init(){
+      setOffset();
       mCliming=false;
-      max=0;min=0;
-      max_liveness=INITIAL_LIVENESS;
-      min_liveness=INITIAL_LIVENESS;
+      max_left=0;
+      max_left_liveness=INITIAL_LIVENESS;
+      min_left=0;
+      min_left_liveness=INITIAL_LIVENESS;
+      max_right=0;
+      max_right_liveness=INITIAL_LIVENESS;
+      min_right=0;
+      min_right_liveness=INITIAL_LIVENESS;
     }
     void ObstacleDitector::setOffset(){
       left_offset = mLeftWheel.getCount();
