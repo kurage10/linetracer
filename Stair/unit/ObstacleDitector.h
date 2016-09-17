@@ -12,6 +12,7 @@ public:
   ObstacleDitector(const ev3api::GyroSensor& gyroSensor);
   bool isObstacle();
   void init();
+  bool isLanding();
 private:
   const ev3api::GyroSensor& mGyroSensor;
   static const int INITIAL_LIVENESS;

@@ -10,18 +10,17 @@
 
 namespace Stair{
   namespace app{
-  
+
     /**
      * コンストラクタ
      * @param lineMonitor     ライン判定
      * @param balancingWalker 倒立走行
      */
-    LineTracer::LineTracer(Stair::unit::LineMonitor* lineMonitor,
-			   Stair::unit::BalancingWalker* balancingWalker)
+    LineTracer::LineTracer(Stair::unit::LineMonitor* lineMonitor,Stair::unit::BalancingWalker* balancingWalker)
       : mLineMonitor(lineMonitor),
-	mBalancingWalker(balancingWalker),
-	mIsInitialized(false),
-	mSpeed(Stair::unit::BalancingWalker::LOW){
+	      mBalancingWalker(balancingWalker),
+	      mIsInitialized(false),
+	      mSpeed(Stair::unit::BalancingWalker::LOW){
     }
 
     LineTracer::~LineTracer(){
@@ -74,6 +73,9 @@ namespace Stair{
 
     bool LineTracer::isDone(){
       return false;
+    }
+    void LineTracer::setSpeed(int speed){
+      mSpeed = speed;
     }
 
     void LineTracer::setStarting(bool starting){

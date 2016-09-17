@@ -37,6 +37,7 @@ namespace LineTrace{
       bool mIsInitialized;
       bool mStarting;
       int mSpeed;
+
     };
 
   }

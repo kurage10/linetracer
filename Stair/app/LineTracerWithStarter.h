@@ -9,10 +9,10 @@
 #ifndef EV3_APP_LINETRACERWITHSTARTER_H_
 #define EV3_APP_LINETRACERWITHSTARTER_H_
 
-#include "Starter.h"
-#include "LineTracer.h"
-#include "TailController.h"
-#include "StairWalker.h"
+#include "../unit/Starter.h"
+#include "./LineTracer.h"
+#include "../unit/TailController.h"
+#include "./StairWalker.h"
 
 using app::Task;
 

@@ -6,16 +6,16 @@
  *  Copyright (c) 2015 Embedded Technology Software Design Robot Contest
  *****************************************************************************/
 
-#include "BalancingWalker.h"
+#include "./BalancingWalker.h"
 
-namespace Stair{
+namespace LookUpGate{
   namespace unit{
 
 // 定数宣言
-    const int Stair::unit::BalancingWalker::LOWEST = 20;    // 超低速
-    const int Stair::unit::BalancingWalker::LOW    = 30;    // 低速
-    const int Stair::unit::BalancingWalker::NORMAL = 50;    // 通常
-    const int Stair::unit::BalancingWalker::HIGH   = 70;    // 高速
+const int BalancingWalker::LOWEST = 20;    // 超低速
+const int BalancingWalker::LOW    = 30;    // 低速
+const int BalancingWalker::NORMAL = 50;    // 通常
+const int BalancingWalker::HIGH   = 70;    // 高速
 
 /**
  * コンストラクタ
@@ -27,13 +27,11 @@ namespace Stair{
 BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& leftWheel,
                                  ev3api::Motor& rightWheel,
-                                 Stair::unit::Balancer* balancer,
-				 InitValues* initValues)
+                                 unit::Balancer* balancer)
     : mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),
       mBalancer(balancer),
-      mInitValues(initValues),
       mForward(LOW),
       mTurn(LOW) {
 }
@@ -46,9 +44,9 @@ void BalancingWalker::run() {
     int rightWheelEnc = mRightWheel.getCount();       // 右モータ回転角度
     int leftWheelEnc  = mLeftWheel.getCount();        // 左モータ回転角度
 
-    //fprintf(file,"%d\n",angle);
-
-    mBalancer->setCommand(mForward, mTurn);
+    fprintf(file,"angle = %d\n",angle);
+    
+    mBalancer->setCommand(0, 0);
 
     int battery = ev3_battery_voltage_mV();
     mBalancer->update(angle, rightWheelEnc, leftWheelEnc, battery);
@@ -62,9 +60,12 @@ void BalancingWalker::run() {
  * バランス走行に必要なものをリセットする
  */
 void BalancingWalker::init() {
-  //int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
-  int offset = mInitValues->get(InitValues::GYRO_OFFSET);
-  
+    int offset = mGyroSensor.getAnglerVelocity();  // ジャイロセンサ値
+
+    // モータの回転を止める
+    mLeftWheel.setPWM(0);
+    mRightWheel.setPWM(0);
+    
     // モータエンコーダをリセットする
     mLeftWheel.reset();
     mRightWheel.reset();
@@ -72,8 +73,8 @@ void BalancingWalker::init() {
     // 倒立振子制御初期化
     mBalancer->init(offset);
 
-    //file = fopen("/gyroLog.txt","w");
-    //fprintf(file,"%d\n",offset);
+    file = fopen("/gyroLog.txt","w");
+    fprintf(file,"offset = %d\n",offset);
 }
 
 /**

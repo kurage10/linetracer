@@ -1,7 +1,6 @@
 #include "Switcher.h"
 
 namespace app{
-
   Switcher::Switcher(Task* linetrace,
 		     Task* garage,
 		     Task* stair,
@@ -11,7 +10,6 @@ namespace app{
     mStair(stair),
     mGate(gate),
     mUsecase(UNDEFINED){
-
   }
   void Switcher::run(){
     switch(mUsecase){
@@ -37,12 +35,12 @@ namespace app{
   void Switcher::execUndefined(){
     //各種初期化
     mUsecase = LINETRACER;
-    //mUsecase = STAIR;
+    //mUsecase = GARAGE;
   }
   void Switcher::execLineTracer(){
     mLineTrace->run();
     if(mLineTrace -> isDone()){
-      mUsecase = LOOKUPGATE;
+      mUsecase = STAIR;
     }
   }
   void Switcher::execLookupGate(){
@@ -63,5 +61,4 @@ namespace app{
       mUsecase = GARAGE;
     }
   }
-
 }

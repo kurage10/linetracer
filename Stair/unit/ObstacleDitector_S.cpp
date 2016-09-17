@@ -9,7 +9,7 @@ namespace Stair{
     ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor):
       mGyroSensor(gyroSensor),
       mCliming(false),
-      detectStair(false), 
+      detectStair(false),
       max(0),
       max_liveness(INITIAL_LIVENESS),
       min(0),
@@ -24,7 +24,7 @@ namespace Stair{
       int diff=max-min;
       fprintf(file,"%d,%d,%d,%d,%d,%d,%d,%d\n",angle,diff,max,min,max_liveness,min_liveness, 200*(int)mCliming,200*(int)detectStair);
 
-      if(diff > 130 || mCliming){
+      if(diff > 80 || mCliming){
 	mCliming=true;
 	return true;
       }/*
@@ -39,6 +39,13 @@ namespace Stair{
       if(min_liveness <= 0)min=0;
 
       return false;
+    }
+    bool ObstacleDitector::isLanding(){
+      if(mGyroSensor.getAngle() < -3){
+        return true;
+      }else{
+        return false;
+      }
     }
     void ObstacleDitector::init(){
       mCliming=false;

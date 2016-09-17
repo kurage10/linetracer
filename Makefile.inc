@@ -13,9 +13,15 @@ APPL_CXXOBJS += \
 	LineTracerWithStarter_LT.o \
 	Switcher.o \
 	InitValues.o \
+	GrayDetector.o \
 	UsecaseDetector.o \
 	DistanceMonitor.o \
 	Stopper_G.o \
+	GarageStopper_G.o \
+	LineMonitor_G.o \
+	Starter_G.o \
+	TailController_G.o \
+	TailWalker_G.o \
 	LineTracerWithStarter_S.o \
 	LineTracer_S.o \
 	StairWalker_S.o \
@@ -43,6 +49,7 @@ APPL_DIR += \
 	 $(mkfile_path)app \
 	 $(mkfile_path)unit \
  	 $(mkfile_path)Garage/app \
+  	 $(mkfile_path)Garage/unit \
 	 $(mkfile_path)Stair/app \
 	 $(mkfile_path)Stair/unit \
 	 $(mkfile_path)LookUpGate/app \
@@ -54,6 +61,7 @@ INCLUDES += \
 	-I$(mkfile_path)app \
 	-I$(mkfile_path)unit \
 	-I$(mkfile_path)Garage/app \
+	-I$(mkfile_path)Garage/unit \
 	-I$(mkfile_path)Stair/app \
 	-I$(mkfile_path)Stair/unit \
 	-I$(mkfile_path)LookUpGate/app \

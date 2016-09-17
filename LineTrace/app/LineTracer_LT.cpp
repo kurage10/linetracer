@@ -29,14 +29,13 @@ namespace LineTrace{
      */
     void LineTracer::run() {
       float direction = 0;
-
       if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
       }
 
       if(mSpeed != 0){
-	//For Left Coutse
+	//For Left Course
 	mSpeed = 80;
 	//For Right Course
 	//mSpeed = mLineMonitor->calcSpeed();

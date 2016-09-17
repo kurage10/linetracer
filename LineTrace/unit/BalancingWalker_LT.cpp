@@ -29,6 +29,7 @@ BalancingWalker::BalancingWalker(const ev3api::GyroSensor& gyroSensor,
                                  ev3api::Motor& rightWheel,
                                  unit::Balancer* balancer,
                                  InitValues* initValues)
+
     : mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),

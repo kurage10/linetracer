@@ -17,7 +17,9 @@ namespace unit{
     return;
   }
 
-  float InitValues::get(Name name){
+
+  int InitValues::get(Name name){
+
     switch(name){
     case GYRO_OFFSET:
       return GyroOffset;

@@ -1,13 +1,13 @@
 #ifndef EV3_APP_STAIRWALKER_H_
 #define EV3_APP_STAIRWALKER_H_
 
-#include "StairTurner.h"
-#include "LineTracer.h"
+#include "../unit/StairTurner.h"
+#include "./LineTracer.h"
 #include "GyroSensor.h"
-#include "ObstacleDitector.h"
-#include "TailWalker.h"
-#include "BalancingWalker.h"
-#include "TailController.h"
+#include "../unit/ObstacleDitector.h"
+#include "../unit/TailWalker.h"
+#include "../unit/BalancingWalker.h"
+#include "../unit/TailController.h"
 #include "Task.h"
 
 using app::Task;
@@ -26,7 +26,7 @@ namespace Stair{
       void run();
       bool isDone();
       ~StairWalker();
-      
+
     private:
       Stair::unit::StairTurner* mStairTurner;
       Stair::app::LineTracer* mLineTracer;
@@ -35,19 +35,24 @@ namespace Stair{
       Stair::unit::BalancingWalker* mBalancingWalker;
       Stair::unit::TailController* mTailController;
       enum State {
-	UNDEFINED,
-	PREPARE,
-	WALKING,
-	CLIMBING,
-	TURNING
+	      UNDEFINED,
+	      PREPARE,
+        STAY,
+	      WALKING,
+	      CLIMBING,
+        PREPARE_TURNING,
+	      TURNING
       };
       State mState;
       int timefromstart;
       int mCount;
+      bool endLine;
       void execUndefined();
       void execPrepare();
+      void execStay();
       void execWalking();
       void execClimbing();
+      void execPrepareTurning();
       void execTurning();
     };
 

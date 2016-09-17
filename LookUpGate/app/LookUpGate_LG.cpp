@@ -168,11 +168,14 @@ namespace LookUpGate{
         // }
         if (timer > 500) {
           ev3_speaker_play_tone(NOTE_A5,300);
-          // done = true;
+
           mTailController -> setAngle(90);
           mLeftWheel.setPWM(0);
           mRightWheel.setPWM(0);
 
+        }
+        if (timer > 1000) {
+          done = true;
         }
         timer ++;
     }
