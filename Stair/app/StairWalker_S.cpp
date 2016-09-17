@@ -10,7 +10,8 @@ namespace Stair{
 			     Stair::unit::TailWalker* tailWalker,
 			     Stair::unit::BalancingWalker* balancingWalker,
 			     Stair::unit::TailController* tailController,
-			     Stair::unit::Waker* waker)
+			     Stair::unit::Waker* waker,
+           Stair::unit::Seeker* seeker)
       :mStairTurner(stairTurner),
        mLineTracer(LineTracer),
        mObstacleDitector(obstacleDitector),
@@ -18,6 +19,7 @@ namespace Stair{
        mBalancingWalker(balancingWalker),
        mTailController(tailController),
        mWaker(waker),
+       mSeeker(seeker),
        mState(UNDEFINED),
        timefromstart(0),
        mCount(0),
@@ -53,12 +55,16 @@ namespace Stair{
       case TURNING:
 	execTurning();
 	break;
+      case SEEK:
+      execSeek();
+      break;
       case FINISH:
-	execFinish();
-        break;
+	       execFinish();
+      break;
       case STOP:
-	execStop();
-        break;
+	       execStop();
+      break;
+
       default:
 	break;
       }
@@ -209,6 +215,7 @@ namespace Stair{
 	}
       */
 
+<<<<<<< HEAD
       if((mObstacleDitector->isDistance(243) && !mObstacleDitector->isDistance(247)) || timefromstart > 0){
       	mBalancingWalker->setCommand(0,0);
       	timefromstart++;
@@ -320,21 +327,22 @@ namespace Stair{
     void StairWalker::execFinish(){
 
       mTailController->run();
-      if(!mObstacleDitector->onStraight()){
+
+
 	//mObstacleDitector->setOffset();
-	mLineTracer->setStarting(true);
-	mLineTracer->setSpeed(10);
-	mLineTracer->run();
+      if(!mSeeker->onStraight()){
+        ev3_speaker_play_tone(NOTE_A5,300);
+      	mLineTracer->setStarting(true);
+      	mLineTracer->setSpeed(10);
+      	mLineTracer->run();
       }else{
-        if(!mObstacleDitector->isDistance(350)){
+        if(!mObstacleDitector->isDistance(400)){
           mBalancingWalker->setCommand(20,0);
           mBalancingWalker->run();
         }else{
           timefromstart=0;
           mTailController->setAngle(90);
-
           mState=STOP;
-
         }
       }
 
@@ -343,8 +351,8 @@ namespace Stair{
       timefromstart=timefromstart+1;
       mTailController->setAngle(90);
       mTailController->run();
-      if(timefromstart < 250){
-        mBalancingWalker->setCommand(-10,0);
+      if(timefromstart < 100){
+        mBalancingWalker->setCommand(-20,0);
         mBalancingWalker->run();
       }
       else{
@@ -361,15 +369,24 @@ namespace Stair{
       mCount=mCount+1;
       mTailController->setAngle(0);
       if(mCount==2){
-	ev3_speaker_play_tone(NOTE_A5,300);
-	mObstacleDitector->setOffset();
-	mState = FINISH;
+      	ev3_speaker_play_tone(NOTE_A5,300);
+      	mObstacleDitector->setOffset();
+        mSeeker->init();
+      	mState = SEEK;
       }else{
-	mObstacleDitector->init();
-	mState=WALKING;
+      	mObstacleDitector->init();
+      	mState=WALKING;
       }
 
     }
+
+    void StairWalker::execSeek(){
+      if(mSeeker->seek()){
+        mSeeker->setOffset();
+        mState=FINISH;
+      }
+    }
+
 
     StairWalker::~StairWalker(){
       delete mStairTurner;

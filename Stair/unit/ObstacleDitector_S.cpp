@@ -126,7 +126,8 @@ namespace Stair{
       left = mLeftWheel.getCount();
       right = mRightWheel.getCount();
       diff = (left > right) ? left-right : right-left;
-      if(diff < 17){
+      if(diff < 17 || straight){
+        straight=true;
         return true;
       }else{
         return false;
