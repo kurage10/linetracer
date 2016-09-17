@@ -34,6 +34,9 @@ namespace Stair{
       case PREPARE:
 	execPrepare();
 	break;
+      case BUFFER:
+        execBuffer();
+      break;
       case STAY:
 	execStay();
         break;
@@ -73,12 +76,25 @@ namespace Stair{
       mLineTracer->init();
       mState=PREPARE;
     }
+    void StairWalker::execBuffer(){
+      timefromstart=timefromstart+1;
+      if(timefromstart < 500){
+        mTailController->setAngle(0);
+        mTailController->run();
+        mLineTracer->setStarting(true);
+        mLineTracer->setSpeed(50);
+        mLineTracer->run();
+      }else{
+        mState=PREPARE;
+        ev3_speaker_play_tone(NOTE_A5,300);
+      }
+    }
     void StairWalker::execPrepare(){
       timefromstart=timefromstart+1;
       if(timefromstart < 500){
         mTailController->setAngle(0);
         mTailController->run();
-        mLineTracer->setStarting(false);
+        mLineTracer->setStarting(true);
         mLineTracer->setSpeed(20);
         mLineTracer->run();
       }else{
@@ -125,8 +141,9 @@ namespace Stair{
       if(mObstacleDitector->isObstacle() && mCount < 2){
       	timefromstart = 0;
         mObstacleDitector->setOffset();
-      	mState = PREPARE_CLIMB;
-      	ev3_speaker_play_tone(NOTE_A5,300);
+      	//mState = PREPARE_CLIMB;
+        mState=CLIMBING;
+        ev3_speaker_play_tone(NOTE_A5,300);
       }
     }
     /*if(mObstacleDitector->isDistance(160) && mCount==1){
@@ -213,26 +230,27 @@ namespace Stair{
       */
 
 
-      if((mObstacleDitector->isDistance(250) && !mObstacleDitector->isDistance(254)) || timefromstart > 0){
+      if((mObstacleDitector->isDistance(218) && !mObstacleDitector->isDistance(222)) || timefromstart > 0){
       	mBalancingWalker->setCommand(0,0);
       	timefromstart++;
       	if(timefromstart > 1500){
       	  // スピンの準備
+          /*
       	  mTailController->setAngle(90);
       	  mTailController->run();
       	  if(mTailController->getAngle() > 80){
       	    //mBalancingWalker->changeMode(false);
             mObstacleDitector->setOffset();
       	    mState=PREPARE_TURNING;
-      	    timefromstart = 0;
+            timefromstart = 0;
       	    ev3_speaker_play_tone(NOTE_A5,300);
-      	  }
+      	  }*/
 
-      	  //shortCutSpin();
+      	  shortCutSpin();
       	}
 
       }else if(timefromstart == 0){
-      	int speed = mObstacleDitector->calcSpeed(252);
+      	int speed = mObstacleDitector->calcSpeed(220);
       	if(speed > unit::BalancingWalker::LOW){
       	  mBalancingWalker->setCommand(unit::BalancingWalker::LOW,0);
       	}else{
@@ -336,7 +354,7 @@ namespace Stair{
       	mLineTracer->setSpeed(10);
       	mLineTracer->run();
       }else{
-        if(!mObstacleDitector->isDistance(135)){
+        if(!mObstacleDitector->isDistance(200)){
           mBalancingWalker->setCommand(20,0);
           mBalancingWalker->run();
         }else{

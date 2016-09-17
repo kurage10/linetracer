@@ -29,7 +29,7 @@ namespace LineTrace{
      */
     void LineTracer::run() {
       float direction = 0;
-      
+
       if (mIsInitialized == false) {
         mBalancingWalker->init();
         mIsInitialized = true;
@@ -43,7 +43,7 @@ namespace LineTrace{
 
 	direction = mLineMonitor->calcDirection(mStarting);
       }
-      
+
       mBalancingWalker->setCommand(mSpeed, direction);
       // 倒立走行を行う
       mBalancingWalker->run();
@@ -55,7 +55,7 @@ namespace LineTrace{
     }
 
     bool LineTracer::isDone(){
-      return mLineMonitor->measureDistance() > 7300;
+      return mLineMonitor->measureDistance() > 7000;
     }
 
     void LineTracer::setStarting(bool starting){

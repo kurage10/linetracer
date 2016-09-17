@@ -42,6 +42,7 @@ namespace Stair{
       Stair::unit::Seeker* mSeeker;
       enum State {
 	      UNDEFINED,
+        BUFFER,
 	      PREPARE,
         STAY,
         STAND,
@@ -60,6 +61,7 @@ namespace Stair{
       bool isFinished;
       bool endLine;
       void execUndefined();
+      void execBuffer();
       void execPrepare();
       void execStand();
       void execStay();
