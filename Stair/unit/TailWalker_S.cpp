@@ -31,8 +31,8 @@ namespace Stair{
 
       mLeftWheel.setPWM(mSpeed + (direction/100)*mSpeed*2);
       mRightWheel.setPWM(mSpeed - (direction/100)*mSpeed*2);*/
-      mLeftWheel.setPWM(-10);
-      mRightWheel.setPWM(-10);
+      mLeftWheel.setPWM(-20);
+      mRightWheel.setPWM(-20);
     }
 
     void TailWalker::setSpeed(int speed){

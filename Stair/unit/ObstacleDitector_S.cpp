@@ -58,7 +58,7 @@ namespace Stair{
         pre_right=right;
       }*/
 
-      if(diff_left > 20 /*|| diff_right > 23*/){
+      if(diff_right > 20 || diff_left > 20){
         setOffset();
 	      mCliming=true;
 	      return true;

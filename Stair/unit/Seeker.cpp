@@ -29,16 +29,24 @@ namespace Stair{
       right = mBalancingWalker->getRightCount();
       switch(mState){
         case TURN:
-          if(!isLost())return true;
+          if(color < 7){
+            crossLine=true;
+          }
+          if(crossLine = true && color < 7){
+            return true;
+          }else{
+            mState=BACK;
+            return false;
+          }
           if(left - left_offset > 30){
             mState = STRAIGHT;
           }else{
-            mBalancingWalker->setCommand(0,-10);
+            mBalancingWalker->setCommand(0,-40);
             mBalancingWalker->run();
           }
         break;
         case STRAIGHT:
-          if(!isLost())return true;
+          if(color < 7) return true;
           if(left - left_offset > 100){
             mState = BACK;
           }else{
@@ -50,7 +58,7 @@ namespace Stair{
           if(color < 7){
             crossLine=true;
           }
-          if(crossLine && isLost()){
+          if(crossLine && color > 10){
             return true;
           }
           mBalancingWalker->setCommand(-10,0);
