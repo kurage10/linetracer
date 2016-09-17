@@ -30,6 +30,7 @@ namespace LookUpGate{
       
       void run();
       bool isDone();
+      void reset();
       
     private:
       unit::TailController* mTailController;

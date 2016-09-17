@@ -22,6 +22,7 @@ namespace Garage{
       void run();
       bool isDone();
       void init();
+      void reset();
       
     private:
       

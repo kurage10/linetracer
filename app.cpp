@@ -229,6 +229,17 @@ static void user_system_destroy() {
     delete gLookUpGate_LG;
 }
 
+void prepare_restart() {
+  gLeftWheel.setPWM(0);
+  gRightWheel.setPWM(0);
+  gTailMotor.setPWM(0);
+
+  gLeftWheel.reset();
+  gRightWheel.reset();
+  gTailMotor.reset();
+}
+
+
 /**
  * トレース実行タイミング
  */
@@ -280,6 +291,20 @@ void remote_task(intptr_t exinf){
     if(c=='1'){
       gStarter_LT->setRemote(true);
       gStarter_G->setRemote(true);
+    }else if(c=='0'){
+      gStarter_LT->setRemote(false);
+      gStarter_G->setRemote(false);
+
+      prepare_restart();
+
+      gLineTracer_LT->reset();
+      gLineTracerWithStarter_LT->reset();
+      gLineTracer_S->reset();
+      gLineTracerWithStarter_S->reset();
+      gStairWalker_S->reset();
+      gLookUpGate_LG->reset();
+      gGarageStopper_G->reset();
+      gStopper_G->reset();
     }else{
       gStarter_LT->setRemote(false);
       gStarter_G->setRemote(false);
@@ -292,3 +317,4 @@ void remote_task(intptr_t exinf){
   }
   ext_tsk();
 }
+

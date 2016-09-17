@@ -18,7 +18,8 @@ public:
 	   Task* gate);
 
   void run();
-
+  void reset();
+  
  private:
   enum Usecase{
     UNDEFINED,

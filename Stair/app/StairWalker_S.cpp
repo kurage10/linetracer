@@ -24,6 +24,15 @@ namespace Stair{
        isFinished(false),
        endLine(false){
     }
+
+    void StairWalker::reset(){
+      mState = UNDEFINED;
+      timefromstart = 0;
+      mCount = 0;
+      isFinished = false;
+      endLine = false;
+    }
+    
     void StairWalker::run(){
       switch (mState) {
       case UNDEFINED:
@@ -209,7 +218,7 @@ namespace Stair{
 	}
       */
       
-      if((mObstacleDitector->isDistance(215) && !mObstacleDitector->isDistance(225)) || timefromstart > 0){
+      if((mObstacleDitector->isDistance(238) && !mObstacleDitector->isDistance(242)) || timefromstart > 0){
 	mBalancingWalker->setCommand(0,0);
 	timefromstart++;
 	if(timefromstart > 500){
@@ -226,7 +235,7 @@ namespace Stair{
 	  //shortCutSpin();
 	}
       }else if(timefromstart == 0){
-	int speed = mObstacleDitector->calcSpeed(220);
+	int speed = mObstacleDitector->calcSpeed(240);
 	if(speed > unit::BalancingWalker::LOW){
 	  mBalancingWalker->setCommand(unit::BalancingWalker::LOW,0);
 	}else{

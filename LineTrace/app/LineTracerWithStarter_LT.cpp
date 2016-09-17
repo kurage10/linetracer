@@ -34,6 +34,11 @@ namespace LineTrace{
       fp = fopen("angleLog.txt","w");
     }
 
+    void LineTracerWithStarter::reset(){
+      mState = UNDEFINED;
+      timeFromStart = 0;
+    }
+
     /**
      * ライントレースする
      */

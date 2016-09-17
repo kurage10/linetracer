@@ -28,6 +28,7 @@ namespace LineTrace{
       void run();
       void init();
       bool isDone();
+      void reset();
       void setStarting(bool starting);
       void setSpeed(int speed);
       

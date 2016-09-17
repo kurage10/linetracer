@@ -16,6 +16,11 @@ namespace Garage{
       bIsInitialized = false;
       bIsTailDown = false;
     }
+
+    void Stopper::reset(){
+      bIsInitialized = false;
+      bIsTailDown = false;
+    }
     
     void Stopper::init(){
       mLeftWheel.setCount(0);

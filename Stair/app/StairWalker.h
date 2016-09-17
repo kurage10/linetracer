@@ -27,6 +27,7 @@ namespace Stair{
 		  Stair::unit::Waker* waker);
       void run();
       bool isDone();
+      void reset();
       ~StairWalker();
 
     private:

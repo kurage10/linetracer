@@ -12,6 +12,10 @@ namespace Garage{
 	mState(UNDEFINED) {
     }
 
+    void GarageStopper::reset(){
+      mState = UNDEFINED;
+    }
+
     GarageStopper::~GarageStopper(){
       delete mTailWalker;
       delete mStarter;

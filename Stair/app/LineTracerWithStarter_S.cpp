@@ -26,6 +26,11 @@ namespace Stair{
 	timeFromStart(0) {
     }
 
+    void LineTracerWithStarter::reset(){
+      mState = UNDEFINED;
+      timeFromStart = 0;
+    }
+    
     LineTracerWithStarter::~LineTracerWithStarter(){
       delete mLineTracer;
       delete mStarter;
