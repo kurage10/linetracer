@@ -25,7 +25,7 @@ namespace LookUpGate{
       const float Kp = 3;//9        // 比例係数
       // target = 5, 8
       const int target = 7;//8        // 白・黒の中間値
-      const int bias = 0;
+      const int bias = 2;
       // msg_f("running...", 1);
       int diff = mColorSensor.getBrightness() - target;
       float turn = Kp * diff + bias;

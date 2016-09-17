@@ -40,7 +40,7 @@ namespace app{
   void Switcher::execLineTracer(){
     mLineTrace->run();
     if(mLineTrace -> isDone()){
-      mUsecase = STAIR;
+      mUsecase = LOOKUPGATE;
     }
   }
   void Switcher::execLookupGate(){

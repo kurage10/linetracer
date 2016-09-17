@@ -48,15 +48,15 @@ namespace Garage{
       mGrayDetector->setGrayThreshold(2);//5
       mGrayDetector->setTimeThreshold(250);//170
 
-      mState = TEST_START;//For testing
+      //mState = TEST_START;//For testing
       mTailWalker->setSpeed(0);
-      
-      //mState = GRAY;//For on going
+
+      mState = GRAY;//For on going
     }
 
     void GarageStopper::execTestStart(){
       mTailWalker->run();
-      
+
       if(mStarter->isPushed()){
 	mTailWalker->setSpeed(10);
 	ev3_speaker_play_tone(NOTE_A5,300);
@@ -78,6 +78,6 @@ namespace Garage{
 	mTailWalker->setSpeed(0);
       }
     }
-    
+
   }
 }

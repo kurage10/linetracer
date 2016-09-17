@@ -71,7 +71,7 @@ namespace LookUpGate{
       if (dis < 45 && flag == 1) {
         state = INIT;
       }
-      mLineTracer->setSpeed(10);
+      // mLineTracer->setSpeed(10);
       mLineTracer->setStarting(false);
       mLineTracer->run();
       mTailController -> run();
@@ -143,6 +143,7 @@ namespace LookUpGate{
       	    time++;
       	    if(time > 250){
       	      time = 0;
+              ev3_speaker_play_tone(NOTE_A5,300);
       	      state = SECOND;
       	      timer = 0;
       	    }
@@ -167,7 +168,9 @@ namespace LookUpGate{
         //     setSpeed(base_speed, 0);
         // }
         if (timer > 500) {
-          ev3_speaker_play_tone(NOTE_A5,300);
+          if (timer < 501) {
+            ev3_speaker_play_tone(NOTE_A5,300);
+          }
 
           mTailController -> setAngle(90);
           mLeftWheel.setPWM(0);
