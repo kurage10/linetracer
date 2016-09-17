@@ -19,11 +19,11 @@ namespace LineTrace{
 // 定数宣言
     const int8_t LineMonitor::INITIAL_THRESHOLD = 28;  // 黒色の光センサ値
 
-    const float LineMonitor::KP_80 = 1.23;
+    const float LineMonitor::KP_80 = 1.475;
     //const float LineMonitor::KI_80 = 1.2;
-    const float LineMonitor::KD_80 = 0.069;
+    const float LineMonitor::KD_80 = 0.094ls;
     //const float LineMonitor::KP_80 = 1.15;
-    const float LineMonitor::KI_80 = 1.28;
+    const float LineMonitor::KI_80 = 1.19;
     //const float LineMonitor::KD_80 = 0.050;
 
 const float LineMonitor::KP_30 = 1.11;
