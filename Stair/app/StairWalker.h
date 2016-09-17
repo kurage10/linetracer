@@ -48,7 +48,8 @@ namespace Stair{
 	      CLIMBING,
         PREPARE_TURNING,
 	      TURNING,
-        FINISH
+        FINISH,
+        STOP
       };
       State mState;
       int timefromstart;
@@ -65,6 +66,7 @@ namespace Stair{
       void execPrepareTurning();
       void execTurning();
       void execFinish();
+      void execStop();
       void shortCutSpin();
     };
 

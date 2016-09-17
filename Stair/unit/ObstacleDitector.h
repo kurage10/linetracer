@@ -15,7 +15,9 @@ public:
   bool isObstacle();
   void init();
   bool isDistance(int goal);
+  bool isDistanceFromFirst(int goal);
   void setOffset();
+  void setFirst();
   int calcSpeed(int goal);
   bool isOnRight();
   bool onStraight();
