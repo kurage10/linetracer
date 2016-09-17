@@ -37,9 +37,9 @@ namespace LineTrace{
 
       if(mSpeed != 0){
 	//For Left Coutse
-	//mSpeed = 80;
+	mSpeed = 80;
 	//For Right Course
-	mSpeed = mLineMonitor->calcSpeed();
+	//mSpeed = mLineMonitor->calcSpeed();
 
 	direction = mLineMonitor->calcDirection(mStarting);
       }

@@ -45,7 +45,10 @@ namespace LookUpGate{
         LineTrace::app::LineTracer* mLineTracer;
         LineTrace::unit::BalancingWalker* mBalancingWalker;
         State state;
-
+	int time;
+	int LeftCount;
+	int RightCount;
+	
         void seek();
         void init();
         void firstPass();
@@ -53,7 +56,8 @@ namespace LookUpGate{
         void secondPass();
         int setSpeed(int speed, int time);
         void delay(int time);
-
+	void getCount();
+	
     };
   }
 }
