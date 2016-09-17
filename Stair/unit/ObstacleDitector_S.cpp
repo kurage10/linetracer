@@ -13,6 +13,7 @@ namespace Stair{
       mColorSensor(colorSensor),
       onRight(false),
       straight(false),
+      firstLand(false),
       mCliming(false),
       detectStair(false),
       max(0),
@@ -92,6 +93,13 @@ namespace Stair{
       pre_left = left_offset;
       pre_right = right_offset;
       timefromstart=0;
+    }
+    void ObstacleDitector::setFirst(){
+      if(!firstLand){
+        firstLeft=mLeftWheel.getCount();
+        firstRight=mRightWheel.getCount();
+        firstLand=false;
+      }
     }
     bool ObstacleDitector::isOnRight(){
       int left,right,color,diff;

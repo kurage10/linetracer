@@ -1,13 +1,13 @@
 #ifndef EV3_APP_STAIRWALKER_H_
 #define EV3_APP_STAIRWALKER_H_
 
-#include "StairTurner.h"
-#include "LineTracer.h"
+#include "../unit/StairTurner.h"
+#include "./LineTracer.h"
 #include "GyroSensor.h"
-#include "ObstacleDitector.h"
-#include "TailWalker.h"
-#include "BalancingWalker.h"
-#include "TailController.h"
+#include "../unit/ObstacleDitector.h"
+#include "../unit/TailWalker.h"
+#include "../unit/BalancingWalker.h"
+#include "../unit/TailController.h"
 #include "Task.h"
 #include "../unit/Waker.h"
 
@@ -47,7 +47,8 @@ namespace Stair{
 	      CLIMBING,
         PREPARE_TURNING,
 	      TURNING,
-        FINISH
+        FINISH,
+        STOP
       };
       State mState;
       int timefromstart;
@@ -64,6 +65,7 @@ namespace Stair{
       void execPrepareTurning();
       void execTurning();
       void execFinish();
+      void execStop();
       void shortCutSpin();
     };
 

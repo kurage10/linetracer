@@ -56,6 +56,9 @@ namespace Stair{
       case FINISH:
 	execFinish();
         break;
+      case STOP:
+	execStop();
+        break;
       default:
 	break;
       }
@@ -318,24 +321,32 @@ namespace Stair{
 	mLineTracer->setSpeed(10);
 	mLineTracer->run();
       }else{
-	if(!mObstacleDitector->isDistance(500)){
-	  mBalancingWalker->setCommand(20,0);
-	  mBalancingWalker->run();
-	}else{
-	  timefromstart=timefromstart+1;
-	  mTailController->setAngle(90);
-	  if(timefromstart < 250){
-	    mBalancingWalker->setCommand(-10,0);
-	    mBalancingWalker->run();
-	  }
-	  else{
-	    mStairTurner->init();
-	    isFinished=true;
-	    ev3_speaker_play_tone(NOTE_A5,300);
-	  }
-	}
+        if(!mObstacleDitector->isDistance(350)){
+          mBalancingWalker->setCommand(20,0);
+          mBalancingWalker->run();
+        }else{
+          timefromstart=0;
+          mTailController->setAngle(90);
+
+          mState=STOP;
+
+        }
       }
       
+    }
+    void StairWalker::execStop(){
+      timefromstart=timefromstart+1;
+      mTailController->setAngle(90);
+      mTailController->run();
+      if(timefromstart < 250){
+        mBalancingWalker->setCommand(-10,0);
+        mBalancingWalker->run();
+      }
+      else{
+        mStairTurner->init();
+        isFinished=true;
+        ev3_speaker_play_tone(NOTE_A5,300);
+      }
     }
     bool StairWalker::isDone(){
       

@@ -37,7 +37,12 @@ static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
 static LineTrace::unit::Waker           *gWaker_LT;
 
-static Garage::app::Stopper *gStopper_G;
+static Garage::app::Stopper             *gStopper_G;
+static Garage::app::GarageStopper       *gGarageStopper_G;
+static Garage::unit::Starter            *gStarter_G;
+static Garage::unit::LineMonitor        *gLineMonitor_G;
+static Garage::unit::TailController     *gTailController_G;
+static Garage::unit::TailWalker         *gTailWalker_G;
 
 static Stair::unit::LineMonitor           *gLineMonitor_S;
 static Stair::unit::LineMonitorForTail    *gLineMonitorForTail_S;
@@ -64,7 +69,7 @@ static LookUpGate::unit::TailController *gTailController_LG;
 
 static app::Switcher *gSwitcher;
 static unit::InitValues *gInitValues;
-//static LineTrace::unit::DistanceMonitor *gDistanceMonitor;
+static unit::GrayDetector *gGrayDetector;
 
 void *__dso_handle = 0;
 
@@ -92,14 +97,29 @@ static void user_system_create() {
     gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT,
 						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
+
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
 									  gWaker_LT,
 									  gGyroSensor);
 
+    gLineMonitor_G     = new Garage::unit::LineMonitor(gColorSensor);
+    gTailController_G  = new Garage::unit::TailController(gTailMotor);
+    gStarter_G         = new Garage::unit::Starter(gTouchSensor);
+    gTailWalker_G      = new Garage::unit::TailWalker(gLeftWheel,
+						      gRightWheel,
+						      gTailController_G,
+						      gLineMonitor_G);
     gStopper_G         = new Garage::app::Stopper(gLeftWheel, gRightWheel, gTailMotor);
-
+    gGrayDetector = new unit::GrayDetector(gLineMonitor_LT,
+					   gBalancingWalker_LT,
+					   gTailWalker_G,
+					   gColorSensor);
+    gGarageStopper_G   = new Garage::app::GarageStopper(gTailWalker_G,
+							gStarter_G,
+							gGrayDetector);
+    
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
 								 gLeftWheel,
@@ -150,9 +170,11 @@ static void user_system_create() {
 						     gRightWheel);
 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
-					 gStopper_G,
+					 //gStopper_G,
+					 gGarageStopper_G,
 					 gStairWalker_S,
 					 gLookUpGate_LG);
+
     // 初期化完了通知
     ev3_led_set_color(LED_ORANGE);
 }
@@ -167,6 +189,7 @@ static void user_system_destroy() {
     fclose(gBt);
     delete gSwitcher;
     delete gInitValues;
+    delete gGrayDetector;
 
     delete gLineTracerWithStarter_LT;
     delete gLineTracer_LT;
@@ -178,6 +201,11 @@ static void user_system_destroy() {
     delete gBalancer_LT;
 
     delete gStopper_G;
+    delete gGarageStopper_G;
+    delete gLineMonitor_G;
+    delete gStarter_G;
+    delete gTailController_G;
+    delete gTailWalker_G;
 
     delete gTailWalker_S;
     delete gStairWalker_S;
@@ -251,13 +279,16 @@ void remote_task(intptr_t exinf){
     uint8_t c = fgetc(gBt); /* 受信 */
     if(c=='1'){
       gStarter_LT->setRemote(true);
+      gStarter_G->setRemote(true);
     }else{
       gStarter_LT->setRemote(false);
+      gStarter_G->setRemote(false);
     }
     fputc(c, gBt); /* エコーバック */
 
   }else{
     gStarter_LT->setRemote(false);
+    gStarter_G->setRemote(false);
   }
   ext_tsk();
 }
