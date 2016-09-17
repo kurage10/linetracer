@@ -57,6 +57,7 @@ static Stair::unit::StairTurner           *gStairTurner_S;
 static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
 static Stair::unit::Waker                 *gWaker_S;
+static Stair::unit::Seeker                 *gSeeker;
 
 static LookUpGate::app::LookUpGate *gLookUpGate_LG;
 static FILE* gBt= ev3_serial_open_file(EV3_SERIAL_BT);
@@ -119,7 +120,7 @@ static void user_system_create() {
     gGarageStopper_G   = new Garage::app::GarageStopper(gTailWalker_G,
 							gStarter_G,
 							gGrayDetector);
-    
+
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
 								 gLeftWheel,
@@ -143,13 +144,15 @@ static void user_system_create() {
 							    gLineMonitorForTail_S);
     gWaker_S           = new Stair::unit::Waker(gTailController_S,
 						     gBalancingWalker_S);
+    gSeeker = new Stair::unit::Seeker(gBalancingWalker_S,gColorSensor);
     gStairWalker_S            = new Stair::app::StairWalker(gStairTurner_S,
 					      gLineTracer_S,
 					      gObstacleDitector_S,
 					      gTailWalker_S,
 					      gBalancingWalker_S,
 					      gTailController_S,
-							    gWaker_S);
+							    gWaker_S,
+                gSeeker);
     gLineTracerWithStarter_S  = new Stair::app::LineTracerWithStarter(gLineTracer_S,
 							  gStarter_S,
 							  gTailController_S);
