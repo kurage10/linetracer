@@ -207,6 +207,7 @@ namespace Stair{
       	mBalancingWalker->setCommand(0,0);
       	timefromstart++;
       	if(timefromstart > 500){
+          /* スピンの準備
           mTailController->setAngle(90);
           mTailController->run();
           if(mTailController->getAngle() > 80){
@@ -214,7 +215,9 @@ namespace Stair{
             mState=PREPARE_TURNING;
         	  timefromstart = 0;
         	  ev3_speaker_play_tone(NOTE_A5,300);
-          }
+          }*/
+
+          shortCutSpin();
       	}
       }else if(timefromstart == 0){
 	      int speed = mObstacleDitector->calcSpeed(220);
@@ -303,19 +306,29 @@ namespace Stair{
 
     }
     void StairWalker::execFinish(){
-      timefromstart=timefromstart+1;
+
       mTailController->run();
-      if(timefromstart < 500){
+      if(!mObstacleDitector->onStraight()){
+        //mObstacleDitector->setOffset();
         mLineTracer->setStarting(true);
         mLineTracer->setSpeed(10);
         mLineTracer->run();
       }else{
-        if(!mObstacleDitector->isDistance(300)){
+        if(!mObstacleDitector->isDistance(500)){
           mBalancingWalker->setCommand(20,0);
           mBalancingWalker->run();
         }else{
-          isFinished=true;
-          ev3_speaker_play_tone(NOTE_A5,300);
+          timefromstart=timefromstart+1;
+          mTailController->setAngle(90);
+          if(timefromstart < 250){
+            mBalancingWalker->setCommand(-10,0);
+            mBalancingWalker->run();
+          }
+          else{
+            mStairTurner->init();
+            isFinished=true;
+            ev3_speaker_play_tone(NOTE_A5,300);
+          }
         }
       }
 
@@ -323,6 +336,19 @@ namespace Stair{
     bool StairWalker::isDone(){
 
       return isFinished;
+    }
+    void StairWalker::shortCutSpin(){
+      mCount=mCount+1;
+      mTailController->setAngle(0);
+      if(mCount==2){
+        ev3_speaker_play_tone(NOTE_A5,300);
+        mObstacleDitector->setOffset();
+        mState = FINISH;
+      }else{
+        mObstacleDitector->init();
+        mState=WALKING;
+      }
+
     }
 
     StairWalker::~StairWalker(){

@@ -65,6 +65,7 @@ namespace Stair{
       void execPrepareTurning();
       void execTurning();
       void execFinish();
+      void shortCutSpin();
     };
 
   }

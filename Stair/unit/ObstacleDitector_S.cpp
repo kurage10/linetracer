@@ -6,10 +6,13 @@ namespace Stair{
 
     const int ObstacleDitector::INITIAL_LIVENESS = 30;
 
-    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel):
+    ObstacleDitector::ObstacleDitector(const ev3api::GyroSensor& gyroSensor,const ev3api::Motor& leftWheel,const ev3api::Motor& rightWheel,const ev3api::ColorSensor& colorSensor):
       mGyroSensor(gyroSensor),
       mLeftWheel(leftWheel),
       mRightWheel(rightWheel),
+      mColorSensor(colorSensor),
+      onRight(false),
+      straight(false),
       mCliming(false),
       detectStair(false),
       max(0),
@@ -90,6 +93,36 @@ namespace Stair{
       pre_right = right_offset;
       timefromstart=0;
     }
-
+    bool ObstacleDitector::isOnRight(){
+      int left,right,color,diff;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      color = mColorSensor.getBrightness();
+      diff = (left > right) ? left-right : right-left;
+      if(!onRight){
+        if(right > left && color < 20){
+          ev3_speaker_play_tone(NOTE_A5,300);
+          onRight=true;
+        }
+      }else{
+        if(diff < 20 || straight){
+          straight = true;
+          ev3_speaker_play_tone(NOTE_A5,300);
+          return true;
+        }
+      }
+      return false;
+    }
+    bool ObstacleDitector::onStraight(){
+      int left,right,diff;
+      left = mLeftWheel.getCount();
+      right = mRightWheel.getCount();
+      diff = (left > right) ? left-right : right-left;
+      if(diff < 17){
+        return true;
+      }else{
+        return false;
+      }
+    }
   }
 }
