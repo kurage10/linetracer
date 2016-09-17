@@ -55,6 +55,17 @@ LineMonitor::LineMonitor(const ev3api::ColorSensor& colorSensor,
   //  fp = fopen("directionLog.csv","w");
 }
 
+    void LineMonitor::reset(){
+      diff[0] = 0;
+      diff[1] = 0;
+      integral = 0;
+      mSpeed = 80;
+      leftWheelEnc = 0;
+      rightWheelEnc = 0;
+      startMeasuringEnc = 0;
+      time = 0;
+    }
+    
 /**
  * ライン上か否かを判定する
  * @retval true  ライン上

@@ -35,8 +35,7 @@ static LineTrace::app::LineTracer      *gLineTracer_LT;
 static LineTrace::unit::Starter         *gStarter_LT;
 static LineTrace::unit::TailController *gTailController_LT;
 static LineTrace::app::LineTracerWithStarter *gLineTracerWithStarter_LT;
-static LineTrace::unit::Waker             *gWaker_LT;
-
+static LineTrace::unit::Waker           *gWaker_LT;
 
 static Garage::app::Stopper             *gStopper_G;
 static Garage::app::GarageStopper       *gGarageStopper_G;
@@ -59,8 +58,6 @@ static Stair::app::StairWalker           *gStairWalker_S;
 static Stair::unit::TailWalker            *gTailWalker_S;
 static Stair::unit::Waker                 *gWaker_S;
 
-
-// static LookUpGate::unit::TailController *gTailController_LG;
 static LookUpGate::app::LookUpGate *gLookUpGate_LG;
 static FILE* gBt= ev3_serial_open_file(EV3_SERIAL_BT);
 bool bt_cmd;
@@ -68,11 +65,10 @@ bool bt_cmd;
 //static LookUpGate::unit::Balancer        *gBalancer_LG;
 //static LookUpGate::unit::BalancingWalker *gBalancingWalker_LG;
 //static LookUpGate::unit::Starter         *gStarter_LG;
-static LookUpGate::unit::GateTracer *gGateTracer_LG;
+static LookUpGate::unit::TailController *gTailController_LG;
 
 static app::Switcher *gSwitcher;
 static unit::InitValues *gInitValues;
-
 static unit::GrayDetector *gGrayDetector;
 
 void *__dso_handle = 0;
@@ -98,15 +94,14 @@ static void user_system_create() {
 							   gRightWheel);
     gStarter_LT         = new LineTrace::unit::Starter(gTouchSensor);
     gTailController_LT  = new LineTrace::unit::TailController(gTailMotor);
-
-    gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT, gBalancingWalker_LT);
-
+    gWaker_LT           = new LineTrace::unit::Waker(gTailController_LT,
+						     gBalancingWalker_LT);
     gLineTracer_LT      = new LineTrace::app::LineTracer(gLineMonitor_LT, gBalancingWalker_LT);
 
     gLineTracerWithStarter_LT = new LineTrace::app::LineTracerWithStarter(gLineTracer_LT,
 									  gStarter_LT,
 									  gTailController_LT,
-                    gWaker_LT,
+									  gWaker_LT,
 									  gGyroSensor);
 
     gLineMonitor_G     = new Garage::unit::LineMonitor(gColorSensor);
@@ -124,7 +119,7 @@ static void user_system_create() {
     gGarageStopper_G   = new Garage::app::GarageStopper(gTailWalker_G,
 							gStarter_G,
 							gGrayDetector);
-
+    
     gBalancer_S               = new Stair::unit::Balancer();
     gBalancingWalker_S        = new Stair::unit::BalancingWalker(gGyroSensor,
 								 gLeftWheel,
@@ -168,15 +163,11 @@ static void user_system_create() {
     //							    gLeftWheel,
     //							    gRightWheel);
 //gStarter_LG         = new LookUpGate::unit::Starter(gTouchSensor);
-    // gTailController_LG = new LookUpGate::unit::TailController(gTailMotor);
-    gGateTracer_LG = new LookUpGate::unit::GateTracer(gLeftWheel, gRightWheel, gColorSensor);
-    gLookUpGate_LG = new LookUpGate::app::LookUpGate(gTailController_LT,
-                                    						     gSonarSensor,
-                                    						     gLeftWheel,
-                                    						     gRightWheel,
-                                                     gGateTracer_LG,
-                                                     gLineTracer_LT,
-                                                     gBalancingWalker_LT);
+    gTailController_LG  = new LookUpGate::unit::TailController(gTailMotor);
+    gLookUpGate_LG = new LookUpGate::app::LookUpGate(gTailController_LG,
+						     gSonarSensor,
+						     gLeftWheel,
+						     gRightWheel);
 
     gSwitcher        = new app::Switcher(gLineTracerWithStarter_LT,
 					 //gStopper_G,
@@ -230,12 +221,11 @@ static void user_system_destroy() {
     delete gBalancingWalker_S;
     delete gBalancer_S;
 
-    // delete gTailController_LG;
+    delete gTailController_LG;
     //delete gStarter_LG;
     //delete gLineMonitor_LG;
     //delete gBalancingWalker_LG;
     //delete gBalancer_LG;
-    delete gGateTracer_LG;
     delete gLookUpGate_LG;
 }
 
@@ -308,7 +298,6 @@ void remote_task(intptr_t exinf){
       prepare_restart();
 
       gStarter_LT->reset();
-      gLineMonitor_LT->reset();
       gLineTracer_LT->reset();
       gLineTracerWithStarter_LT->reset();
       gLineTracer_S->reset();

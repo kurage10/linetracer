@@ -24,6 +24,7 @@ public:
     void setThreshold(int8_t threshold);
     int calcSpeed();
     int measureDistance();
+    void reset();
 
 private:
     static const int8_t INITIAL_THRESHOLD;
