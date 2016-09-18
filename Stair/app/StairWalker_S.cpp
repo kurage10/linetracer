@@ -72,13 +72,18 @@ namespace Stair{
 	break;
       }
     }
+    // A: 7200 BUFFER+PREPARE 200 200 1.8
+    // B: 7200 BUFFER+PREPARE 200 200 1.65
+    // C: 7200 PREPARE 400 1.65
+    // D: 7200 PREPARE 400 1.8
     void StairWalker::execUndefined(){
       mLineTracer->init();
+      //mState=PREPARE;
       mState=PREPARE;
     }
     void StairWalker::execBuffer(){
       timefromstart=timefromstart+1;
-      if(timefromstart < 500){
+      if(timefromstart < 200){
         mTailController->setAngle(0);
         mTailController->run();
         mLineTracer->setStarting(true);
@@ -86,12 +91,13 @@ namespace Stair{
         mLineTracer->run();
       }else{
         mState=PREPARE;
+        //mState=WALKING;
         ev3_speaker_play_tone(NOTE_A5,300);
       }
     }
     void StairWalker::execPrepare(){
       timefromstart=timefromstart+1;
-      if(timefromstart < 500){
+      if(timefromstart < 400){
         mTailController->setAngle(0);
         mTailController->run();
         mLineTracer->setStarting(true);
