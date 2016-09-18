@@ -94,7 +94,7 @@ namespace LookUpGate{
         } else if (timer < 1000) {
           // mLeftWheel.setPWM(0);
           // mRightWheel.setPWM(0);
-          mTailController -> setAngle(80);
+          mTailController -> setAngle(78);
         } else if (timer >= 1100) {
           mGateTracer -> run();
         }
@@ -118,7 +118,7 @@ namespace LookUpGate{
         } else if (timer >= 420) {
             int n = setSpeed(0, 0);
             if (1 == n) {
-      	      mTailController -> setAngle(80);
+      	      mTailController -> setAngle(78);
       	      time++;
       	      if (time > 250) {
     		          time = 0;
@@ -142,7 +142,7 @@ namespace LookUpGate{
         mRightWheel.setPWM(-8);
         // }
         if (/*15*/30 < dis && dis < 40) {
-	      mTailController -> setAngle(80);
+	      mTailController -> setAngle(77);
 	      setSpeed(0, 0);
 	      time++;
 	  if(time > 250){
@@ -157,7 +157,7 @@ namespace LookUpGate{
 #else
       mTailController->run();
       if (mGateTracer -> back(LeftCount,RightCount)) {
-      	mTailController -> setAngle(80);
+      	mTailController -> setAngle(78);
       	state = SECOND;
       	setSpeed(0,0);
       	timer = 0;
