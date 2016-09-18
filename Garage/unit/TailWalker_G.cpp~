@@ -13,7 +13,7 @@ namespace Garage{
        mLineMonitor(lineMonitor), 
        mSpeed(20),
        mIsInitialized(false),
-       mAngle(95),
+       mAngle(90),
        mDirection(),
        mDoTrace(false),
        mStartMeasuringDistance(){

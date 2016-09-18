@@ -33,10 +33,16 @@ namespace LookUpGate{
       mRightWheel.setPWM(pwm + turn);
       }*/
 
+
+    /*
+      Left-Course1...Kp = 23, target = 5, bias = 0; angle(back) = 75;
+      Left-Course2...Kp = 25, target = 4, bias = 0; angle(back) = 76;
+      Left-Course3...Kp = 28, target = 4, bias = 0; angle(back) = 75;
+     */
     void GateTracer::run() {
-      const float Kp = 20;//9        // 比例係数
+      const float Kp = 25;//9        // 比例係数
       // target = 5, 8
-      const int target = 6;//8        // 白・黒の中間値
+      const int target = 4;//8        // 白・黒の中間値
       const int bias = 0;
       // msg_f("running...", 1);
       int diff = mColorSensor.getBrightness() - target;

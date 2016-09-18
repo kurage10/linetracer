@@ -33,6 +33,12 @@ namespace LookUpGate{
       mRightWheel.setPWM(pwm + turn);
       }*/
 
+
+    /*
+      Left-Course1...Kp = 23, target = 5, bias = 0; angle(back) = 75;
+      Left-Course2...Kp = 25, target = 4, bias = 0; angle(back) = 76;
+      Left-Course3...Kp = 28, target = 4, bias = 0; angle(back) = 75;
+     */
     void GateTracer::run() {
       const float Kp = 23;//9        // 比例係数
       // target = 5, 8

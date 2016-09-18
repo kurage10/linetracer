@@ -142,7 +142,7 @@ namespace LookUpGate{
         mRightWheel.setPWM(-8);
         // }
         if (/*15*/30 < dis && dis < 40) {
-	      mTailController -> setAngle(77);
+	      mTailController -> setAngle(76);
 	      setSpeed(0, 0);
 	      time++;
 	  if(time > 250){
