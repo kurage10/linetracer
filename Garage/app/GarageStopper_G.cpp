@@ -49,7 +49,7 @@ namespace Garage{
       mTailWalker->init();
       mGrayDetector->init();
       mGrayDetector->setTraceThreshold(10);//9?
-      mGrayDetector->setGrayThreshold(2);//5
+      mGrayDetector->setGrayThreshold(5);//5
       mGrayDetector->setTimeThreshold(250);//170
 
       //mState = TEST_START;//For testing
