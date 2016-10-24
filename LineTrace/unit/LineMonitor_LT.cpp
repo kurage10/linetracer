@@ -25,7 +25,7 @@ namespace LineTrace{
     const float LineMonitor::KP_80 = 1.15;
     const float LineMonitor::KI_80 = 1.28;
     const float LineMonitor::KD_80 = 0.050;
-    
+
 const float LineMonitor::KP_30 = 1.11;
 const float LineMonitor::KI_30 = 3.96;
 const float LineMonitor::KD_30 = 0.08;
@@ -115,6 +115,7 @@ float LineMonitor::calcDirection(bool starting){
  */
 int LineMonitor::calcSpeed(){
   int distance=measureDistance();
+  /*
   if(distance > 2500 && startMeasuringEnc != 0){
     mSpeed = 30;
   }
@@ -132,8 +133,8 @@ int LineMonitor::calcSpeed(){
   //if(distance > 3380 && startMeasuringEnc != 0){
   if(distance > 3400 && startMeasuringEnc != 0){
     mSpeed = 80;
-  }
-
+  }*/
+  mSpeed = 30;
   return mSpeed;
 }
 int LineMonitor::measureDistance(){
